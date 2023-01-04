@@ -690,33 +690,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7562944640096631921, guid: 6f0c670679c73cc448fd51a193b950b5, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7562944640096631925, guid: 6f0c670679c73cc448fd51a193b950b5, type: 3}
       propertyPath: m_Name
       value: Camera
-      objectReference: {fileID: 0}
-    - target: {fileID: 7562944640096631927, guid: 6f0c670679c73cc448fd51a193b950b5, type: 3}
-      propertyPath: orthographic
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7562944640096631927, guid: 6f0c670679c73cc448fd51a193b950b5, type: 3}
-      propertyPath: field of view
-      value: 40
-      objectReference: {fileID: 0}
-    - target: {fileID: 7562944640096631927, guid: 6f0c670679c73cc448fd51a193b950b5, type: 3}
-      propertyPath: far clip plane
-      value: 5000
-      objectReference: {fileID: 0}
-    - target: {fileID: 7562944640096631927, guid: 6f0c670679c73cc448fd51a193b950b5, type: 3}
-      propertyPath: near clip plane
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7562944640096631927, guid: 6f0c670679c73cc448fd51a193b950b5, type: 3}
-      propertyPath: orthographic size
-      value: 14.46
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6f0c670679c73cc448fd51a193b950b5, type: 3}
@@ -882,7 +858,7 @@ GameObject:
   - component: {fileID: 577043739}
   - component: {fileID: 577043738}
   - component: {fileID: 577043741}
-  - component: {fileID: 577043740}
+  - component: {fileID: 577043742}
   m_Layer: 0
   m_Name: CM vcam1 (5)
   m_TagString: Untagged
@@ -936,7 +912,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 577043737}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 36.51, y: 58.649998, z: -102.74878}
+  m_LocalPosition: {x: 36.84, y: 58.649998, z: -102.74878}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -944,35 +920,6 @@ Transform:
   m_Father: {fileID: 1936142443}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &577043740
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 577043737}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 350987ec97e7e994c8417c6397d93e60, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cameraPositions: []
-  extraCameraPositions: []
-  levels_forDisabling: []
-  rotOffset: -90
-  time: 0.4
-  rot: 0
-  IsHitingWall: 0
-  thudScipt: {fileID: 842828121}
-  menuScript: {fileID: 0}
-  mobileRotateEnabled: 1
-  useMenu: 0
-  airRot: 1
-  waitBeforeGravChange: 0.34
-  preRot: {x: 0, y: 0, z: 0}
-  Dimension3D: 0
-  rotationMode: 0
-  rotDisToRotate: 0
 --- !u!114 &577043741
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1003,6 +950,35 @@ MonoBehaviour:
   m_Damping: 0
   m_DampingWhenOccluded: 0
   m_OptimalTargetDistance: 100
+--- !u!114 &577043742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 577043737}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49c051ade6320e4c3b29b34e42664ac4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraPositions: []
+  extraCameraPositions: []
+  levels_forDisabling: []
+  rotOffset: 0
+  time: 0.4
+  rot: 90
+  IsHitingWall: 0
+  thudScipt: {fileID: 842828121}
+  menuScript: {fileID: 0}
+  mobileRotateEnabled: 1
+  useMenu: 0
+  airRot: 1
+  waitBeforeGravChange: 0
+  preRot: {x: 0, y: 0, z: 0}
+  Dimension3D: 0
+  rotationMode: 0
+  rotDisToRotate: 15
 --- !u!1 &715180055
 GameObject:
   m_ObjectHideFlags: 0
@@ -1689,7 +1665,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a109dd017b70867cb89490850e5d0140, type: 3}
+  m_Script: {fileID: 11500000, guid: 7e0c7d02803fce9f6ae1f61a8ca3f66e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &891942183
@@ -2642,7 +2618,7 @@ GameObject:
   - component: {fileID: 1442898911}
   - component: {fileID: 1442898910}
   - component: {fileID: 1442898912}
-  - component: {fileID: 1442898913}
+  - component: {fileID: 1442898914}
   m_Layer: 0
   m_Name: CM vcam1 (1)
   m_TagString: Untagged
@@ -2734,7 +2710,7 @@ MonoBehaviour:
   m_Damping: 0
   m_DampingWhenOccluded: 0
   m_OptimalTargetDistance: 100
---- !u!114 &1442898913
+--- !u!114 &1442898914
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2743,26 +2719,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 1442898909}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 350987ec97e7e994c8417c6397d93e60, type: 3}
+  m_Script: {fileID: 11500000, guid: 49c051ade6320e4c3b29b34e42664ac4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   cameraPositions: []
   extraCameraPositions: []
   levels_forDisabling: []
-  rotOffset: -90
+  rotOffset: 0
   time: 0.4
-  rot: 0
+  rot: 90
   IsHitingWall: 0
   thudScipt: {fileID: 842828121}
   menuScript: {fileID: 0}
   mobileRotateEnabled: 1
   useMenu: 0
   airRot: 1
-  waitBeforeGravChange: 0.34
+  waitBeforeGravChange: 0
   preRot: {x: 0, y: 0, z: 0}
   Dimension3D: 0
   rotationMode: 0
-  rotDisToRotate: 0
+  rotDisToRotate: 15
 --- !u!1 &1494124506
 GameObject:
   m_ObjectHideFlags: 0
@@ -2795,45 +2771,6 @@ Transform:
   m_Father: {fileID: 715180058}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1777453912 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7562944640096631925, guid: 6f0c670679c73cc448fd51a193b950b5, type: 3}
-  m_PrefabInstance: {fileID: 502501725}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1777453922
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1777453912}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 72ece51f2901e7445ab60da3685d6b5f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ShowDebugText: 0
-  m_ShowCameraFrustum: 1
-  m_IgnoreTimeScale: 0
-  m_WorldUpOverride: {fileID: 0}
-  m_UpdateMethod: 2
-  m_BlendUpdateMethod: 1
-  m_DefaultBlend:
-    m_Style: 1
-    m_Time: 2
-    m_CustomCurve:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-  m_CustomBlends: {fileID: 0}
-  m_CameraCutEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_CameraActivatedEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &1780169594
 GameObject:
   m_ObjectHideFlags: 0
@@ -2845,7 +2782,7 @@ GameObject:
   - component: {fileID: 1780169596}
   - component: {fileID: 1780169595}
   - component: {fileID: 1780169597}
-  - component: {fileID: 1780169598}
+  - component: {fileID: 1780169599}
   m_Layer: 0
   m_Name: CM vcam1
   m_TagString: Untagged
@@ -2937,7 +2874,7 @@ MonoBehaviour:
   m_Damping: 0
   m_DampingWhenOccluded: 0
   m_OptimalTargetDistance: 100
---- !u!114 &1780169598
+--- !u!114 &1780169599
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2946,15 +2883,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 1780169594}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 350987ec97e7e994c8417c6397d93e60, type: 3}
+  m_Script: {fileID: 11500000, guid: 49c051ade6320e4c3b29b34e42664ac4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   cameraPositions: []
   extraCameraPositions: []
   levels_forDisabling: []
-  rotOffset: -90
+  rotOffset: 0
   time: 0.4
-  rot: 0
+  rot: 90
   IsHitingWall: 0
   thudScipt: {fileID: 842828121}
   menuScript: {fileID: 0}
@@ -2965,7 +2902,7 @@ MonoBehaviour:
   preRot: {x: 0, y: 0, z: 0}
   Dimension3D: 0
   rotationMode: 0
-  rotDisToRotate: 0
+  rotDisToRotate: 15
 --- !u!1 &1781468070
 GameObject:
   m_ObjectHideFlags: 0
@@ -3358,7 +3295,7 @@ GameObject:
   - component: {fileID: 2058461855}
   - component: {fileID: 2058461854}
   - component: {fileID: 2058461857}
-  - component: {fileID: 2058461856}
+  - component: {fileID: 2058461858}
   m_Layer: 0
   m_Name: CM vcam1 (4)
   m_TagString: Untagged
@@ -3420,35 +3357,6 @@ Transform:
   m_Father: {fileID: 1936142443}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2058461856
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2058461853}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 350987ec97e7e994c8417c6397d93e60, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cameraPositions: []
-  extraCameraPositions: []
-  levels_forDisabling: []
-  rotOffset: -90
-  time: 0.4
-  rot: 0
-  IsHitingWall: 0
-  thudScipt: {fileID: 842828121}
-  menuScript: {fileID: 0}
-  mobileRotateEnabled: 1
-  useMenu: 0
-  airRot: 1
-  waitBeforeGravChange: 0.34
-  preRot: {x: 0, y: 0, z: 0}
-  Dimension3D: 0
-  rotationMode: 0
-  rotDisToRotate: 0
 --- !u!114 &2058461857
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3479,6 +3387,35 @@ MonoBehaviour:
   m_Damping: 0
   m_DampingWhenOccluded: 0
   m_OptimalTargetDistance: 100
+--- !u!114 &2058461858
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2058461853}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49c051ade6320e4c3b29b34e42664ac4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraPositions: []
+  extraCameraPositions: []
+  levels_forDisabling: []
+  rotOffset: 0
+  time: 0.4
+  rot: 90
+  IsHitingWall: 0
+  thudScipt: {fileID: 842828121}
+  menuScript: {fileID: 0}
+  mobileRotateEnabled: 1
+  useMenu: 0
+  airRot: 1
+  waitBeforeGravChange: 0
+  preRot: {x: 0, y: 0, z: 0}
+  Dimension3D: 0
+  rotationMode: 0
+  rotDisToRotate: 15
 --- !u!1 &2061311693
 GameObject:
   m_ObjectHideFlags: 0
@@ -3644,14 +3581,6 @@ PrefabInstance:
     - target: {fileID: 2744243322723031596, guid: b46b94448cfa84e42869cb4f5b8b2066, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2744243322723031599, guid: b46b94448cfa84e42869cb4f5b8b2066, type: 3}
-      propertyPath: m_Constraints
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2744243322723031599, guid: b46b94448cfa84e42869cb4f5b8b2066, type: 3}
-      propertyPath: m_GravityScale
-      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b46b94448cfa84e42869cb4f5b8b2066, type: 3}
