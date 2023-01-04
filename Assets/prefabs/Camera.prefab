@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7562944640096631920}
   - component: {fileID: 7562944640096631927}
   - component: {fileID: 7562944640096631926}
-  - component: {fileID: 7562944640096631921}
+  - component: {fileID: 1777453922}
   m_Layer: 0
   m_Name: Camera
   m_TagString: MainCamera
@@ -58,11 +58,11 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
-  far clip plane: 1000
-  field of view: 60
+  near clip plane: 0.1
+  far clip plane: 5000
+  field of view: 40
   orthographic: 1
-  orthographic size: 15.63
+  orthographic size: 14.46
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -86,7 +86,7 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7562944640096631925}
   m_Enabled: 1
---- !u!114 &7562944640096631921
+--- !u!114 &1777453922
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -95,25 +95,31 @@ MonoBehaviour:
   m_GameObject: {fileID: 7562944640096631925}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 350987ec97e7e994c8417c6397d93e60, type: 3}
+  m_Script: {fileID: 11500000, guid: 72ece51f2901e7445ab60da3685d6b5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraPositions: []
-  extraCameraPositions: []
-  levels_forDisabling: []
-  rotOffset: -90
-  time: 0.4
-  rot: 0
-  IsHitingWall: 0
-  thudScipt: {fileID: 7856540356522506107}
-  menuScript: {fileID: 0}
-  mobileRotateEnabled: 1
-  useMenu: 0
-  airRot: 1
-  preRot: {x: 0, y: 0, z: 0}
-  Dimension3D: 0
-  rotationMode: 0
-  rotDisToRotate: 0
+  m_ShowDebugText: 0
+  m_ShowCameraFrustum: 1
+  m_IgnoreTimeScale: 0
+  m_WorldUpOverride: {fileID: 0}
+  m_UpdateMethod: 2
+  m_BlendUpdateMethod: 1
+  m_DefaultBlend:
+    m_Style: 1
+    m_Time: 2
+    m_CustomCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+  m_CustomBlends: {fileID: 0}
+  m_CameraCutEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_CameraActivatedEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &7562944639099915048
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -170,6 +176,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 431487670942022739, guid: b9d06055d2fa3fee9a749e3ecf5796a4, type: 3}
+      propertyPath: audioSource
+      value: 
+      objectReference: {fileID: 7856540356522506106}
+    - target: {fileID: 431487670942022739, guid: b9d06055d2fa3fee9a749e3ecf5796a4, type: 3}
       propertyPath: rotateSound
       value: 
       objectReference: {fileID: 8300000, guid: 193da8917ad6a84418fcd3011ac0510d, type: 3}
@@ -180,14 +190,8 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 431487670942022737, guid: b9d06055d2fa3fee9a749e3ecf5796a4, type: 3}
   m_PrefabInstance: {fileID: 7562944639099915048}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &7856540356522506107 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 431487670942022739, guid: b9d06055d2fa3fee9a749e3ecf5796a4, type: 3}
+--- !u!82 &7856540356522506106 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 431487670942022738, guid: b9d06055d2fa3fee9a749e3ecf5796a4, type: 3}
   m_PrefabInstance: {fileID: 7562944639099915048}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a109dd017b70867cb89490850e5d0140, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

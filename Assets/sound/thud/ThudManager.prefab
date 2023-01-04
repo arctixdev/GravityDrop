@@ -42,19 +42,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 431487670942022736}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a109dd017b70867cb89490850e5d0140, type: 3}
+  m_Script: {fileID: 11500000, guid: 7e0c7d02803fce9f6ae1f61a8ca3f66e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioSource: {fileID: 431487670942022738}
-  thud1: {fileID: 8300000, guid: 22697adcc0f28196195ec938307781db, type: 3}
-  thud2: {fileID: 8300000, guid: 400fffc48d6d734e2a713e082d8cd3ef, type: 3}
-  thud3: {fileID: 8300000, guid: 1c871fd41b6ea2711bdbcef868f878f9, type: 3}
-  thud4: {fileID: 8300000, guid: 7cbd6795631a929179490c3f69ec8905, type: 3}
-  thud5: {fileID: 8300000, guid: 1af8fdfbd79ababe3befa3c1c9f604a8, type: 3}
-  thud6: {fileID: 8300000, guid: 2fb51a9caf3e7ff719741f4bc12e44d3, type: 3}
-  thud7: {fileID: 8300000, guid: d8059fefb9491de3f9192200507cc6a1, type: 3}
-  thud8: {fileID: 8300000, guid: df1852e2eedb2ec948d6c5885e7c474f, type: 3}
-  rotateSound: {fileID: 8300000, guid: d668593c1a5ab775788d2f9447407810, type: 3}
+  audioSource: {fileID: 0}
+  thud1: {fileID: 0}
+  thud2: {fileID: 0}
+  thud3: {fileID: 0}
+  thud4: {fileID: 0}
+  thud5: {fileID: 0}
+  thud6: {fileID: 0}
+  thud7: {fileID: 0}
+  thud8: {fileID: 0}
+  rotateSound: {fileID: 0}
 --- !u!82 &431487670942022738
 AudioSource:
   m_ObjectHideFlags: 0
