@@ -3,8 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-using UnityEngine.InputSystem;
-
 public class mainController : MonoBehaviour
 {
     // Start is called before the first frame update
@@ -85,11 +83,6 @@ public class mainController : MonoBehaviour
     {
         rot = transform.eulerAngles.z;
 
-        if(AttitudeSensor.current != null){
-            InputSystem.EnableDevice(AttitudeSensor.current);
-
-        }
-
         isMobile = false;
 
 
@@ -106,17 +99,6 @@ public class mainController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(AttitudeSensor.current != null){
-            isMobile = AttitudeSensor.current.attitude.ReadValue().eulerAngles.z != 0;
-
-            
-            SAngle = AttitudeSensor.current.attitude.ReadValue().eulerAngles.z;
-        }
-        else{
-            // Debug.Log("no censor");
-            // menuScript.level(-10);
-        }
-
         pM = new Vector2(Input.mousePosition.x / Screen.width * 100, Input.mousePosition.y / Screen.height * 100);
         RM = Quaternion.LookRotation(Input.mousePosition - new Vector3(Screen.width / 2, Screen.height / 2, 0)).eulerAngles.x;
         if(Input.GetMouseButtonDown(0)){
