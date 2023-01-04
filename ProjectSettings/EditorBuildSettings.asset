@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/map 2.unity
     guid: d8c9c882298c0a6499b57680c9354cbb
-  m_configObjects: {}
+  m_configObjects:
+    com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: efc3c46f92337a2c9968e80cb3a5e731, type: 2}
+    com.unity.adaptiveperformance.samsung.android.provider_settings: {fileID: 11400000, guid: 18fcdede29d78d2a7bf2e4e96291e8ab, type: 2}
+    com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000, guid: b42c75e88882661e9897a91b63f8c70c, type: 2}

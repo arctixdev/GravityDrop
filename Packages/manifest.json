@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.unity.adaptiveperformance.samsung.android": "4.0.2",
     "com.unity.cinemachine": "2.8.9",
     "com.unity.feature.2d": "1.0.0",
     "com.unity.feature.development": "1.0.1",
