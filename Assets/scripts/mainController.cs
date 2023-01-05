@@ -106,16 +106,16 @@ public class mainController : MonoBehaviour
             startpM = pM;
             startrotmouse = RM;
             oldrottomouse = RM;
-            Debug.Log(Input.mousePosition - new Vector3(Screen.width / 2, Screen.height / 2, 0));
+            // Debug.Log(Input.mousePosition - new Vector3(Screen.width / 2, Screen.height / 2, 0));
         }
 
-        if(Input.GetMouseButton(0)){
+        if(Input.GetMouseButton(0) && mobileRotateEnabled){
             transform.Rotate(0, 0, RM - oldrottomouse);
             oldrottomouse = Quaternion.LookRotation(Input.mousePosition - new Vector3(Screen.width / 2, Screen.height / 2, 0)).eulerAngles.x;
         }
         
         if(Input.GetMouseButtonUp(0)){
-            if(IsHitingWall){
+            if((IsHitingWall || airRot) && mobileRotateEnabled){
 
                 if(rotationMode == rotModes.rotationOfLevel){
 
