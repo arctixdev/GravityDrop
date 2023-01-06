@@ -33,7 +33,7 @@ public class gridplacement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetMouseButtonDown(0)){
+        if(Input.GetMouseButton(0)){
             addBlock();
 
         }
@@ -70,7 +70,7 @@ public class gridplacement : MonoBehaviour
                     if(side.x != 0){
                         foreach(Vector3 Yside in Ysides){
                             if(worldPosition + side + Yside == child.position){
-                                Debug.Log(worldPosition + side + Yside);
+                                Debug.Log(side);
 
                                 GameObject corner = Instantiate(cornerPrefab, worldPosition + side, Quaternion.identity, cornerParent);
 
