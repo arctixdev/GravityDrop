@@ -70,7 +70,7 @@ public class gridplacement : MonoBehaviour
                     if(side.x != 0){
                         foreach(Vector3 Yside in Ysides){
                             if(worldPosition + side + Yside == child.position){
-                                Debug.Log(side);
+                                Debug.Log(worldPosition + side + Yside);
 
                                 GameObject corner = Instantiate(cornerPrefab, worldPosition + side, Quaternion.identity, cornerParent);
 
