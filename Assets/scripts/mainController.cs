@@ -97,10 +97,19 @@ public class mainController : MonoBehaviour
     }
 
     // Update is called once per frame
+    float calcMouseRot(){
+        Vector2 screenMiddle = new Vector3(Screen.width / 2, Screen.height / 2, 0);
+        Vector2 endPosition = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+
+        Vector2 direction = endPosition - screenMiddle;
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
+        return -angle;
+    }
     void Update()
     {
         pM = new Vector2(Input.mousePosition.x / Screen.width * 100, Input.mousePosition.y / Screen.height * 100);
-        RM = Quaternion.LookRotation(Input.mousePosition - new Vector3(Screen.width / 2, Screen.height / 2, 0)).eulerAngles.x;
+        RM = calcMouseRot();
         if(Input.GetMouseButtonDown(0)){
 
             startpM = pM;
@@ -111,12 +120,14 @@ public class mainController : MonoBehaviour
 
         if(Input.GetMouseButton(0) && mobileRotateEnabled){
             transform.Rotate(0, 0, RM - oldrottomouse);
-            oldrottomouse = Quaternion.LookRotation(Input.mousePosition - new Vector3(Screen.width / 2, Screen.height / 2, 0)).eulerAngles.x;
+
+            oldrottomouse = calcMouseRot();
+            
         }
         
         if(Input.GetMouseButtonUp(0)){
             if((IsHitingWall || airRot) && mobileRotateEnabled){
-
+                // Debug.Log(RM - oldrottomouse);
                 if(rotationMode == rotModes.rotationOfLevel){
 
                     float rotdiff = startrotmouse - RM ;
