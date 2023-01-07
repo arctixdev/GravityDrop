@@ -128,12 +128,15 @@ public class mainController : MonoBehaviour
         if(Input.GetMouseButtonUp(0)){
             if((IsHitingWall || airRot) && mobileRotateEnabled){
                 // Debug.Log(RM - oldrottomouse);
+                // adding the last rotation velocity
+                RM += RM - oldrottomouse;
                 if(rotationMode == rotModes.rotationOfLevel){
 
                     float rotdiff = startrotmouse - RM ;
                     if(rotdiff < -180) rotdiff += 360;
                     if(rotdiff > 180) rotdiff -= 360;
-                    Debug.Log(rotdiff);
+                    // Debug.Log(rotdiff);
+                    
                     
                     if(rotdiff > rotDisToRotate){
                         rot -= 90;
