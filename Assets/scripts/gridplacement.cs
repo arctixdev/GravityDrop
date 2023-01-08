@@ -140,7 +140,7 @@ public class gridplacement : MonoBehaviour
 
         blockPlacements.Add(new Vector2(x, y));
 
-        MapString =  exportMapAsString();
+        MapString = exportMapAsString();
 
         for (int i = 0; i < parent.transform.childCount; i++)
         {
@@ -151,20 +151,20 @@ public class gridplacement : MonoBehaviour
                 if(worldPosition + side == child.position){
                     Instantiate(middlePiece, worldPosition + side/2 + Vector3.back, Quaternion.identity, parent);
                 }
-                else{
-                    if(side.x != 0){
-                        foreach(Vector3 Yside in Ysides){
-                            if(worldPosition + side + Yside == child.position){
-                                // Debug.Log(worldPosition + side + Yside);
+                
+                if(side.x != 0){
+                    foreach(Vector3 Yside in Ysides){
+                        if(worldPosition + side + Yside == child.position){
+                            // Debug.Log(worldPosition + side + Yside);
 
-                                GameObject corner = Instantiate(cornerPrefab, worldPosition + side, Quaternion.identity, cornerParent);
+                            GameObject corner = Instantiate(cornerPrefab, worldPosition + side, Quaternion.identity, cornerParent);
 
-                                corner.transform.LookAt((worldPosition + worldPosition + side + Yside) / 2);
-                                
-                            }
+                            corner.transform.LookAt((worldPosition + worldPosition + side + Yside) / 2);
+                            
                         }
                     }
                 }
+                
 
             }
         }
