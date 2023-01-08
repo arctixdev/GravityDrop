@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.EventSystems;
 
 public class gridplacement : MonoBehaviour
 {
@@ -51,11 +52,25 @@ public class gridplacement : MonoBehaviour
             }
         }
 
+
     }
 
     // Update is called once per frame
     void Update()
     {
+        // blockType += Mathf.RoundToInt(Input.mouseScrollDelta.y);
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (EventSystem.current.IsPointerOverGameObject())
+            {
+                Debug.Log("UI was clicked");
+            }
+            else
+            {
+                Debug.Log("Scene was clicked");
+            }
+        }
+
         if(Input.GetMouseButton(0)){
             Vector3 mousePosition = Input.mousePosition;
             Vector3 worldPosition = Camera.main.ScreenToWorldPoint(mousePosition);
