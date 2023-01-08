@@ -1,0 +1,63 @@
+.button {
+    height: 114px;
+    width: 325px;
+    font-size: 40px;
+    position: relative;
+    align-items: center;
+    justify-content: flex-start;
+    border-top-left-radius: 19px;
+    border-bottom-left-radius: 19px;
+    border-top-right-radius: 19px;
+    border-bottom-right-radius: 19px;
+    border-left-color: rgba(149, 149, 149, 0);
+    border-right-color: rgba(149, 149, 149, 0);
+    border-top-color: rgba(149, 149, 149, 0);
+    border-bottom-color: rgba(149, 149, 149, 0);
+    background-color: rgb(0, 120, 255);
+}
+
+.button:hover {
+    height: 114px;
+    width: 325px;
+    font-size: 40px;
+    position: relative;
+    align-items: center;
+    justify-content: flex-start;
+    border-top-left-radius: 19px;
+    border-bottom-left-radius: 19px;
+    border-top-right-radius: 19px;
+    border-bottom-right-radius: 19px;
+    border-left-color: rgba(149, 149, 149, 0);
+    border-right-color: rgba(149, 149, 149, 0);
+    border-top-color: rgba(149, 149, 149, 0);
+    border-bottom-color: rgba(149, 149, 149, 0);
+    background-color: rgb(0, 95, 202);
+    transition-duration: 1s;
+}
+
+.button:active {
+    height: 114px;
+    width: 325px;
+    font-size: 40px;
+    position: relative;
+    align-items: center;
+    justify-content: flex-start;
+    border-top-left-radius: 19px;
+    border-bottom-left-radius: 19px;
+    border-top-right-radius: 19px;
+    border-bottom-right-radius: 19px;
+    border-left-color: rgba(149, 149, 149, 0);
+    border-right-color: rgba(149, 149, 149, 0);
+    border-top-color: rgba(149, 149, 149, 0);
+    border-bottom-color: rgba(149, 149, 149, 0);
+    background-color: rgb(0, 83, 176);
+}
+
+.jumpOut {
+    translate: 0 449px;
+    rotate: 13deg;
+    transition-property: translate;
+    transition-duration: 1s;
+    transition-timing-function: ease-out-back;
+    transition-delay: 0.2s;
+}
