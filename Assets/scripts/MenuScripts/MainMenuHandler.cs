@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
+using UnityEngine.SceneManagement;
 
 public class MainMenuHandler : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class MainMenuHandler : MonoBehaviour
     private VisualElement mainMenu;
     private VisualElement root;
     private VisualElement settingsMenu;
+
+    public string gameScene = "map builder level";
 
     void Start()
     {
@@ -39,6 +42,8 @@ public class MainMenuHandler : MonoBehaviour
     // When start button is pressed
     void StartButtonPressed() {
         MainJumpOut();
+        mainMenu.schedule.Execute(() => SceneManager.LoadScene(gameScene)).StartingIn(200);
+        //SceneManager.LoadScene(gameScene);
     }
 
     void BackButtonPressed() {
@@ -55,7 +60,7 @@ public class MainMenuHandler : MonoBehaviour
     //Add jumpOut class to main menu buttons so they animate out.
     void MainJumpOut() {
         mainMenu.AddToClassList("jumpOut"); 
-        mainMenu.schedule.Execute(() => mainMenu.AddToClassList("goneUp") ).StartingIn(30); 
+        mainMenu.schedule.Execute(() => mainMenu.AddToClassList("goneUp") ).StartingIn(150); 
     }
 
     void MainJumpIn() {
