@@ -1,9 +1,13 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
     <Style src="project://database/Assets/Graphics/ui/GlobalStyle.uss?fileID=7433441132597879392&amp;guid=836fd4815a672a597897e086fba0c814&amp;type=3#GlobalStyle" />
     <ui:VisualElement name="Background" style="align-items: center; justify-content: center; width: 100%; height: 100%;">
-        <ui:VisualElement style="height: 408px; width: 624px; background-color: rgb(255, 255, 255); border-top-left-radius: 50px; border-bottom-left-radius: 50px; border-top-right-radius: 50px; border-bottom-right-radius: 50px; align-items: center; justify-content: center;">
-            <ui:Button text="Start Game" display-tooltip-when-elided="true" name="start-button" class="button"/>
-            <ui:Button text="Button" display-tooltip-when-elided="true" class="button"/>
+        <ui:VisualElement name="MainMenu" style="position: absolute;">
+            <ui:Button text="Start Game" display-tooltip-when-elided="true" name="start-button" class="button" />
+            <ui:Button text="Settings" display-tooltip-when-elided="true" name="settings-button" class="button" />
+        </ui:VisualElement>
+        <ui:VisualElement name="SettingsMenu">
+            <ui:Button text="huhu" display-tooltip-when-elided="true" name="huh-button" class="button" />
+            <ui:Button text="Go back" display-tooltip-when-elided="true" name="back-button" class="button" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>
