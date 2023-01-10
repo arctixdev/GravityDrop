@@ -1,6 +1,6 @@
 .button {
-    height: 114px;
-    width: 325px;
+    height: 120px;
+    width: 400px;
     font-size: 40px;
     position: relative;
     align-items: center;
@@ -13,7 +13,7 @@
     border-right-color: rgba(149, 149, 149, 0);
     border-top-color: rgba(149, 149, 149, 0);
     border-bottom-color: rgba(149, 149, 149, 0);
-    background-color: rgb(0, 120, 255);
+    background-color: rgb(255, 190, 0);
     margin-left: 10px;
     margin-right: 10px;
     margin-top: 10px;
@@ -21,11 +21,16 @@
 }
 
 .button:hover {
-    background-color: rgb(0, 95, 202);
+    background-color: rgb(207, 154, 0);
 }
 
 .button:active {
-    background-color: rgb(0, 83, 176);
+    background-color: rgb(180, 134, 0);
+}
+
+.smallButton {
+    width: 55%;
+    height: 80px;
 }
 
 .jumpOut {
@@ -37,7 +42,7 @@
 }
 
 .jumpIn {
-    translate: 0 0px;
+    translate: 0 0;
     transition-property: translate;
     transition-duration: 1.5s;
     transition-timing-function: ease-out-elastic;
@@ -50,4 +55,18 @@
 
 .goneUp {
     translate: 0 -600px;
+}
+
+.setting {
+}
+
+.welcomeText {
+    align-items: flex-start;
+    -unity-font-style: bold;
+    font-size: 40px;
+    height: 39px;
+    width: 238px;
+}
+
+.all {
 }
