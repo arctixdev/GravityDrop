@@ -13,6 +13,7 @@ public class MainMenuHandler : MonoBehaviour
     private VisualElement root;
     private VisualElement settingsMenu;
     private Label nameText;
+    private Slider soundSlider;
 
     public string gameScene = "map builder level";
     public string username = "Un10cked_";
@@ -29,7 +30,8 @@ public class MainMenuHandler : MonoBehaviour
         startButton = root.Q<Button>("start-button");
         settingsButton = root.Q<Button>("settings-button");
         backButton = root.Q<Button>("back-button");
-        nameText = root.Q<Label>("nameText");
+        nameText = root.Q<Label>("name-text");
+        soundSlider = root.Q<Slider>("sound-slider");
 
         // Register click events
         startButton.clicked += StartButtonPressed;
@@ -42,10 +44,18 @@ public class MainMenuHandler : MonoBehaviour
         // Set username in text
         nameText.text = "huh";
         nameText.text = string.Format(message, username);
+
+        // Register slider change func
+        soundSlider.RegisterValueChangedCallback(soundChange);
     }
 
     // Update is unused
     void Update() {}
+
+    void soundChange(ChangeEvent<float> evt) {
+        PlayerPrefs.SetFloat("soundLevel", evt.newValue);
+        PlayerPrefs.Save();
+    }
 
     // When start button is pressed
     void StartButtonPressed() {
