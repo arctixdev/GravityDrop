@@ -69,4 +69,7 @@
 }
 
 .all {
+    font-size: 50px;
+    -unity-text-align: upper-left;
+    -unity-font-style: bold;
 }

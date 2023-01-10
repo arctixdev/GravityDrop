@@ -12,8 +12,11 @@ public class MainMenuHandler : MonoBehaviour
     private VisualElement mainMenu;
     private VisualElement root;
     private VisualElement settingsMenu;
+    private Label nameText;
 
     public string gameScene = "map builder level";
+    public string username = "Un10cked_";
+    public string message = "Hi {0}!";
 
     void Start()
     {
@@ -26,6 +29,7 @@ public class MainMenuHandler : MonoBehaviour
         startButton = root.Q<Button>("start-button");
         settingsButton = root.Q<Button>("settings-button");
         backButton = root.Q<Button>("back-button");
+        nameText = root.Q<Label>("nameText");
 
         // Register click events
         startButton.clicked += StartButtonPressed;
@@ -34,6 +38,10 @@ public class MainMenuHandler : MonoBehaviour
 
         // Hide settings
         settingsMenu.AddToClassList("goneDown");
+
+        // Set username in text
+        nameText.text = "huh";
+        nameText.text = string.Format(message, username);
     }
 
     // Update is unused
@@ -42,19 +50,19 @@ public class MainMenuHandler : MonoBehaviour
     // When start button is pressed
     void StartButtonPressed() {
         MainJumpOut();
-        mainMenu.schedule.Execute(() => SceneManager.LoadScene(gameScene)).StartingIn(200);
+        mainMenu.schedule.Execute(() => SceneManager.LoadSceneAsync(gameScene)).StartingIn(200);
         //SceneManager.LoadScene(gameScene);
     }
 
     void BackButtonPressed() {
         SettingsJumpOut();
-        MainJumpIn();
+        mainMenu.schedule.Execute(() => MainJumpIn()).StartingIn(100);
     }
 
     // When settings button is pressed
     void SettingsButtonPressed() {
         MainJumpOut();
-        SettingsJumpIn();
+        mainMenu.schedule.Execute(() => SettingsJumpIn()).StartingIn(200);
     }
 
     //Add jumpOut class to main menu buttons so they animate out.
