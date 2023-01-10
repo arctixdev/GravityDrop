@@ -7,6 +7,7 @@
         <ui:VisualElement name="menus" style="position: absolute; align-items: center; justify-content: center;">
             <ui:VisualElement name="SettingsMenu" class="goneDown setting" style="display: flex;">
                 <ui:Button text="huhu" display-tooltip-when-elided="true" name="huh-button" class="button" />
+                <ui:Slider picking-mode="Ignore" label="" value="100" high-value="100" low-value="0" show-input-field="false" inverted="false" name="Slider" style="background-color: rgba(0, 0, 0, 0);" />
                 <ui:Button text="Go back" display-tooltip-when-elided="true" name="back-button" class="button" />
             </ui:VisualElement>
             <ui:VisualElement name="MainMenu" class="setting all" style="position: absolute; justify-content: center; align-items: center;">
