@@ -31,7 +31,7 @@ public class mainController : MonoBehaviour
 
     private float SAngle;
 
-    bool isMobile;
+    //bool isMobile;
 
     Vector2 pM;
     Vector2 M;
@@ -83,7 +83,7 @@ public class mainController : MonoBehaviour
     {
         rot = transform.eulerAngles.z;
 
-        isMobile = false;
+        //isMobile = false;
 
 
         Vector3 gravShiftCalc = new Vector3(0,-9.81f,0);

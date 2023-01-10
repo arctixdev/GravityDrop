@@ -135,9 +135,7 @@ PlayerSettings:
     16:9: 1
     Others: 1
   bundleVersion: 1.5
-  preloadedAssets:
-  - {fileID: 7215682404848577331, guid: efc3c46f92337a2c9968e80cb3a5e731, type: 2}
-  - {fileID: 11400000, guid: 18fcdede29d78d2a7bf2e4e96291e8ab, type: 2}
+  preloadedAssets: []
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -800,7 +798,7 @@ PlayerSettings:
     Purchasing: 0
     UDP: 0
     UNet: 1
-    Unity Ads: 0
+    Unity Ads: 1
   luminIcon:
     m_Name: 
     m_ModelFolderPath: 
