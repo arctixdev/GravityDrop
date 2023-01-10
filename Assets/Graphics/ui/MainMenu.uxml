@@ -2,12 +2,12 @@
     <Style src="project://database/Assets/Graphics/ui/GlobalStyle.uss?fileID=7433441132597879392&amp;guid=836fd4815a672a597897e086fba0c814&amp;type=3#GlobalStyle" />
     <ui:VisualElement name="Background" class="all" style="align-items: center; justify-content: center; width: 100%; height: 100%; position: relative;">
         <ui:VisualElement style="align-items: flex-start; justify-content: flex-start; position: absolute; width: 260px; left: 25px; top: 20px;">
-            <ui:Label text="Hi {name}!" display-tooltip-when-elided="true" name="nameText" tabindex="4" class="welcomeText" />
+            <ui:Label text="Hi {name}!" display-tooltip-when-elided="true" name="name-text" tabindex="4" class="welcomeText" />
         </ui:VisualElement>
         <ui:VisualElement name="menus" style="position: absolute; align-items: center; justify-content: center;">
             <ui:VisualElement name="SettingsMenu" class="goneDown setting" style="display: flex;">
                 <ui:Button text="huhu" display-tooltip-when-elided="true" name="huh-button" class="button" />
-                <ui:Slider picking-mode="Ignore" label="" value="100" high-value="100" low-value="0" show-input-field="false" inverted="false" name="Slider" style="background-color: rgba(0, 0, 0, 0);" />
+                <ui:Slider picking-mode="Ignore" value="100" high-value="100" low-value="0" show-input-field="false" inverted="false" name="sound-slider" style="background-color: rgba(0, 0, 0, 0);" />
                 <ui:Button text="Go back" display-tooltip-when-elided="true" name="back-button" class="button" />
             </ui:VisualElement>
             <ui:VisualElement name="MainMenu" class="setting all" style="position: absolute; justify-content: center; align-items: center;">
