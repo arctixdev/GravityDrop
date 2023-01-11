@@ -34,13 +34,26 @@ public class gridplacement : MonoBehaviour
 
     public ToggleGroup toggleGroup;
 
+    public bool disablePhysicsOnStart = true; 
+
 
     int n;
 
 
     // Start is called before the first frame update
+
+    /// <summary>
+    /// Awake is called when the script instance is being loaded.
+    /// </summary>
+    void Awake()
+    {
+        if(disablePhysicsOnStart){
+            Physics2D.autoSimulation = false;
+        }
+    }
     void Start()
     {
+        
         importMapAsString(MapString);
 
         sides = Xsides.Union(Ysides).ToArray();
@@ -57,20 +70,33 @@ public class gridplacement : MonoBehaviour
         }
 
 
+
     }
+
+    
 
     // Update is called once per frame
     void Update()
     {
         // blockType += Mathf.RoundToInt(Input.mouseScrollDelta.y);
 
+        if(!EventSystem.current.IsPointerOverGameObject()){
+            
+            if(Input.GetMouseButton(0) ){
+                
+                Vector3 mousePosition = Input.mousePosition;
+                Vector3 worldPosition = Camera.main.ScreenToWorldPoint(mousePosition);
 
-        if(Input.GetMouseButton(0) && !EventSystem.current.IsPointerOverGameObject()){
-            Vector3 mousePosition = Input.mousePosition;
-            Vector3 worldPosition = Camera.main.ScreenToWorldPoint(mousePosition);
+                int x = Mathf.RoundToInt(worldPosition.x / 2.5f);
+                int y = Mathf.RoundToInt(worldPosition.y / 2.5f);
+                if(blockType == 3){
+                    removeBlock(x, y);
+                }
+                else {
+                    addBlock(x, y, blockType, 0);
+                }
 
-            addBlock(Mathf.RoundToInt(worldPosition.x / 2.5f), Mathf.RoundToInt(worldPosition.y / 2.5f), blockType, 0);
-
+            }
         }
     }
 
@@ -117,6 +143,18 @@ public class gridplacement : MonoBehaviour
                 numbers[2],
                 numbers[3]
             );
+        }
+
+    }
+
+    void removeBlock(int x, int y){
+        for (int i = 0; i < parent.transform.childCount; i++)
+        {
+            Transform child = parent.transform.GetChild(i);
+
+            if(child.position.x == x * 2.5f && child.position.y == y * 2.5f){
+                Destroy(child.gameObject);
+            }
         }
 
     }
@@ -182,9 +220,9 @@ public class gridplacement : MonoBehaviour
                         if(worldPosition + side + Yside == child.position){
                             // Debug.Log(worldPosition + side + Yside);
 
-                            GameObject corner = Instantiate(cornerPrefab, worldPosition + side, Quaternion.identity, cornerParent);
+                            GameObject corner = Instantiate(cornerPrefab, worldPosition + (side + Yside) / 2, Quaternion.identity, cornerParent);
 
-                            corner.transform.LookAt((worldPosition + worldPosition + side + Yside) / 2);
+                            // corner.transform.LookAt((worldPosition + worldPosition + side + Yside) / 2);
                             
                         }
                     }
