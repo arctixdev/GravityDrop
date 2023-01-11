@@ -6,6 +6,7 @@ TagManager:
   tags:
   - entry
   - exit
+  - roundetBlock
   layers:
   - Default
   - TransparentFX

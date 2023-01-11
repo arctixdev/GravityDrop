@@ -1,6 +1,5 @@
+
 using System;
-using System.Xml.Schema;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
@@ -154,6 +153,10 @@ public class gridplacement : MonoBehaviour
 
             if(child.position.x == x * 2.5f && child.position.y == y * 2.5f){
                 Destroy(child.gameObject);
+
+                if(child.CompareTag("roundetBlock")){
+                    Debug.Log("is roundet block");
+                }
             }
         }
 
