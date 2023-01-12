@@ -35,8 +35,13 @@ public class gridplacement : MonoBehaviour
 
     public bool disablePhysicsOnStart = true; 
 
+    List<block> oldblockpos = new List<block>();
 
-    int n;
+    bool isSimRunning;
+
+    public GameObject player;
+
+
 
 
     // Start is called before the first frame update
@@ -147,20 +152,69 @@ public class gridplacement : MonoBehaviour
     }
 
     void removeBlock(int x, int y){
-        for (int i = 0; i < parent.transform.childCount; i++)
+        for (int b = 0; b < parent.transform.childCount; b++)
         {
-            Transform child = parent.transform.GetChild(i);
+            Transform block = parent.transform.GetChild(b);
 
-            if(child.position.x == x * 2.5f && child.position.y == y * 2.5f){
-                Destroy(child.gameObject);
+            if(block.position.x == x * 2.5f && block.position.y == y * 2.5f){
 
-                if(child.CompareTag("roundetBlock")){
+                if(block.CompareTag("roundetBlock")){
                     Debug.Log("is roundet block");
+
+                    for (int i = 0; i < connectorParent.transform.childCount; i++)
+                    {
+                        Transform connector = connectorParent.transform.GetChild(i);
+    
+                        if(Mathf.Abs(connector.position.x - block.position.x) < 1.3 && Mathf.Abs(connector.position.y - block.position.y) < 1.3){
+                            Destroy(connector.gameObject);
+                        }
+                    }
+                    for (int i = 0; i < cornerParent.transform.childCount; i++)
+                    {
+                        Transform corner = cornerParent.transform.GetChild(i);
+
+                        if(Mathf.Abs(corner.position.x - block.position.x) < 1.3 && Mathf.Abs(corner.position.y - block.position.y) < 1.3){
+                            int count = 0;
+                            
+                            for (int d = 0; d < parent.transform.childCount; d++)
+                            {
+                                Transform bb = parent.transform.GetChild(d);
+            
+                                if(Mathf.Abs(bb.position.x - corner.position.x) < 1.3 && Mathf.Abs(bb.position.y - corner.position.y) < 1.3){
+                                    count ++;
+                                }
+                                if(count > 3){
+                                    break;
+                                }
+                            }
+                            
+                            if(count == 3) {
+                                Destroy(corner.gameObject);
+
+                            }
+
+
+                        }
+                    }
+
+
+                    
+
+
                 }
+
+                
+                Destroy(block.gameObject);
+
+                var itemToRemove = mapList.Single(r => r[0] == x && r[1] == y);
+                mapList.Remove(itemToRemove);
+
             }
         }
 
     }
+
+
 
     void addBlock(int x, int y, int blockType, int Rotation){
         // Vector3 mousePosition = Input.mousePosition;
@@ -241,8 +295,67 @@ public class gridplacement : MonoBehaviour
     }
 
     public void updateSelectedItem(){
+
         Toggle toggle = toggleGroup.ActiveToggles().FirstOrDefault();
         Debug.Log(toggle.transform.GetSiblingIndex());
         blockType = toggle.transform.GetSiblingIndex();
+    }
+    
+    public void StartOrStopSim(){
+        if(isSimRunning) StopSim();
+        else StartSim();
+    }
+
+    void StartSim(){
+        isSimRunning = true;
+        oldblockpos.Clear();
+
+        for (int b = 0; b < parent.transform.childCount; b++)
+        {
+            GameObject block = parent.transform.GetChild(b).gameObject;
+
+            if(block.GetComponent<Rigidbody2D>() != null){
+                oldblockpos.Add(new block(block.gameObject));
+
+            }
+
+        }
+
+        oldblockpos.Add(new block(player));
+
+        Physics2D.autoSimulation = true;
+    }
+    void StopSim(){
+        isSimRunning = false;
+        Physics2D.autoSimulation = false;
+        foreach (block b in oldblockpos)
+        {
+            b.resetTransform();
+        }
+    }
+}
+
+
+
+
+
+
+class block{
+
+    private Vector3 pos;
+    private Quaternion rot;
+    private GameObject gameObject;
+    public block( GameObject igameObject){
+        pos = igameObject.transform.position;
+        rot = igameObject.transform.rotation;
+        gameObject = igameObject;
+    }
+
+    public void resetTransform(){
+        gameObject.transform.position = pos;
+        gameObject.transform.rotation = rot;
+
+        // Debug.Log("eff");
+
     }
 }
