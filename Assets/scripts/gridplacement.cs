@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using UnityEngine.EventSystems;
- using UnityEngine.UI;
+using UnityEngine.UI;
 
 public class gridplacement : MonoBehaviour
 {
@@ -51,6 +51,8 @@ public class gridplacement : MonoBehaviour
 
     [SerializeField]
     public Transform msEffectParent;
+    [SerializeField]
+    public iTween.EaseType EaseType;
 
 
 
@@ -86,7 +88,30 @@ public class gridplacement : MonoBehaviour
 
         foreach (GameObject b in blockPrefabs)
         {
-            
+            GameObject msEffectBlock = Instantiate(b, msEffectParent.position, msEffectParent.rotation, msEffectParent);
+
+            BoxCollider2D boxCollider = msEffectBlock.GetComponent<BoxCollider2D>();
+            if (boxCollider != null)
+            {
+                Destroy(boxCollider);
+            }
+            Rigidbody2D rb = msEffectBlock.GetComponent<Rigidbody2D>();
+            if (rb != null)
+            {
+                Destroy(rb);
+            }
+
+            // // Get the sprite renderer component
+            // SpriteRenderer renderer = msEffectBlock.GetComponent<SpriteRenderer>();
+
+            // // Get the current color of the material
+            // Color currentColor = renderer.color;
+
+            // // Set the new alpha value (0-1)
+            // currentColor.a = 0.5f;
+
+            // // Set the new color back to the sprite renderer
+            // renderer.color = currentColor;
         }
 
 
@@ -100,15 +125,15 @@ public class gridplacement : MonoBehaviour
     {
         // blockType += Mathf.RoundToInt(Input.mouseScrollDelta.y);
 
+        Vector3 mousePosition = Input.mousePosition;
+        Vector3 worldPosition = Camera.main.ScreenToWorldPoint(mousePosition);
+        int x = Mathf.RoundToInt(worldPosition.x / 2.5f);
+        int y = Mathf.RoundToInt(worldPosition.y / 2.5f);
         if(!EventSystem.current.IsPointerOverGameObject()){
             
             if(Input.GetMouseButton(0) ){
                 
-                Vector3 mousePosition = Input.mousePosition;
-                Vector3 worldPosition = Camera.main.ScreenToWorldPoint(mousePosition);
 
-                int x = Mathf.RoundToInt(worldPosition.x / 2.5f);
-                int y = Mathf.RoundToInt(worldPosition.y / 2.5f);
                 if(blockType == 4){
                     removeBlock(x, y);
                 }
@@ -121,6 +146,12 @@ public class gridplacement : MonoBehaviour
 
         rot = (rot + Mathf.RoundToInt(Input.mouseScrollDelta.y)) % 4 ;
 
+        if(blockType != 4){
+
+            GameObject child = msEffectParent.GetChild(blockType).gameObject;
+            iTween.RotateTo(child, iTween.Hash("z", rot * 90, "time", 0.1));
+            iTween.MoveTo(child, iTween.Hash("x", x * 2.5f, "y", y * 2.5f, "time", 0.1, "easetype", EaseType));  
+        }
         
     }
 
@@ -199,7 +230,7 @@ public class gridplacement : MonoBehaviour
                             for (int d = 0; d < parent.transform.childCount; d++)
                             {
                                 Transform bb = parent.transform.GetChild(d);
-            
+                                if(!bb.CompareTag("roundetBlock")) continue;
                                 if(Mathf.Abs(bb.position.x - corner.position.x) < 1.3 && Mathf.Abs(bb.position.y - corner.position.y) < 1.3){
                                     count ++;
                                 }
@@ -226,8 +257,10 @@ public class gridplacement : MonoBehaviour
                 
                 Destroy(block.gameObject);
 
-                var itemToRemove = mapList.Single(r => r[0] == x && r[1] == y);
+                var itemToRemove = mapList.Find(r => r[0] == x && r[1] == y);
                 mapList.Remove(itemToRemove);
+
+                break;
 
             }
         }
