@@ -28,6 +28,7 @@ public class gridplacement : MonoBehaviour
     List<List<int>> mapList = new List<List<int>>();
 
     public int blockType = 0;
+    public int rot = 0;
 
     public string MapString;
 
@@ -47,6 +48,9 @@ public class gridplacement : MonoBehaviour
     public GameObject editorCam;
     [SerializeField]
     public GameObject playingCam;
+
+    [SerializeField]
+    public Transform msEffectParent;
 
 
 
@@ -80,6 +84,11 @@ public class gridplacement : MonoBehaviour
             }
         }
 
+        foreach (GameObject b in blockPrefabs)
+        {
+            
+        }
+
 
 
     }
@@ -100,15 +109,19 @@ public class gridplacement : MonoBehaviour
 
                 int x = Mathf.RoundToInt(worldPosition.x / 2.5f);
                 int y = Mathf.RoundToInt(worldPosition.y / 2.5f);
-                if(blockType == 3){
+                if(blockType == 4){
                     removeBlock(x, y);
                 }
                 else {
-                    addBlock(x, y, blockType, 0);
+                    addBlock(x, y, blockType, rot);
                 }
 
             }
         }
+
+        rot = (rot + Mathf.RoundToInt(Input.mouseScrollDelta.y)) % 4 ;
+
+        
     }
 
     List<List<int>> exportMap(){
@@ -267,7 +280,8 @@ public class gridplacement : MonoBehaviour
         
         // 0 -1 0 0 ,0 -2 0 0 ,0 -3 0 0 ,-2 -2 0 0 ,-1 -2 0 0 ,1 -2 0 0 ,2 -2 0 0 ,2 -3 0 0 ,2 -4 0 0 ,2 -5 0 0 ,1 -5 0 0 ,0 -5 0 0 ,-1 -5 0 0 ,-2 -5 0 0 ,-2 -4 0 0 ,-2 -3 0 0 ,-1 -3 0 0 ,1 -3 0 0 ,1 -4 0 0 ,0 -4 0 0 ,-1 -4 0 0 ,0 -6 0 0 ,0 -7 0 0 ,0 -8 0 0 ,2 -8 0 0 ,1 -8 0 0 ,-1 -8 0 0 ,-2 -8 0 0 ,-2 -9 0 0 ,-1 -9 0 0 ,0 -9 0 0 ,1 -9 0 0 ,2 -9 0 0 ,3 -8 0 0 ,3 -9 0 0 ,-3 -8 0 0 ,-3 -9 0 0 ,-4 -9 0 0 ,-5 -9 0 0 ,-6 -9 0 0 ,-4 -8 0 0 ,-6 -10 0 0 ,-6 -11 0 0 ,-6 -12 0 0 ,4 -9 0 0 ,4 -10 0 0 ,5 -10 0 0 ,4 -11 0 0 ,4 -12 0 0 ,5 -11 0 0 ,5 -12 0 0 ,-2 -10 0 0 ,-1 -10 0 0 ,-1 -11 0 0 ,-1 -12 0 0 ,-1 -13 0 0 ,-2 -12 0 0 ,-2 -11 0 0 ,-2 -13 0 0 ,0 -4 0 0 ,0 -4 0 0 ,0 -4 0 0 ,0 -4 0 0 ,0 -4 0 0 ,0 -4 0 0 ,
         if(blockType != 0) worldPosition += Vector3.back * 2;
-        GameObject newObject = Instantiate(blockPrefabs[blockType], worldPosition, Quaternion.identity, parent);
+        Debug.Log(blockType);
+        GameObject newObject = Instantiate(blockPrefabs[blockType], worldPosition, Quaternion.Euler(0, 0, Rotation * 90), parent);
         if(blockType != 0) return;
         for (int i = 0; i < parent.transform.childCount; i++)
         {
