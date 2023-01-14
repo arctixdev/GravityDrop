@@ -41,6 +41,13 @@ public class gridplacement : MonoBehaviour
 
     public GameObject player;
 
+    
+
+    [SerializeField]
+    public GameObject editorCam;
+    [SerializeField]
+    public GameObject playingCam;
+
 
 
 
@@ -307,7 +314,10 @@ public class gridplacement : MonoBehaviour
     }
 
     void StartSim(){
-        isSimRunning = true;
+
+        
+
+        swichCam(true);
         oldblockpos.Clear();
 
         for (int b = 0; b < parent.transform.childCount; b++)
@@ -324,16 +334,28 @@ public class gridplacement : MonoBehaviour
         oldblockpos.Add(new block(player));
 
         Physics2D.autoSimulation = true;
+
+
     }
     void StopSim(){
-        isSimRunning = false;
+
+
+        swichCam(false);
         Physics2D.autoSimulation = false;
         foreach (block b in oldblockpos)
         {
             b.resetTransform();
         }
     }
+
+    void swichCam(bool isPlaying){
+        isSimRunning = isPlaying;
+        editorCam.SetActive(!isPlaying);
+        playingCam.SetActive(isPlaying);
+    }
 }
+
+
 
 
 
