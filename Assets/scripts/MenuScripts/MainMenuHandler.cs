@@ -14,10 +14,12 @@ public class MainMenuHandler : MonoBehaviour
     private VisualElement settingsMenu;
     private Label nameText;
     private Slider soundSlider;
+    private Button huhButton;
 
     public string gameScene = "map builder level";
     public string username = "Un10cked_";
     public string message = "Hi {0}!";
+    public AdsManager AdsManager;
 
     void Start()
     {
@@ -32,11 +34,13 @@ public class MainMenuHandler : MonoBehaviour
         backButton = root.Q<Button>("back-button");
         nameText = root.Q<Label>("name-text");
         soundSlider = root.Q<Slider>("sound-slider");
+        huhButton = root.Q<Button>("huh-button");
 
         // Register click events
         startButton.clicked += StartButtonPressed;
         settingsButton.clicked += SettingsButtonPressed;
         backButton.clicked += BackButtonPressed;
+        huhButton.clicked += huhButtonPressed;
 
         // Hide settings
         settingsMenu.AddToClassList("goneDown");
@@ -51,6 +55,10 @@ public class MainMenuHandler : MonoBehaviour
 
     // Update is unused
     void Update() {}
+
+    void huhButtonPressed() {
+        AdsManager.PlayAd();
+    }
 
     void soundChange(ChangeEvent<float> evt) {
         PlayerPrefs.SetFloat("soundLevel", evt.newValue);

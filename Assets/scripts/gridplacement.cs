@@ -65,7 +65,8 @@ public class gridplacement : MonoBehaviour
     void Awake()
     {
         if(disablePhysicsOnStart){
-            Physics2D.autoSimulation = false;
+            //Physics2D.autoSimulation = false;
+            Debug.Log("Disabled physics");
         }
     }
     void Start()

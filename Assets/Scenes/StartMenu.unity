@@ -439,6 +439,7 @@ MonoBehaviour:
   gameScene: map builder level
   username: Un10cked_
   message: Hi {0}!
+  AdsManager: {fileID: 919393136}
 --- !u!1 &270674030
 GameObject:
   m_ObjectHideFlags: 0
@@ -1699,6 +1700,17 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &919393136 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1921963237175480552, guid: 5abdb7e67f8449feeb77fc5f43afaa65, type: 3}
+  m_PrefabInstance: {fileID: 1921963238921284871}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f18e04d786776f0d787b5a2e9a078243, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &980544833
 GameObject:
   m_ObjectHideFlags: 0
@@ -4143,6 +4155,50 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &2136251825
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2136251827}
+  - component: {fileID: 2136251826}
+  m_Layer: 0
+  m_Name: GPGSManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2136251826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2136251825}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec5053806f554513fab4931bc9040053, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &2136251827
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2136251825}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.8527198, y: 1.7359152, z: 23.874123}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2139564588
 GameObject:
   m_ObjectHideFlags: 0
