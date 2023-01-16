@@ -41,17 +41,15 @@
 .jumpOut {
     translate: 0 -600px;
     transition-property: translate;
-    transition-duration: 1.5s;
-    transition-timing-function: ease-out-elastic;
-    transition-delay: 0s;
+    transition-duration: 0.5s;
+    transition-timing-function: ease-out-back;
 }
 
 .jumpIn {
     translate: 0 0;
     transition-property: translate;
-    transition-duration: 1.5s;
-    transition-timing-function: ease-out-elastic;
-    transition-delay: 0s;
+    transition-duration: 0.5s;
+    transition-timing-function: ease-in-back;
 }
 
 .goneDown {

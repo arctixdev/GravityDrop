@@ -48,15 +48,10 @@ public class MainMenuHandler : MonoBehaviour
         // Hide settings
         settingsMenu.AddToClassList("goneDown");
 
-        // Set username in text
-        username = PlayGamesPlatform.Instance.GetUserDisplayName();
-        if (username == "") {
-            username = "Guest";
-        }
-        nameText.text = string.Format(message, username);
-
         // Register slider change func
         soundSlider.RegisterValueChangedCallback(soundChange);
+
+        PlayGamesPlatform.Instance.Authenticate(ProcessAuthentication);
     }
 
     // Update is unused
@@ -77,21 +72,30 @@ public class MainMenuHandler : MonoBehaviour
         mainMenu.schedule.Execute(() => SceneManager.LoadSceneAsync(gameScene)).StartingIn(200);
     }
 
+    internal void ProcessAuthentication(SignInStatus status) {
+      if (status == SignInStatus.Success) {
+        username = PlayGamesPlatform.Instance.GetUserDisplayName();
+      } else {
+        username = "Guest";
+      }
+      nameText.text = string.Format(message, username);
+    }
+
     void BackButtonPressed() {
         SettingsJumpOut();
-        mainMenu.schedule.Execute(() => MainJumpIn()).StartingIn(100);
+        mainMenu.schedule.Execute(() => MainJumpIn()).StartingIn(0);
     }
 
     // When settings button is pressed
     void SettingsButtonPressed() {
         MainJumpOut();
-        mainMenu.schedule.Execute(() => SettingsJumpIn()).StartingIn(200);
+        mainMenu.schedule.Execute(() => SettingsJumpIn()).StartingIn(0);
     }
 
     //Add jumpOut class to main menu buttons so they animate out.
     void MainJumpOut() {
         mainMenu.AddToClassList("jumpOut"); 
-        mainMenu.schedule.Execute(() => mainMenu.AddToClassList("goneUp") ).StartingIn(150); 
+        mainMenu.schedule.Execute(() => mainMenu.AddToClassList("goneUp") ).StartingIn(0); 
     }
 
     void MainJumpIn() {
@@ -106,6 +110,6 @@ public class MainMenuHandler : MonoBehaviour
 
     void SettingsJumpOut() {
         settingsMenu.AddToClassList("jumpOut");
-        settingsMenu.schedule.Execute(() => settingsMenu.AddToClassList("goneDown") ).StartingIn(30); 
+        settingsMenu.schedule.Execute(() => settingsMenu.AddToClassList("goneDown") ).StartingIn(0); 
     }
 }

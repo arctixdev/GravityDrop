@@ -13,7 +13,7 @@
             <ui:VisualElement name="MainMenu" class="setting all" style="position: absolute; justify-content: center; align-items: center;">
                 <ui:Button text="Start Game" display-tooltip-when-elided="true" name="start-button" class="button" />
                 <ui:Button text="Settings" display-tooltip-when-elided="true" name="settings-button" class="button" />
-                <ui:VisualElement style="flex-direction: row; align-items: center; justify-content: center; display: flex; visibility: visible; overflow: hidden; height: 100px; width: 400px;">
+                <ui:VisualElement style="flex-direction: row; align-items: center; justify-content: center; display: none; visibility: hidden; overflow: hidden; height: 100px; width: 400px;">
                     <ui:Button text="Log out" display-tooltip-when-elided="true" name="other-button" class="button smallButton" />
                     <ui:Button text="Login" display-tooltip-when-elided="true" name="login-button" class="button smallButton" />
                 </ui:VisualElement>
