@@ -7,6 +7,7 @@ TagManager:
   - entry
   - exit
   - roundetBlock
+  - killPlayer
   layers:
   - Default
   - TransparentFX

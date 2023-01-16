@@ -13,7 +13,8 @@ public class gridplacement : MonoBehaviour
     public GameObject cornerPrefab;
     public Vector2 size;
 
-    public Transform parent;
+    public Transform OtherBlocksParent;
+    public Transform RoomBlockParent;
     public Transform connectorParent;
     public Transform cornerParent;
 
@@ -204,56 +205,59 @@ public class gridplacement : MonoBehaviour
     }
 
     void removeBlock(int x, int y){
-        for (int b = 0; b < parent.transform.childCount; b++)
+        for (int b = 0; b < OtherBlocksParent.transform.childCount; b++)
         {
-            Transform block = parent.transform.GetChild(b);
+            Transform block = OtherBlocksParent.transform.GetChild(b);
+
+            if(block.position.x == x * 2.5f && block.position.y == y * 2.5f){
+                Destroy(block.gameObject);
+                return;
+            }
+        }
+
+        for (int b = 0; b < RoomBlockParent.transform.childCount; b++)
+        {
+            Transform block = RoomBlockParent.transform.GetChild(b);
 
             if(block.position.x == x * 2.5f && block.position.y == y * 2.5f){
 
-                if(block.CompareTag("roundetBlock")){
-                    Debug.Log("is roundet block");
+                for (int i = 0; i < connectorParent.transform.childCount; i++)
+                {
+                    Transform connector = connectorParent.transform.GetChild(i);
 
-                    for (int i = 0; i < connectorParent.transform.childCount; i++)
-                    {
-                        Transform connector = connectorParent.transform.GetChild(i);
-    
-                        if(Mathf.Abs(connector.position.x - block.position.x) < 1.3 && Mathf.Abs(connector.position.y - block.position.y) < 1.3){
-                            Destroy(connector.gameObject);
-                        }
+                    if(Mathf.Abs(connector.position.x - block.position.x) < 1.3 && Mathf.Abs(connector.position.y - block.position.y) < 1.3){
+                        Destroy(connector.gameObject);
                     }
-                    for (int i = 0; i < cornerParent.transform.childCount; i++)
-                    {
-                        Transform corner = cornerParent.transform.GetChild(i);
-
-                        if(Mathf.Abs(corner.position.x - block.position.x) < 1.3 && Mathf.Abs(corner.position.y - block.position.y) < 1.3){
-                            int count = 0;
-                            
-                            for (int d = 0; d < parent.transform.childCount; d++)
-                            {
-                                Transform bb = parent.transform.GetChild(d);
-                                if(!bb.CompareTag("roundetBlock")) continue;
-                                if(Mathf.Abs(bb.position.x - corner.position.x) < 1.3 && Mathf.Abs(bb.position.y - corner.position.y) < 1.3){
-                                    count ++;
-                                }
-                                if(count > 3){
-                                    break;
-                                }
-                            }
-                            
-                            if(count == 3) {
-                                Destroy(corner.gameObject);
-
-                            }
-
-
-                        }
-                    }
-
-
-                    
-
-
                 }
+                for (int i = 0; i < cornerParent.transform.childCount; i++)
+                {
+                    Transform corner = cornerParent.transform.GetChild(i);
+
+                    if(Mathf.Abs(corner.position.x - block.position.x) < 1.3 && Mathf.Abs(corner.position.y - block.position.y) < 1.3){
+                        int count = 0;
+                        
+                        for (int d = 0; d < RoomBlockParent.transform.childCount; d++)
+                        {
+                            Transform bb = RoomBlockParent.transform.GetChild(d);
+                            if(Mathf.Abs(bb.position.x - corner.position.x) < 1.3 && Mathf.Abs(bb.position.y - corner.position.y) < 1.3){
+                                count ++;
+                            }
+                            if(count > 3){
+                                break;
+                            }
+                        }
+                        
+                        if(count == 3) {
+                            Destroy(corner.gameObject);
+
+                        }
+
+
+                    }
+                }
+
+
+                
 
                 
                 Destroy(block.gameObject);
@@ -313,13 +317,17 @@ public class gridplacement : MonoBehaviour
         MapString = exportMapAsString();
         
         // 0 -1 0 0 ,0 -2 0 0 ,0 -3 0 0 ,-2 -2 0 0 ,-1 -2 0 0 ,1 -2 0 0 ,2 -2 0 0 ,2 -3 0 0 ,2 -4 0 0 ,2 -5 0 0 ,1 -5 0 0 ,0 -5 0 0 ,-1 -5 0 0 ,-2 -5 0 0 ,-2 -4 0 0 ,-2 -3 0 0 ,-1 -3 0 0 ,1 -3 0 0 ,1 -4 0 0 ,0 -4 0 0 ,-1 -4 0 0 ,0 -6 0 0 ,0 -7 0 0 ,0 -8 0 0 ,2 -8 0 0 ,1 -8 0 0 ,-1 -8 0 0 ,-2 -8 0 0 ,-2 -9 0 0 ,-1 -9 0 0 ,0 -9 0 0 ,1 -9 0 0 ,2 -9 0 0 ,3 -8 0 0 ,3 -9 0 0 ,-3 -8 0 0 ,-3 -9 0 0 ,-4 -9 0 0 ,-5 -9 0 0 ,-6 -9 0 0 ,-4 -8 0 0 ,-6 -10 0 0 ,-6 -11 0 0 ,-6 -12 0 0 ,4 -9 0 0 ,4 -10 0 0 ,5 -10 0 0 ,4 -11 0 0 ,4 -12 0 0 ,5 -11 0 0 ,5 -12 0 0 ,-2 -10 0 0 ,-1 -10 0 0 ,-1 -11 0 0 ,-1 -12 0 0 ,-1 -13 0 0 ,-2 -12 0 0 ,-2 -11 0 0 ,-2 -13 0 0 ,0 -4 0 0 ,0 -4 0 0 ,0 -4 0 0 ,0 -4 0 0 ,0 -4 0 0 ,0 -4 0 0 ,
-        if(blockType != 0) worldPosition += Vector3.back * 2;
-        Debug.Log(blockType);
-        GameObject newObject = Instantiate(blockPrefabs[blockType], worldPosition, Quaternion.Euler(0, 0, Rotation * 90), parent);
-        if(blockType != 0) return;
-        for (int i = 0; i < parent.transform.childCount; i++)
+        if(blockType != 0){
+            worldPosition += Vector3.back * 2;
+            Instantiate(blockPrefabs[blockType], worldPosition, Quaternion.Euler(0, 0, Rotation * 90), OtherBlocksParent);
+            return;
+        } 
+
+        Instantiate(blockPrefabs[blockType], worldPosition, Quaternion.Euler(0, 0, Rotation * 90), RoomBlockParent);
+
+        for (int i = 0; i < RoomBlockParent.transform.childCount; i++)
         {
-            Transform child = parent.transform.GetChild(i);
+            Transform child = RoomBlockParent.transform.GetChild(i);
             
             foreach (Vector3 side in sides)
             {
@@ -368,9 +376,9 @@ public class gridplacement : MonoBehaviour
         swichCam(true);
         oldblockpos.Clear();
 
-        for (int b = 0; b < parent.transform.childCount; b++)
+        for (int b = 0; b < OtherBlocksParent.transform.childCount; b++)
         {
-            GameObject block = parent.transform.GetChild(b).gameObject;
+            GameObject block = OtherBlocksParent.transform.GetChild(b).gameObject;
 
             if(block.GetComponent<Rigidbody2D>() != null){
                 oldblockpos.Add(new block(block.gameObject));
