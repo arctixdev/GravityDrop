@@ -15,10 +15,7 @@ public class GPGSManager : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    void Update(){}
 
     internal void ProcessAuthentication(SignInStatus status) {
       if (status == SignInStatus.Success) {
