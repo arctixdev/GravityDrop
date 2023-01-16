@@ -437,7 +437,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameScene: map builder level
-  username: Un10cked_
+  username: Guest
   message: Hi {0}!
   AdsManager: {fileID: 919393136}
 --- !u!1 &270674030

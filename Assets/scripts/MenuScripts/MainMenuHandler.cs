@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.SceneManagement;
+using GooglePlayGames;
+using GooglePlayGames.BasicApi;
 
 public class MainMenuHandler : MonoBehaviour
 {
@@ -17,12 +19,13 @@ public class MainMenuHandler : MonoBehaviour
     private Button huhButton;
 
     public string gameScene = "map builder level";
-    public string username = "Un10cked_";
+    public string username = "Guest";
     public string message = "Hi {0}!";
     public AdsManager AdsManager;
 
     void Start()
     {
+        Application.targetFrameRate = 60;
         // Get root element
         root = GetComponent<UIDocument>().rootVisualElement;
 
@@ -46,7 +49,10 @@ public class MainMenuHandler : MonoBehaviour
         settingsMenu.AddToClassList("goneDown");
 
         // Set username in text
-        nameText.text = "huh";
+        username = PlayGamesPlatform.Instance.GetUserDisplayName();
+        if (username == "") {
+            username = "Guest";
+        }
         nameText.text = string.Format(message, username);
 
         // Register slider change func
@@ -69,7 +75,6 @@ public class MainMenuHandler : MonoBehaviour
     void StartButtonPressed() {
         MainJumpOut();
         mainMenu.schedule.Execute(() => SceneManager.LoadSceneAsync(gameScene)).StartingIn(200);
-        //SceneManager.LoadScene(gameScene);
     }
 
     void BackButtonPressed() {
