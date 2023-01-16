@@ -6,6 +6,7 @@ using System.Linq;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+
 public class gridplacement : MonoBehaviour
 {
     public List<GameObject> blockPrefabs;
@@ -56,7 +57,7 @@ public class gridplacement : MonoBehaviour
     public iTween.EaseType EaseType;
 
 
-
+    // public SimulationMode2D simulationMode;
 
     // Start is called before the first frame update
 
@@ -66,7 +67,7 @@ public class gridplacement : MonoBehaviour
     void Awake()
     {
         if(disablePhysicsOnStart){
-            //Physics2D.autoSimulation = false;
+            Physics2D.simulationMode = SimulationMode2D.Script;
             Debug.Log("Disabled physics");
         }
     }
@@ -389,7 +390,8 @@ public class gridplacement : MonoBehaviour
 
         oldblockpos.Add(new block(player));
 
-        Physics2D.autoSimulation = true;
+        Physics2D.simulationMode = SimulationMode2D.FixedUpdate;
+        
 
 
     }
@@ -397,7 +399,7 @@ public class gridplacement : MonoBehaviour
 
 
         swichCam(false);
-        Physics2D.autoSimulation = false;
+        Physics2D.simulationMode = SimulationMode2D.Script;
         foreach (block b in oldblockpos)
         {
             b.resetTransform();
