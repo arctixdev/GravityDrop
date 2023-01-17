@@ -4932,6 +4932,7 @@ GameObject:
   - component: {fileID: 2744243322723031596}
   - component: {fileID: 2744243322723031597}
   - component: {fileID: 2744243322723031598}
+  - component: {fileID: 6026732199872369608}
   - component: {fileID: 2744243322723031599}
   - component: {fileID: 1843792754}
   m_Layer: 0
@@ -5033,7 +5034,33 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2.45, y: 2.45}
+  m_Size: {x: 2.45, y: 2.2}
+  m_EdgeRadius: 0
+--- !u!61 &6026732199872369608
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2744243322723031594}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 3.87, y: 3.87}
+    newSize: {x: 3.87, y: 3.87}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 2.2, y: 2.45}
   m_EdgeRadius: 0
 --- !u!50 &2744243322723031599
 Rigidbody2D:
@@ -5069,3 +5096,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   trailRenderer: {fileID: 685702521}
+  deathParticleSystem: {fileID: 3881782665184067422, guid: 170296ca19bbf2a428109164131880cd, type: 3}
+  killDelay: 3
+  killtimer: 0
+  rb: {fileID: 2744243322723031599}

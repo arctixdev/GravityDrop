@@ -164,6 +164,18 @@ public class gridplacement : MonoBehaviour
 
         return mapList;
     }
+
+    void saveMapToBinnary(){
+        int[,] map = {{0, 0}, {0, 0}};
+        for (int a = 0; a < mapList.Count(); a++)
+        {
+            for (int b = 0; b < mapList[a].Count(); b++)
+            {
+                map[a, b] = mapList[a][b];
+            }
+        }
+        SaveSystem.SaveMap(map);
+    }
     String exportMapAsString(){
         String MapString = "";
         foreach (List<int> row in mapList)
