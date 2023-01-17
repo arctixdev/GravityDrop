@@ -5,7 +5,7 @@ using UnityEngine;
 using System.Linq;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-
+using TMPro;
 
 public class gridplacement : MonoBehaviour
 {
@@ -44,6 +44,7 @@ public class gridplacement : MonoBehaviour
 
     public GameObject player;
 
+
     
 
     [SerializeField]
@@ -55,6 +56,8 @@ public class gridplacement : MonoBehaviour
     public Transform msEffectParent;
     [SerializeField]
     public iTween.EaseType EaseType;
+
+    public TMP_InputField MapNameInputField;
 
 
     // public SimulationMode2D simulationMode;
@@ -140,6 +143,7 @@ public class gridplacement : MonoBehaviour
 
                     if(blockType == 4){
                         removeBlock(x, y);
+                        
                     }
                     else {
                         addBlock(x, y, blockType, rot);
@@ -193,6 +197,7 @@ public class gridplacement : MonoBehaviour
             MapString += ',';
         }
         // Debug.Log(MapString);
+        SaveSystem.WriteString(MapNameInputField.text.Replace(" ", "-"), MapString);
         return MapString;
     }
 
@@ -226,8 +231,14 @@ public class gridplacement : MonoBehaviour
 
             if(block.position.x == x * 2.5f && block.position.y == y * 2.5f){
                 Destroy(block.gameObject);
+
+                var itemToRemove = mapList.Find(r => r[0] == x && r[1] == y);
+                mapList.Remove(itemToRemove);
+                exportMapAsString();
                 return;
             }
+
+
         }
 
         for (int b = 0; b < RoomBlockParent.transform.childCount; b++)
