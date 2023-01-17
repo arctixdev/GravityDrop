@@ -40,7 +40,7 @@ public class gridplacement : MonoBehaviour
 
     List<block> oldblockpos = new List<block>();
 
-    bool isSimRunning;
+    bool inPlayMode;
 
     public GameObject player;
 
@@ -127,33 +127,35 @@ public class gridplacement : MonoBehaviour
     void Update()
     {
         // blockType += Mathf.RoundToInt(Input.mouseScrollDelta.y);
+        if(!inPlayMode){
 
-        Vector3 mousePosition = Input.mousePosition;
-        Vector3 worldPosition = Camera.main.ScreenToWorldPoint(mousePosition);
-        int x = Mathf.RoundToInt(worldPosition.x / 2.5f);
-        int y = Mathf.RoundToInt(worldPosition.y / 2.5f);
-        if(!EventSystem.current.IsPointerOverGameObject()){
-            
-            if(Input.GetMouseButton(0) ){
+            Vector3 mousePosition = Input.mousePosition;
+            Vector3 worldPosition = Camera.main.ScreenToWorldPoint(mousePosition);
+            int x = Mathf.RoundToInt(worldPosition.x / 2.5f);
+            int y = Mathf.RoundToInt(worldPosition.y / 2.5f);
+            if(!EventSystem.current.IsPointerOverGameObject()){
                 
+                if(Input.GetMouseButton(0) ){
+                    
 
-                if(blockType == 4){
-                    removeBlock(x, y);
-                }
-                else {
-                    addBlock(x, y, blockType, rot);
-                }
+                    if(blockType == 4){
+                        removeBlock(x, y);
+                    }
+                    else {
+                        addBlock(x, y, blockType, rot);
+                    }
 
+                }
             }
-        }
 
-        rot = (rot + Mathf.RoundToInt(Input.mouseScrollDelta.y)) % 4 ;
+            rot = (rot + Mathf.RoundToInt(Input.mouseScrollDelta.y)) % 4 ;
 
-        if(blockType != 4){
+            if(blockType != 4){
 
-            GameObject child = msEffectParent.GetChild(blockType).gameObject;
-            iTween.RotateTo(child, iTween.Hash("z", rot * 90, "time", 0.1));
-            iTween.MoveTo(child, iTween.Hash("x", x * 2.5f, "y", y * 2.5f, "time", 0.1, "easetype", EaseType));  
+                GameObject child = msEffectParent.GetChild(blockType).gameObject;
+                iTween.RotateTo(child, iTween.Hash("z", rot * 90, "time", 0.1));
+                iTween.MoveTo(child, iTween.Hash("x", x * 2.5f, "y", y * 2.5f, "time", 0.1, "easetype", EaseType));  
+            }
         }
         
     }
@@ -366,7 +368,7 @@ public class gridplacement : MonoBehaviour
     }
     
     public void StartOrStopSim(){
-        if(isSimRunning) StopSim();
+        if(inPlayMode) StopSim();
         else StartSim();
     }
 
@@ -407,7 +409,7 @@ public class gridplacement : MonoBehaviour
     }
 
     void swichCam(bool isPlaying){
-        isSimRunning = isPlaying;
+        inPlayMode = isPlaying;
         editorCam.SetActive(!isPlaying);
         playingCam.SetActive(isPlaying);
     }
