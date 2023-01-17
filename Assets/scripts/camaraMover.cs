@@ -21,20 +21,20 @@ public class camaraMover : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKey(KeyCode.W)){
+        if(Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)){
             yspeed = Mathf.Clamp(yspeed + Acceleration * Time.deltaTime, -Maxspeed, Maxspeed);
         }
-        else if(Input.GetKey(KeyCode.S)){
+        else if(Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)){
             yspeed = Mathf.Clamp(yspeed - Acceleration * Time.deltaTime, -Maxspeed, Maxspeed);
         }
         else if(yspeed != 0){
             yspeed = clampToZero(yspeed, Acceleration * Time.deltaTime);
         }
 
-        if(Input.GetKey(KeyCode.D)){
+        if(Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)){
             xspeed = Mathf.Clamp(xspeed + Acceleration * Time.deltaTime, -Maxspeed, Maxspeed);
         }
-        else if(Input.GetKey(KeyCode.A)){
+        else if(Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)){
             xspeed = Mathf.Clamp(xspeed - Acceleration * Time.deltaTime, -Maxspeed, Maxspeed);
         }
         else if(xspeed != 0){
