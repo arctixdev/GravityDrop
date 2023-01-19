@@ -20,6 +20,8 @@ public class playerScript : MonoBehaviour
     public Rigidbody2D rb;
 
     bool dead = false;
+
+    public bool froze;
     void Start()
     {
         spawnPoint = transform.position;
@@ -34,6 +36,23 @@ public class playerScript : MonoBehaviour
     void Update()
     {
 
+        if(rb.angularVelocity == 0 && (rb.rotation % 90 > 0.08) && (rb.rotation % 90 < 10 || rb.rotation % 90 > 80) && !froze && rb.velocity == Vector2.zero){
+            // StartCoroutine(freeze());
+
+            rb.SetRotation(0);
+        }
+
+        if(froze){
+            // rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+            rb.AddTorque(1f);
+        }
+        else {
+            // rb.constraints = RigidbodyConstraints2D.None;
+            
+        }
+
+        
+        
     }
     void OnCollisionEnter2D(Collision2D other)
     {
@@ -78,6 +97,22 @@ public class playerScript : MonoBehaviour
 
         iTween.ScaleTo(gameObject, iTween.Hash("x", 1, "y", 1, "z", 1, "time", 1, "oncomplete", "enableRb", "oncompletetarget", gameObject));
         transform.rotation = Quaternion.Euler(0, 0, 0);
+
+    }
+
+    IEnumerator freeze(){
+        froze = true;
+        rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+        rb.freezeRotation = true;
+
+        yield return new WaitForSeconds(1f);
+
+        rb.constraints = RigidbodyConstraints2D.None;
+        rb.freezeRotation = false;
+        rb.WakeUp();
+
+        yield return new WaitForSeconds(1f);
+        froze = false;
 
     }
 
