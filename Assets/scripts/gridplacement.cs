@@ -25,7 +25,7 @@ public class gridplacement : MonoBehaviour
     public Vector3[] Ysides;
     public Vector3[] sides;
 
-    public List<Vector2> blockPlacements = new List<Vector2>();
+    // public List<Vector2> blockPlacements = new List<Vector2>();
 
     List<List<int>> mapList = new List<List<int>>();
 
@@ -59,6 +59,10 @@ public class gridplacement : MonoBehaviour
 
     public TMP_InputField MapNameInputField;
 
+    public Transform MapsParent;
+
+    public GameObject MapButtonPrefab;
+
 
     // public SimulationMode2D simulationMode;
 
@@ -74,11 +78,31 @@ public class gridplacement : MonoBehaviour
             Debug.Log("Disabled physics");
         }
     }
+
+    void clearMap(){
+        removeAllChildren(OtherBlocksParent);
+        removeAllChildren(RoomBlockParent);
+        removeAllChildren(connectorParent);
+        removeAllChildren(cornerParent);
+
+        mapList = new List<List<int>>();
+    }
+
+    void removeAllChildren(Transform parent){
+        for (int i = 0; i < parent.childCount; i++)
+        {
+            Destroy(parent.GetChild(i).gameObject);
+        }
+    }
+    void importMapFromFile(string MapName){
+        clearMap();
+        Debug.Log("importing map with name: " + MapName + " and info: " + SaveSystem.ReadString(MapName.Replace(" ", "-")));
+        importMapAsString(SaveSystem.ReadString(MapName.Replace(" ", "-")));
+    }
     void Start()
     {
-        
-        importMapAsString(SaveSystem.ReadString(MapNameInputField.text.Replace(" ", "-")));
-        
+        importMapFromFile(MapNameInputField.text);
+        ListMapsToLoad(MapButtonPrefab, MapsParent);
 
         sides = Xsides.Union(Ysides).ToArray();
         List<List<int>> list = exportMap();
@@ -125,6 +149,27 @@ public class gridplacement : MonoBehaviour
 
     }
 
+    void ListMapsToLoad(GameObject buttonPrefab, Transform mapListParent){
+        string[] mapNames = SaveSystem.getAllSavedMapNames();
+
+        for (int i = 0; i < mapNames.Length; i++)
+        {
+            addButtonToMapList(buttonPrefab, mapListParent, mapNames[i]);
+        }
+    }
+
+    void addButtonToMapList(GameObject buttonPrefab, Transform mapListParent, string mapName){
+        GameObject newButton = Instantiate(buttonPrefab, mapListParent);
+        changeTextOfButton(newButton, mapName);
+        newButton.GetComponent<Button>().onClick.AddListener(() => importMapFromFile(mapName));
+        
+        
+    }
+
+    void changeTextOfButton(GameObject button, string newText){
+        button.GetComponentInChildren<TMP_Text>().text = newText;
+    }
+
     
 
     // Update is called once per frame
@@ -151,9 +196,9 @@ public class gridplacement : MonoBehaviour
                     }
 
                 }
+                rot = (rot + Mathf.RoundToInt(Input.mouseScrollDelta.y)) % 4 ;
             }
-
-            rot = (rot + Mathf.RoundToInt(Input.mouseScrollDelta.y)) % 4 ;
+            
 
             if(blockType != 4){
 
@@ -339,7 +384,7 @@ public class gridplacement : MonoBehaviour
 
         mapList.Add(block);
 
-        blockPlacements.Add(new Vector2(x, y));
+        // blockPlacements.Add(new Vector2(x, y));
 
         MapString = exportMapAsString();
         
@@ -350,10 +395,11 @@ public class gridplacement : MonoBehaviour
             return;
         } 
 
-        Instantiate(blockPrefabs[blockType], worldPosition, Quaternion.Euler(0, 0, Rotation * 90), RoomBlockParent);
+        Instantiate(blockPrefabs[0], worldPosition, Quaternion.Euler(0, 0, Rotation * 90), RoomBlockParent);
 
         for (int i = 0; i < RoomBlockParent.transform.childCount; i++)
         {
+
             Transform child = RoomBlockParent.transform.GetChild(i);
             
             foreach (Vector3 side in sides)

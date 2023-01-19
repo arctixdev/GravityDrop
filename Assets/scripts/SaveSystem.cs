@@ -58,4 +58,16 @@ public static class SaveSystem
         return data;
     }
 
+    public static string[] getAllSavedMapNames(){
+        string[] paths = Directory.GetFiles("Assets/MapsData/", "*.txt");
+        string[] names = new string[paths.Length];
+        for (int i = 0; i < paths.Length; i++)
+        {
+            names[i] = Path.GetFileName(paths[i].Replace(".txt", ""));
+            Debug.Log(names[i]);
+        }
+        return names;
+        // return paths;
+    }
+
 }
