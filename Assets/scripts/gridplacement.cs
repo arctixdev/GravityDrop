@@ -79,6 +79,8 @@ public class gridplacement : MonoBehaviour
         }
     }
 
+
+
     void clearMap(){
         removeAllChildren(OtherBlocksParent);
         removeAllChildren(RoomBlockParent);
@@ -98,6 +100,7 @@ public class gridplacement : MonoBehaviour
         clearMap();
         Debug.Log("importing map with name: " + MapName + " and info: " + SaveSystem.ReadString(MapName.Replace(" ", "-")));
         importMapAsString(SaveSystem.ReadString(MapName.Replace(" ", "-")));
+        
     }
     void Start()
     {
@@ -348,11 +351,7 @@ public class gridplacement : MonoBehaviour
 
     void addBlock(int x, int y, int blockType, int Rotation){
         // Vector3 mousePosition = Input.mousePosition;
-        Vector3 worldPosition = new Vector3();
-        worldPosition.x = x * 2.5F;
-        worldPosition.y = y * 2.5F;
-
-        worldPosition.z = zPos;
+        Vector3 worldPosition = new Vector3(x * 2.5F, y * 2.5F, zPos);
 
 
         
@@ -399,7 +398,6 @@ public class gridplacement : MonoBehaviour
 
         for (int i = 0; i < RoomBlockParent.transform.childCount; i++)
         {
-
             Transform child = RoomBlockParent.transform.GetChild(i);
             
             foreach (Vector3 side in sides)
@@ -412,16 +410,13 @@ public class gridplacement : MonoBehaviour
                     foreach(Vector3 Yside in Ysides){
                         if(worldPosition + side + Yside == child.position){
                             // Debug.Log(worldPosition + side + Yside);
-
                             GameObject corner = Instantiate(cornerPrefab, worldPosition + (side + Yside) / 2, Quaternion.identity, cornerParent);
-
                             // corner.transform.LookAt((worldPosition + worldPosition + side + Yside) / 2);
                             
                         }
                     }
                 }
                 
-
             }
         }
 
@@ -429,6 +424,12 @@ public class gridplacement : MonoBehaviour
 
             // if(child.)
     }
+
+    bool isBlockHere(Vector3 pos, List<int> bb){
+        return pos.x == bb[0] && pos.y == bb[1];
+    }
+
+    
 
     public void updateSelectedItem(){
 
