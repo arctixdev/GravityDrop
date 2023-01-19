@@ -46,13 +46,16 @@ public static class SaveSystem
         //Re-import the file to update the reference in the editor
     }
 
-    public static void ReadString()
+    public static string ReadString(string name)
     {
-        string path = "Assets/Resources/test.txt";
+
+        string path = "Assets/MapsData/" + name + ".txt";
+        if(!File.Exists(path)) return "0 0 0 0";
         //Read the text from directly from the test.txt file
         StreamReader reader = new StreamReader(path); 
-        Debug.Log(reader.ReadToEnd());
+        string data = reader.ReadToEnd();
         reader.Close();
+        return data;
     }
 
 }

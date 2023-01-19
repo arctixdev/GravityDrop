@@ -77,7 +77,8 @@ public class gridplacement : MonoBehaviour
     void Start()
     {
         
-        importMapAsString(MapString);
+        importMapAsString(SaveSystem.ReadString(MapNameInputField.text.Replace(" ", "-")));
+        
 
         sides = Xsides.Union(Ysides).ToArray();
         List<List<int>> list = exportMap();
