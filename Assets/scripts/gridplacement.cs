@@ -202,7 +202,7 @@ public class gridplacement : MonoBehaviour
                 if(Input.GetMouseButton(0) ){
                     
 
-                    if(blockType == 4){
+                    if(blockType == toggleGroup.transform.childCount - 1){
                         removeBlock(x, y);
                         
                     }
