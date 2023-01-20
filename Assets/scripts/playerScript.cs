@@ -33,13 +33,22 @@ public class playerScript : MonoBehaviour
 
 
     // Update is called once per frame
+
+    float closest(float n, float q){
+        return (Mathf.Round(n / q) * q);
+    }
     void Update()
     {
 
-        if(rb.angularVelocity == 0 && (rb.rotation % 90 > 0.08) && (rb.rotation % 90 < 10 || rb.rotation % 90 > 80) && !froze && rb.velocity == Vector2.zero){
+        if(rb.angularVelocity == 0 &&
+        ((45 - Mathf.Abs(rb.rotation % 90 - 45)) is < 15 and > 0.4f) &&
+        !froze &&
+        rb.velocity == Vector2.zero){
             // StartCoroutine(freeze());
+            Debug.Log("player fix");
 
-            rb.SetRotation(0);
+            // rb.SetRotation(closest(rb.rotation, 90));
+            transform.rotation = Quaternion.identity;
         }
 
         if(froze){

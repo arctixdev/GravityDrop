@@ -6,6 +6,7 @@ using System.Linq;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections;
 
 public class gridplacement : MonoBehaviour
 {
@@ -79,6 +80,18 @@ public class gridplacement : MonoBehaviour
         }
     }
 
+    IEnumerator importMapFromFileIE(string MapName)
+    {
+
+        clearMap();
+        Debug.Log("importing map with name: " + MapName + " and info: " + SaveSystem.ReadString(MapName.Replace(" ", "-")));
+        yield return null;
+        yield return null;
+        importMapAsString(SaveSystem.ReadString(MapName.Replace(" ", "-")));
+
+
+    }
+
 
 
     void clearMap(){
@@ -97,9 +110,8 @@ public class gridplacement : MonoBehaviour
         }
     }
     void importMapFromFile(string MapName){
-        clearMap();
-        Debug.Log("importing map with name: " + MapName + " and info: " + SaveSystem.ReadString(MapName.Replace(" ", "-")));
-        importMapAsString(SaveSystem.ReadString(MapName.Replace(" ", "-")));
+        StartCoroutine(importMapFromFileIE(MapName));
+        
         
     }
     void Start()
