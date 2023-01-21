@@ -1,3 +1,4 @@
+using System;
 using System.Security.Cryptography.X509Certificates;
 using System.Collections;
 using System.Collections.Generic;
@@ -39,21 +40,22 @@ public class playerScript : MonoBehaviour
     }
     void Update()
     {
-
+        // Debug.Log(45 - Math.Abs((Math.Abs(263.1082)  % 90 - 45)));
         if(rb.angularVelocity == 0 &&
-        ((45 - Mathf.Abs(rb.rotation % 90 - 45)) is < 15 and > 0.4f) &&
+        ((45 - Mathf.Abs(Math.Abs(rb.rotation) % 90 - 45)) is < 20 and > 0.4f) &&
         !froze &&
         rb.velocity == Vector2.zero){
             // StartCoroutine(freeze());
             Debug.Log("player fix");
+            StartCoroutine(fix());
 
             // rb.SetRotation(closest(rb.rotation, 90));
-            transform.rotation = Quaternion.identity;
+            // transform.rotation = Quaternion.identity;
         }
 
         if(froze){
             // rb.constraints = RigidbodyConstraints2D.FreezeRotation;
-            rb.AddTorque(1f);
+            // rb.AddTorque(1f);
         }
         else {
             // rb.constraints = RigidbodyConstraints2D.None;
@@ -121,6 +123,18 @@ public class playerScript : MonoBehaviour
         rb.WakeUp();
 
         yield return new WaitForSeconds(1f);
+        froze = false;
+
+    }
+    IEnumerator fix(){
+        rb.simulated = false;
+        froze = true;
+
+        yield return null;
+        rb.simulated = true;
+
+        yield return null;
+
         froze = false;
 
     }
