@@ -23,8 +23,11 @@ public class playerScript : MonoBehaviour
     bool dead = false;
 
     public bool froze;
+
+    public Animation anim;
     void Start()
     {
+        
         spawnPoint = transform.position;
 
         dead = false;
@@ -80,9 +83,9 @@ public class playerScript : MonoBehaviour
         rb.velocity = Vector2.zero;
         rb.simulated = false;
 
-        Instantiate(deathParticleSystem, transform.position, Quaternion.identity);
+        // Instantiate(deathParticleSystem, transform.position, Quaternion.identity);
         trailRenderer.Clear();
-        transform.localScale = Vector3.zero;
+        // transform.localScale = Vector3.zero;
 
         StartCoroutine(death());
 
@@ -95,17 +98,18 @@ public class playerScript : MonoBehaviour
 
     IEnumerator death()
     {
+        anim.Play("die");
+        yield return !anim.IsPlaying("die");
 
-        transform.rotation = Quaternion.Euler(0, 0, 0);
-        yield return new WaitForSeconds(0.5f);
 
+        yield return new WaitForSeconds(1);
+        transform.localScale = Vector3.zero;
         transform.rotation = Quaternion.Euler(0, 0, 0);
         transform.position = spawnPoint;
         trailRenderer.Clear();
 
-        yield return new WaitForSeconds(1);
 
-
+        gameObject.GetComponent<SpriteRenderer>().color = new Color(255, 255, 255, 255);
         iTween.ScaleTo(gameObject, iTween.Hash("x", 1, "y", 1, "z", 1, "time", 1, "oncomplete", "enableRb", "oncompletetarget", gameObject));
         transform.rotation = Quaternion.Euler(0, 0, 0);
 

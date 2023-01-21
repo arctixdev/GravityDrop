@@ -215,7 +215,7 @@ public class gridplacement : MonoBehaviour
             }
             
 
-            if(blockType != 4){
+            if(blockType != toggleGroup.transform.childCount - 1){
 
                 GameObject child = msEffectParent.GetChild(blockType).gameObject;
                 iTween.RotateTo(child, iTween.Hash("z", rot * 90, "time", 0.1));
