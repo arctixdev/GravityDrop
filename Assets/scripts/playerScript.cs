@@ -47,7 +47,8 @@ public class playerScript : MonoBehaviour
         if(rb.angularVelocity == 0 &&
         ((45 - Mathf.Abs(Math.Abs(rb.rotation) % 90 - 45)) is < 20 and > 0.4f) &&
         !froze &&
-        rb.velocity == Vector2.zero){
+        rb.velocity == Vector2.zero &&
+        !dead){
             // StartCoroutine(freeze());
             Debug.Log("player fix");
             StartCoroutine(fix());
@@ -78,12 +79,11 @@ public class playerScript : MonoBehaviour
     }
 
     void die(){
-        dead = true;
-        killtimer = killDelay;
+        if (dead) return;
+        rb.angularVelocity = 0;
         rb.velocity = Vector2.zero;
         rb.simulated = false;
 
-        // Instantiate(deathParticleSystem, transform.position, Quaternion.identity);
         trailRenderer.Clear();
         // transform.localScale = Vector3.zero;
 
@@ -98,15 +98,20 @@ public class playerScript : MonoBehaviour
 
     IEnumerator death()
     {
+        dead = true;
+
+        Instantiate(deathParticleSystem, transform.position, Quaternion.identity);
         anim.Play("die");
-        yield return !anim.IsPlaying("die");
+        yield return new WaitForSeconds(0.7f);
 
-
-        yield return new WaitForSeconds(1);
         transform.localScale = Vector3.zero;
         transform.rotation = Quaternion.Euler(0, 0, 0);
         transform.position = spawnPoint;
         trailRenderer.Clear();
+
+        yield return new WaitForSeconds(1);
+
+        
 
 
         gameObject.GetComponent<SpriteRenderer>().color = new Color(255, 255, 255, 255);
