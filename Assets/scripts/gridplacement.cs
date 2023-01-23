@@ -64,6 +64,8 @@ public class gridplacement : MonoBehaviour
 
     public GameObject MapButtonPrefab;
 
+    public tileMapHandler tileMapHandler;
+
 
     // public SimulationMode2D simulationMode;
 
@@ -362,34 +364,15 @@ public class gridplacement : MonoBehaviour
 
 
     void addBlock(int x, int y, int blockType, int Rotation){
-        // Vector3 mousePosition = Input.mousePosition;
         Vector3 worldPosition = new Vector3(x * 2.5F, y * 2.5F, zPos);
 
 
-        
-        // for (int i = 0; i < parent.transform.childCount; i++)
-        // {
-        //     Transform child = parent.transform.GetChild(i);
-
-        //     if(child.position == worldPosition){
-        //         return;
-        //     }
-
-        // }
         List<int> block = new List<int>() {
                                 x, 
                                 y,
                                 blockType,
                                 Rotation
                             };
-        // foreach (List<int> row in mapList)
-        // {
-        //     Debug.Log("-----------");
-        //     if(row.SequenceEqual(block)) {
-                
-        //         return;
-        //     }
-        // }
 
         if(mapList.Any(x => x.SequenceEqual(block))) return;
 
@@ -404,33 +387,12 @@ public class gridplacement : MonoBehaviour
             worldPosition += Vector3.back * 2;
             Instantiate(blockPrefabs[blockType], worldPosition, Quaternion.Euler(0, 0, Rotation * 90), OtherBlocksParent);
             return;
-        } 
-
-        Instantiate(blockPrefabs[0], worldPosition, Quaternion.Euler(0, 0, Rotation * 90), RoomBlockParent);
-
-        for (int i = 0; i < RoomBlockParent.transform.childCount; i++)
-        {
-            Transform child = RoomBlockParent.transform.GetChild(i);
-            
-            foreach (Vector3 side in sides)
-            {
-                if(worldPosition + side == child.position){
-                    Instantiate(connector, worldPosition + side/2 + Vector3.back, Quaternion.identity, connectorParent);
-                }
-                
-                else if(side.x != 0){
-                    foreach(Vector3 Yside in Ysides){
-                        if(worldPosition + side + Yside == child.position){
-                            // Debug.Log(worldPosition + side + Yside);
-                            GameObject corner = Instantiate(cornerPrefab, worldPosition + (side + Yside) / 2, Quaternion.identity, cornerParent);
-                            // corner.transform.LookAt((worldPosition + worldPosition + side + Yside) / 2);
-                            
-                        }
-                    }
-                }
-                
-            }
         }
+        
+        tileMapHandler.addBlock(x, y);
+
+        
+
 
             
 
