@@ -44,9 +44,10 @@ public class tileMapHandler : MonoBehaviour
 
     }
 
-    bool checkTile(int x, int y, int BX, int BY){
+    bool checkTile(int x, int y, int BX, int BY, bool place){
         // Debug.Log(x - (x % 2));
-        return (x - (x % 2) == BX * 2 && y - (y % 2) == BY * 2)|| !isCornerTile(grid.GetTile<Tile>(new Vector3Int(x, y, 0)));
+        if(x - BX is -1 or 0 && y - BY is -1 or 0) return place;
+        return !isCornerTile(grid.GetTile<Tile>(new Vector3Int(x, y, 0)));
         // return true;
     }
 
