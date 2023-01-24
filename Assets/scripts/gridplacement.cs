@@ -11,14 +11,9 @@ using System.Collections;
 public class gridplacement : MonoBehaviour
 {
     public List<GameObject> blockPrefabs;
-    public GameObject connector;
-    public GameObject cornerPrefab;
     public Vector2 size;
 
     public Transform OtherBlocksParent;
-    public Transform RoomBlockParent;
-    public Transform connectorParent;
-    public Transform cornerParent;
 
     public float zPos;
 
@@ -98,9 +93,7 @@ public class gridplacement : MonoBehaviour
 
     void clearMap(){
         removeAllChildren(OtherBlocksParent);
-        removeAllChildren(RoomBlockParent);
-        removeAllChildren(connectorParent);
-        removeAllChildren(cornerParent);
+        tileMapHandler.clearMap();
 
         mapList = new List<List<int>>();
     }
@@ -304,61 +297,7 @@ public class gridplacement : MonoBehaviour
 
         }
 
-        for (int b = 0; b < RoomBlockParent.transform.childCount; b++)
-        {
-            Transform block = RoomBlockParent.transform.GetChild(b);
-
-            if(block.position.x == x * 2.5f && block.position.y == y * 2.5f){
-
-                for (int i = 0; i < connectorParent.transform.childCount; i++)
-                {
-                    Transform connector = connectorParent.transform.GetChild(i);
-
-                    if(Mathf.Abs(connector.position.x - block.position.x) < 1.3 && Mathf.Abs(connector.position.y - block.position.y) < 1.3){
-                        Destroy(connector.gameObject);
-                    }
-                }
-                for (int i = 0; i < cornerParent.transform.childCount; i++)
-                {
-                    Transform corner = cornerParent.transform.GetChild(i);
-
-                    if(Mathf.Abs(corner.position.x - block.position.x) < 1.3 && Mathf.Abs(corner.position.y - block.position.y) < 1.3){
-                        int count = 0;
-                        
-                        for (int d = 0; d < RoomBlockParent.transform.childCount; d++)
-                        {
-                            Transform bb = RoomBlockParent.transform.GetChild(d);
-                            if(Mathf.Abs(bb.position.x - corner.position.x) < 1.3 && Mathf.Abs(bb.position.y - corner.position.y) < 1.3){
-                                count ++;
-                            }
-                            if(count > 3){
-                                break;
-                            }
-                        }
-                        
-                        if(count == 3) {
-                            Destroy(corner.gameObject);
-
-                        }
-
-
-                    }
-                }
-
-
-                
-
-                
-                Destroy(block.gameObject);
-
-                var itemToRemove = mapList.Find(r => r[0] == x && r[1] == y);
-                mapList.Remove(itemToRemove);
-
-                break;
-
-            }
-        }
-
+        tileMapHandler.changeBlock(x, y, false);
     }
 
 
@@ -374,22 +313,20 @@ public class gridplacement : MonoBehaviour
                                 Rotation
                             };
 
-        if(mapList.Any(x => x.SequenceEqual(block))) return;
+        // if(mapList.Any(x => x.SequenceEqual(block))) return;
 
-        mapList.Add(block);
+        // mapList.Add(block);
 
-        // blockPlacements.Add(new Vector2(x, y));
 
-        MapString = exportMapAsString();
+        // MapString = exportMapAsString();
         
-        // 0 -1 0 0 ,0 -2 0 0 ,0 -3 0 0 ,-2 -2 0 0 ,-1 -2 0 0 ,1 -2 0 0 ,2 -2 0 0 ,2 -3 0 0 ,2 -4 0 0 ,2 -5 0 0 ,1 -5 0 0 ,0 -5 0 0 ,-1 -5 0 0 ,-2 -5 0 0 ,-2 -4 0 0 ,-2 -3 0 0 ,-1 -3 0 0 ,1 -3 0 0 ,1 -4 0 0 ,0 -4 0 0 ,-1 -4 0 0 ,0 -6 0 0 ,0 -7 0 0 ,0 -8 0 0 ,2 -8 0 0 ,1 -8 0 0 ,-1 -8 0 0 ,-2 -8 0 0 ,-2 -9 0 0 ,-1 -9 0 0 ,0 -9 0 0 ,1 -9 0 0 ,2 -9 0 0 ,3 -8 0 0 ,3 -9 0 0 ,-3 -8 0 0 ,-3 -9 0 0 ,-4 -9 0 0 ,-5 -9 0 0 ,-6 -9 0 0 ,-4 -8 0 0 ,-6 -10 0 0 ,-6 -11 0 0 ,-6 -12 0 0 ,4 -9 0 0 ,4 -10 0 0 ,5 -10 0 0 ,4 -11 0 0 ,4 -12 0 0 ,5 -11 0 0 ,5 -12 0 0 ,-2 -10 0 0 ,-1 -10 0 0 ,-1 -11 0 0 ,-1 -12 0 0 ,-1 -13 0 0 ,-2 -12 0 0 ,-2 -11 0 0 ,-2 -13 0 0 ,0 -4 0 0 ,0 -4 0 0 ,0 -4 0 0 ,0 -4 0 0 ,0 -4 0 0 ,0 -4 0 0 ,
         if(blockType != 0){
             worldPosition += Vector3.back * 2;
             Instantiate(blockPrefabs[blockType], worldPosition, Quaternion.Euler(0, 0, Rotation * 90), OtherBlocksParent);
             return;
         }
         
-        tileMapHandler.addBlock(x, y);
+        tileMapHandler.changeBlock(x, y, true);
 
         
 
