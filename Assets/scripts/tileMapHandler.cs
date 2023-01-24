@@ -43,13 +43,11 @@ public class tileMapHandler : MonoBehaviour
 
     }
 
-    bool checkTile(int x, int y, int BX, int BY){
-        return (blockfloor(x) == BX * 2 && blockfloor(y) == BY * 2 )|| !isCornerTile(grid.GetTile<Tile>(new Vector3Int(x-1, y-1, 0)));
-        return true;
-    }
-
-    int blockfloor(int n){
-        return Mathf.FloorToInt(n / 2) * 2;
+    bool checkTile(int x, int y, int BX, int BY, bool place){
+        // Debug.Log(x - (x % 2));
+        if(x - BX is -1 or 0 && y - BY is -1 or 0) return place;
+        return !isCornerTile(grid.GetTile<Tile>(new Vector3Int(x, y, 0)));
+        // return true;
     }
 
     void updateTile(int x, int y, int BX, int BY){
