@@ -1,5 +1,4 @@
 using System;
-using System.Security.Cryptography.X509Certificates;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -30,7 +29,7 @@ public class tileMapHandler : MonoBehaviour
         {
             for (int y = 0; y < 4; y++)
             {
-                updateTile((BX * 2) + x - 2, (BY * 2) + y - 2, BX, BY);
+                updateTile((BX * 2) + x - 1, (BY * 2) + y - 1, BX, BY);
                 // placeTile(x, y, outSideTiles);
             }
         }
@@ -45,22 +44,26 @@ public class tileMapHandler : MonoBehaviour
     }
 
     bool checkTile(int x, int y, int BX, int BY){
-        // Debug.Log(x - (x % 2));
-        return (x - (x % 2) == BX * 2 && y - (y % 2) == BY * 2)|| !isCornerTile(grid.GetTile<Tile>(new Vector3Int(x, y, 0)));
-        // return true;
+        return (blockfloor(x) == BX * 2 && blockfloor(y) == BY * 2 )|| !isCornerTile(grid.GetTile<Tile>(new Vector3Int(x-1, y-1, 0)));
+        return true;
+    }
+
+    int blockfloor(int n){
+        return Mathf.FloorToInt(n / 2) * 2;
     }
 
     void updateTile(int x, int y, int BX, int BY){
         int TilesAround = 0;
 
-        for (int i = -1; i < 3; i += 2)
-        {
-            if(checkTile(x + i, y, BX, BY)) TilesAround ++;
-            if(checkTile(x, y + i, BX, BY)) TilesAround ++;
-        }
+        
+        if(checkTile(x + -1, y, BX, BY)) TilesAround ++;
+        if(checkTile(x + 1, y, BX, BY)) TilesAround ++;
+        if(checkTile(x, y + -1, BX, BY)) TilesAround ++;
+        if(checkTile(x, y + 1, BX, BY)) TilesAround ++;
         
 
-        Debug.Log(checkTile(x, y, BX, BY));
+
+        Debug.Log(Math.Floor(-0.6));
         if(!checkTile(x, y, BX, BY)){
             switch (TilesAround)
             {
@@ -89,7 +92,7 @@ public class tileMapHandler : MonoBehaviour
     }
 
     void placeTile(int x, int y, List<Tile> tiles){
-        grid.SetTile(new Vector3Int(x, y, 0), tiles[(Math.Abs(x % 2) + Math.Abs(y % 2 * 2))]);
+        grid.SetTile(new Vector3Int(x-1, y-1, 0), tiles[(Math.Abs(x % 2) + Math.Abs(y % 2 * 2))]);
     }
     void removeTile(int x, int y){
         grid.SetTile(new Vector3Int(x, y, 0), null);
