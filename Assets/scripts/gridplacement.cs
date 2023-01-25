@@ -23,7 +23,7 @@ public class gridplacement : MonoBehaviour
 
     // public List<Vector2> blockPlacements = new List<Vector2>();
 
-    List<List<int>> mapList = new List<List<int>>();
+    HashSet<List<int>> mapList = new HashSet<List<int>>();
 
     public int blockType = 0;
     public int rot = 0;
@@ -92,13 +92,13 @@ public class gridplacement : MonoBehaviour
 
 
     void clearMap(){
-        removeAllChildren(OtherBlocksParent);
+        clearChildren(OtherBlocksParent);
         tileMapHandler.clearMap();
 
-        mapList = new List<List<int>>();
+        mapList = new HashSet<List<int>>();
     }
 
-    void removeAllChildren(Transform parent){
+    void clearChildren(Transform parent){
         for (int i = 0; i < parent.childCount; i++)
         {
             Destroy(parent.GetChild(i).gameObject);
@@ -115,7 +115,7 @@ public class gridplacement : MonoBehaviour
         ListMapsToLoad(MapButtonPrefab, MapsParent);
 
         sides = Xsides.Union(Ysides).ToArray();
-        List<List<int>> list = exportMap();
+        HashSet<List<int>> list = exportMap();
 
 
         foreach (List<int> row in list)
@@ -160,6 +160,7 @@ public class gridplacement : MonoBehaviour
     }
 
     void ListMapsToLoad(GameObject buttonPrefab, Transform mapListParent){
+        clearChildren(mapListParent);
         string[] mapNames = SaveSystem.getAllSavedMapNames();
 
         for (int i = 0; i < mapNames.Length; i++)
@@ -220,23 +221,23 @@ public class gridplacement : MonoBehaviour
         
     }
 
-    List<List<int>> exportMap(){
+    HashSet<List<int>> exportMap(){
 
         return mapList;
     }
 
-    void saveMapToBinnary(){
-        int[,] map = {{0, 0}, {0, 0}};
-        for (int a = 0; a < mapList.Count(); a++)
-        {
-            for (int b = 0; b < mapList[a].Count(); b++)
-            {
-                map[a, b] = mapList[a][b];
-            }
-        }
-        SaveSystem.SaveMap(map);
-    }
-    String exportMapAsString(){
+    // void saveMapToBinnary(){
+    //     int[,] map = {{0, 0}, {0, 0}};
+    //     foreach (List<int> i in mapList)
+    //     {
+    //         for (int b = 0; b < i.Count(); b++)
+    //         {
+    //             map[a, b] = i[b];
+    //         }
+    //     }
+    //     SaveSystem.SaveMap(map);
+    // }
+    public string exportMapAsString(){
         String MapString = "";
         foreach (List<int> row in mapList)
         {
@@ -255,6 +256,11 @@ public class gridplacement : MonoBehaviour
         // Debug.Log(MapString);
         SaveSystem.WriteString(MapNameInputField.text.Replace(" ", "-"), MapString);
         return MapString;
+    }
+
+    public void hellooo(){
+        exportMapAsString();
+        ListMapsToLoad(MapButtonPrefab, MapsParent);
     }
 
     void importMapAsString(string mapStr){
@@ -288,8 +294,8 @@ public class gridplacement : MonoBehaviour
             if(block.position.x == x * 2.5f && block.position.y == y * 2.5f){
                 Destroy(block.gameObject);
 
-                var itemToRemove = mapList.Find(r => r[0] == x && r[1] == y);
-                mapList.Remove(itemToRemove);
+                // var itemToRemove = mapList.Where(r => r[0] == x && r[1] == y);
+                mapList.RemoveWhere(r => r[0] == x && r[1] == y);
                 exportMapAsString();
                 return;
             }
@@ -313,9 +319,10 @@ public class gridplacement : MonoBehaviour
                                 Rotation
                             };
 
-        // if(mapList.Any(x => x.SequenceEqual(block))) return;
+        if(mapList.Any(x => x.SequenceEqual(block))) return;
 
-        // mapList.Add(block);
+
+        mapList.Add(block);
 
 
         // MapString = exportMapAsString();
