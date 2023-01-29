@@ -8,6 +8,7 @@ TagManager:
   - exit
   - roundetBlock
   - killPlayer
+  - spawnPoint
   layers:
   - Default
   - TransparentFX
