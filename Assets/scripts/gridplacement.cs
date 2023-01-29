@@ -304,6 +304,7 @@ public class gridplacement : MonoBehaviour
         }
 
         tileMapHandler.changeBlock(x, y, false);
+        mapList.RemoveWhere(r => r[0] == x && r[1] == y);
     }
 
 

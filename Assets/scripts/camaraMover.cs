@@ -12,6 +12,9 @@ public class camaraMover : MonoBehaviour
     float Maxspeed;
     [SerializeField]
     public float Acceleration;
+
+    [SerializeField]
+    public float rotationTime;
     
     void Start()
     {
@@ -45,8 +48,18 @@ public class camaraMover : MonoBehaviour
 
 
         transform.Translate(new Vector3(xspeed * Time.deltaTime, yspeed * Time.deltaTime, 0));
+
+        if(Input.GetKeyDown("[1]")){
+            rotateCam(-90);
+        }
+        if(Input.GetKeyDown("[2]")){
+            rotateCam(90);
+        }
     }
 
+    void rotateCam(float deg){
+        iTween.RotateTo(gameObject, iTween.Hash("rotation", new Vector3(0, 0, transform.rotation.eulerAngles.z + deg), "time", rotationTime, "easetype", iTween.EaseType.easeInOutCubic));
+    }
     float clampToZero(float n, float distance){
         if(n == 0) return 0;
         if(distance > Mathf.Abs(n)) return 0;
