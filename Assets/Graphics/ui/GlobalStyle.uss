@@ -1,6 +1,6 @@
 :root {
-    --main-color: rgb(255,190,0);
-    --second-color: rgb(0,0,0);
+    --main-color: rgb(255, 190, 0);
+    --second-color: rgb(0, 0, 0);
 }
 
 .button {
@@ -34,24 +34,22 @@
 }
 
 .smallButton {
-    width: 55%;
+    width: 47%;
     height: 80px;
 }
 
 .jumpOut {
     translate: 0 -600px;
     transition-property: translate;
-    transition-duration: 1.5s;
-    transition-timing-function: ease-out-elastic;
-    transition-delay: 0s;
+    transition-duration: 0.5s;
+    transition-timing-function: ease-out-back;
 }
 
 .jumpIn {
     translate: 0 0;
     transition-property: translate;
-    transition-duration: 1.5s;
-    transition-timing-function: ease-out-elastic;
-    transition-delay: 0s;
+    transition-duration: 0.5s;
+    transition-timing-function: ease-in-back;
 }
 
 .goneDown {
@@ -82,7 +80,14 @@
 .unity-base-slider__tracker {
     background-color: var(--main-color);
     height: 10px;
-    /* translate: 0 5; */
-    
 }
 
+.welcomeText {
+    display: flex;
+    visibility: visible;
+    overflow: visible;
+    align-items: center;
+    justify-content: center;
+    height: 62px;
+    width: 321px;
+}

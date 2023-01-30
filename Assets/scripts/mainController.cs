@@ -73,7 +73,7 @@ public class mainController : MonoBehaviour
     public float rotDisToRotate;
 
 
-
+    public iTween.EaseType EaseType;
 
     void Awake()
     {
@@ -157,7 +157,7 @@ public class mainController : MonoBehaviour
                     }
                 }
             }
-            iTween.RotateTo(gameObject, iTween.Hash("rotation", new Vector3(preRot.x, preRot.y, rot), "time", time, "easetype", iTween.EaseType.easeOutCubic));
+            iTween.RotateTo(gameObject, iTween.Hash("rotation", new Vector3(preRot.x, preRot.y, rot), "time", time, "easetype", EaseType));
         }
         if(useMenu){
             menuScript.level((int) (Input.mousePosition.x / Screen.width * 100));

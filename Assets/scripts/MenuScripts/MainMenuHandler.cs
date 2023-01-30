@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.SceneManagement;
+using GooglePlayGames;
+using GooglePlayGames.BasicApi;
 
 public class MainMenuHandler : MonoBehaviour
 {
@@ -17,12 +19,13 @@ public class MainMenuHandler : MonoBehaviour
     private Button huhButton;
 
     public string gameScene = "map builder level";
-    public string username = "Un10cked_";
+    public string username = "Guest";
     public string message = "Hi {0}!";
     public AdsManager AdsManager;
 
     void Start()
     {
+        Application.targetFrameRate = 60;
         // Get root element
         root = GetComponent<UIDocument>().rootVisualElement;
 
@@ -45,12 +48,10 @@ public class MainMenuHandler : MonoBehaviour
         // Hide settings
         settingsMenu.AddToClassList("goneDown");
 
-        // Set username in text
-        nameText.text = "huh";
-        nameText.text = string.Format(message, username);
-
         // Register slider change func
         soundSlider.RegisterValueChangedCallback(soundChange);
+
+        PlayGamesPlatform.Instance.Authenticate(ProcessAuthentication);
     }
 
     // Update is unused
@@ -69,24 +70,32 @@ public class MainMenuHandler : MonoBehaviour
     void StartButtonPressed() {
         MainJumpOut();
         mainMenu.schedule.Execute(() => SceneManager.LoadSceneAsync(gameScene)).StartingIn(200);
-        //SceneManager.LoadScene(gameScene);
+    }
+
+    internal void ProcessAuthentication(SignInStatus status) {
+      if (status == SignInStatus.Success) {
+        username = PlayGamesPlatform.Instance.GetUserDisplayName();
+      } else {
+        username = "Guest";
+      }
+      nameText.text = string.Format(message, username);
     }
 
     void BackButtonPressed() {
         SettingsJumpOut();
-        mainMenu.schedule.Execute(() => MainJumpIn()).StartingIn(100);
+        mainMenu.schedule.Execute(() => MainJumpIn()).StartingIn(0);
     }
 
     // When settings button is pressed
     void SettingsButtonPressed() {
         MainJumpOut();
-        mainMenu.schedule.Execute(() => SettingsJumpIn()).StartingIn(200);
+        mainMenu.schedule.Execute(() => SettingsJumpIn()).StartingIn(0);
     }
 
     //Add jumpOut class to main menu buttons so they animate out.
     void MainJumpOut() {
         mainMenu.AddToClassList("jumpOut"); 
-        mainMenu.schedule.Execute(() => mainMenu.AddToClassList("goneUp") ).StartingIn(150); 
+        mainMenu.schedule.Execute(() => mainMenu.AddToClassList("goneUp") ).StartingIn(0); 
     }
 
     void MainJumpIn() {
@@ -101,6 +110,6 @@ public class MainMenuHandler : MonoBehaviour
 
     void SettingsJumpOut() {
         settingsMenu.AddToClassList("jumpOut");
-        settingsMenu.schedule.Execute(() => settingsMenu.AddToClassList("goneDown") ).StartingIn(30); 
+        settingsMenu.schedule.Execute(() => settingsMenu.AddToClassList("goneDown") ).StartingIn(0); 
     }
 }

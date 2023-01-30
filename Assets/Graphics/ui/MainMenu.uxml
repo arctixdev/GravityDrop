@@ -1,8 +1,8 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
     <Style src="project://database/Assets/Graphics/ui/GlobalStyle.uss?fileID=7433441132597879392&amp;guid=836fd4815a672a597897e086fba0c814&amp;type=3#GlobalStyle" />
     <ui:VisualElement name="Background" class="all" style="align-items: center; justify-content: center; width: 100%; height: 100%; position: relative;">
-        <ui:VisualElement style="align-items: flex-start; justify-content: flex-start; position: absolute; width: 260px; left: 25px; top: 20px;">
-            <ui:Label text="Hi {name}!" display-tooltip-when-elided="true" name="name-text" tabindex="4" class="welcomeText" style="display: none; visibility: hidden; overflow: hidden;" />
+        <ui:VisualElement style="align-items: flex-start; justify-content: center; position: absolute; width: 260px; left: 25px; top: 20px;">
+            <ui:Label text="Hi Guest!" display-tooltip-when-elided="true" name="name-text" tabindex="4" class="welcomeText" />
         </ui:VisualElement>
         <ui:VisualElement name="menus" style="position: absolute; align-items: center; justify-content: center;">
             <ui:VisualElement name="SettingsMenu" class="goneDown setting" style="display: flex;">
@@ -13,7 +13,7 @@
             <ui:VisualElement name="MainMenu" class="setting all" style="position: absolute; justify-content: center; align-items: center;">
                 <ui:Button text="Start Game" display-tooltip-when-elided="true" name="start-button" class="button" />
                 <ui:Button text="Settings" display-tooltip-when-elided="true" name="settings-button" class="button" />
-                <ui:VisualElement style="flex-direction: row; align-items: center; justify-content: center; display: none; visibility: hidden; overflow: hidden;">
+                <ui:VisualElement style="flex-direction: row; align-items: center; justify-content: center; display: none; visibility: hidden; overflow: hidden; height: 100px; width: 400px;">
                     <ui:Button text="Log out" display-tooltip-when-elided="true" name="other-button" class="button smallButton" />
                     <ui:Button text="Login" display-tooltip-when-elided="true" name="login-button" class="button smallButton" />
                 </ui:VisualElement>
