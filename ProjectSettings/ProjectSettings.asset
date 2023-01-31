@@ -252,7 +252,7 @@ PlayerSettings:
   AndroidTargetDevices: 1
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
-  AndroidKeystoreName: /home/jonathan/Documents/Keys/GravityDrop.keystore
+  AndroidKeystoreName: C:/Users/jona114x/OneDrive - Roskilde Kommune/Dokumenter 1/GravityDrop.keystore
   AndroidKeyaliasName: gravitydropkeystore
   AndroidBuildApkPerCpuArchitecture: 0
   AndroidTVCompatibility: 0
