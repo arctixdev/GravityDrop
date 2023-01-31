@@ -184,15 +184,25 @@ public class gridplacement : MonoBehaviour
     
 
     // Update is called once per frame
+    Vector2Int getMsPos(){
+        Vector3 mousePosition = Input.mousePosition;
+        Vector3 worldPosition = Camera.main.ScreenToWorldPoint(mousePosition);
+        return new Vector2Int(
+            Mathf.RoundToInt(worldPosition.x / 2.5f),
+            Mathf.RoundToInt(worldPosition.y / 2.5f));
+    }
+
+    Vector2 blockToWorldPos(Vector2Int pos){
+        return new Vector2(pos.x * 2.5f, pos.y * 2.5f);
+    }
     void Update()
     {
         // blockType += Mathf.RoundToInt(Input.mouseScrollDelta.y);
         if(!inPlayMode){
 
-            Vector3 mousePosition = Input.mousePosition;
-            Vector3 worldPosition = Camera.main.ScreenToWorldPoint(mousePosition);
-            int x = Mathf.RoundToInt(worldPosition.x / 2.5f);
-            int y = Mathf.RoundToInt(worldPosition.y / 2.5f);
+            Vector2Int msPos = getMsPos();
+            int x = msPos.x;
+            int y = msPos.y;
             if(!EventSystem.current.IsPointerOverGameObject()){
                 
                 if(Input.GetMouseButton(0) ){
@@ -354,7 +364,11 @@ public class gridplacement : MonoBehaviour
 
         Toggle toggle = toggleGroup.ActiveToggles().FirstOrDefault();
         Debug.Log(toggle.transform.GetSiblingIndex());
+        msEffectParent.GetChild(blockType).gameObject.SetActive(false);
         blockType = toggle.transform.GetSiblingIndex();
+        GameObject obj = msEffectParent.GetChild(blockType).gameObject;
+        obj.SetActive(true);
+        obj.transform.position = blockToWorldPos(getMsPos());
     }
     
     public void StartOrStopSim(){

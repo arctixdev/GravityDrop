@@ -78,6 +78,14 @@ public class playerScript : MonoBehaviour
         }
     }
 
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if(other.CompareTag("spawnPoint")){
+            spawnPoint = new Vector3(other.transform.position.x, other.transform.position.y, transform.position.z);
+        }
+    }
+
     void die(){
         if (dead) return;
         rb.angularVelocity = 0;
