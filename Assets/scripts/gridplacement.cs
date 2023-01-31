@@ -364,11 +364,16 @@ public class gridplacement : MonoBehaviour
 
         Toggle toggle = toggleGroup.ActiveToggles().FirstOrDefault();
         Debug.Log(toggle.transform.GetSiblingIndex());
-        msEffectParent.GetChild(blockType).gameObject.SetActive(false);
+
+        if(blockType !=  toggleGroup.transform.childCount - 1) msEffectParent.GetChild(blockType).gameObject.SetActive(false);
+        
         blockType = toggle.transform.GetSiblingIndex();
-        GameObject obj = msEffectParent.GetChild(blockType).gameObject;
-        obj.SetActive(true);
-        obj.transform.position = blockToWorldPos(getMsPos());
+
+        if(blockType !=  toggleGroup.transform.childCount - 1){
+            GameObject obj = msEffectParent.GetChild(blockType).gameObject;
+            obj.SetActive(true);
+            obj.transform.position = blockToWorldPos(getMsPos());
+        }
     }
     
     public void StartOrStopSim(){
