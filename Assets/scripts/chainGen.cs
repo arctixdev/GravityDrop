@@ -17,22 +17,28 @@ public class chainGen : MonoBehaviour
     bool lockFront;
     [SerializeField]
     bool lockEnd;
+    [SerializeField]
+    bool moveWithMouse;
 
     Rigidbody2D endrb;
+
+    int chaincount = 0;
     void Start()
     {
         genChain(transform.position);
     }
 
     void genChain(Vector3 startPos){
-        GameObject NewChain = Instantiate(chain, startPos, Quaternion.identity, transform);
+        chaincount++;
+        GameObject head = Instantiate(new GameObject("Chain (" + chaincount + ")"), startPos, Quaternion.identity, transform);
+        GameObject NewChain = Instantiate(chain, startPos, Quaternion.identity, head.transform);
         NewChain.transform.GetChild(0).GetComponent<HingeJoint2D>().connectedBody = null;
         NewChain.transform.GetChild(0).GetComponent<HingeJoint2D>().autoConfigureConnectedAnchor = false;
         NewChain.transform.GetChild(1).GetComponent<HingeJoint2D>().autoConfigureConnectedAnchor = false;
         Rigidbody2D rb = NewChain.transform.GetChild(1).GetComponent<Rigidbody2D>();
         for (int i = 1; i < chainLength; i++)
         {
-            NewChain = Instantiate(chain, startPos + Vector3.down * i * DistancePerChain * transform.localScale.y, Quaternion.identity, transform);
+            NewChain = Instantiate(chain, startPos + Vector3.down * i * DistancePerChain * transform.localScale.y, Quaternion.identity, head.transform);
             NewChain.transform.GetChild(0).GetComponent<HingeJoint2D>().connectedBody = rb;
             NewChain.transform.GetChild(0).GetComponent<HingeJoint2D>().autoConfigureConnectedAnchor = false;
             NewChain.transform.GetChild(1).GetComponent<HingeJoint2D>().autoConfigureConnectedAnchor = false;
@@ -53,7 +59,9 @@ public class chainGen : MonoBehaviour
         // this.gameObject.transform.GetChild(0).GetChild(0).position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         // Vector3 mspos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         // endrb.MovePosition(Camera.main.ScreenToWorldPoint(Input.mousePosition));
-        transform.GetChild(transform.childCount - 1).GetChild(1).position = Camera.main.ScreenToWorldPoint(Input.mousePosition + Vector3.forward * 4);
+        if(moveWithMouse){
+            transform.GetChild(transform.childCount - 1).GetChild(1).position = Camera.main.ScreenToWorldPoint(Input.mousePosition + Vector3.forward * 4);
+        }
 
         if(Input.GetMouseButtonDown(0)){
             genChain(Camera.main.ScreenToWorldPoint(Input.mousePosition) + Vector3.forward * 4);
