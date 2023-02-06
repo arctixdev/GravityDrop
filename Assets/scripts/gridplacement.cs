@@ -63,6 +63,7 @@ public class gridplacement : MonoBehaviour
 
 
     // public SimulationMode2D simulationMode;
+    string currentMapName;
 
     // Start is called before the first frame update
 
@@ -264,7 +265,9 @@ public class gridplacement : MonoBehaviour
             MapString += ',';
         }
         // Debug.Log(MapString);
-        SaveSystem.WriteString(MapNameInputField.text.Replace(" ", "-"), MapString);
+        SaveSystem.WriteString(currentMapName, MapString);
+        // SaveSystem.WriteString(MapNameInputField.text.Replace(" ", "-"), MapString);
+
         return MapString;
     }
 
