@@ -45,7 +45,7 @@ public class playerScript : MonoBehaviour
     {
         // Debug.Log(45 - Math.Abs((Math.Abs(263.1082)  % 90 - 45)));
         if(rb.angularVelocity == 0 &&
-        ((45 - Mathf.Abs(Math.Abs(rb.rotation) % 90 - 45)) is < 20 and > 0.4f) &&
+        ((45 - Mathf.Abs(Math.Abs(rb.rotation) % 90 - 45)) is < 90 and > 0.4f) &&
         !froze &&
         rb.velocity == Vector2.zero &&
         !dead){

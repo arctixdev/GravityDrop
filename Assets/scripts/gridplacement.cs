@@ -269,6 +269,7 @@ public class gridplacement : MonoBehaviour
     }
 
     public void hellooo(){
+        Debug.Log("saving map...");
         exportMapAsString();
         ListMapsToLoad(MapButtonPrefab, MapsParent);
     }
