@@ -31,7 +31,7 @@ public class TrailRenderer_Local : MonoBehaviour {
         // Reset the trail
         Reset();
 
-        InvokeRepeating("shortenLine", 0.03f, 0.03f);
+        // InvokeRepeating("shortenLine", 0.03f, 0.03f);
     }
  
     public void Reset() {
@@ -78,7 +78,9 @@ public class TrailRenderer_Local : MonoBehaviour {
     }
 
     void shortenLine(int amount = 1){
+        
         int len = myLine.positionCount - amount;
+        if(len < 0) return;
         Vector3[] tempList = new Vector3[len];
         // Calculate how many extra items will need to be cut out from the original list
         

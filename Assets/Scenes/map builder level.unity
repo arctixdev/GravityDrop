@@ -10197,27 +10197,27 @@ LineRenderer:
   - {x: 0, y: 0, z: 1}
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 1
+    widthMultiplier: 2
     widthCurve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
         time: 0
         value: 0
-        inSlope: 0
-        outSlope: 0
+        inSlope: 1.099649
+        outSlope: 1.099649
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
-        outWeight: 0.33333334
+        outWeight: 0.12452107
       - serializedVersion: 3
         time: 1
         value: 1
-        inSlope: 0
-        outSlope: 0
+        inSlope: 0.13708702
+        outSlope: 0.13708702
         tangentMode: 0
         weightedMode: 0
-        inWeight: 0
+        inWeight: 0.454023
         outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2

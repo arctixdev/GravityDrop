@@ -141,14 +141,12 @@ public class gridplacement : MonoBehaviour
             foreach (int element in row)
             {
                 // Do something with the element
-                Debug.Log(element);
             }
         }
         for (int i = msEffectParent.childCount; i < blockPrefabs.Count; i++)
         {
             addBlockPrefab(blockPrefabs[i]);
         }
-
 
 
     }
@@ -219,7 +217,7 @@ public class gridplacement : MonoBehaviour
 
                 GameObject child = msEffectParent.GetChild(blockType).gameObject;
                 // child.SetActive(false);
-                // iTween.RotateTo(child, iTween.Hash("z", rot * 90, "time", 0.1));
+                iTween.RotateTo(child, iTween.Hash("z", rot * 90, "time", 0.1));
                 iTween.MoveTo(child, iTween.Hash("x", x * 2.5f, "y", y * 2.5f, "time", 0.1, "easetype", EaseType));  
             }
         }
@@ -258,7 +256,7 @@ public class gridplacement : MonoBehaviour
             }
             MapString += ',';
         }
-        // Debug.Log(MapString);
+        
         SaveSystem.WriteString(currentMapName, MapString);
         // SaveSystem.WriteString(MapNameInputField.text.Replace(" ", "-"), MapString);
 
@@ -266,9 +264,18 @@ public class gridplacement : MonoBehaviour
     }
 
     public void hellooo(){
-        Debug.Log("saving map...");
-        exportMapAsString();
-        ListMapsToLoad(MapButtonPrefab, MapsParent);
+        GameObject selected = EventSystem.current.currentSelectedGameObject;
+        if (selected != MapNameInputField.gameObject)
+        {
+            
+            Debug.Log("saving map...");
+            exportMapAsString();
+            ListMapsToLoad(MapButtonPrefab, MapsParent);
+        }
+        else {
+            Debug.Log("you have focused a ui element so saving will be skipped");
+        }
+        
     }
 
     void importMapAsString(string mapStr){
@@ -361,7 +368,6 @@ public class gridplacement : MonoBehaviour
     public void updateSelectedItem(){
 
         Toggle toggle = toggleGroup.ActiveToggles().FirstOrDefault();
-        Debug.Log(toggle.transform.GetSiblingIndex());
 
         msEffectParent.GetChild(blockType).gameObject.SetActive(false);
         
@@ -451,8 +457,6 @@ class block{
     public void resetTransform(){
         gameObject.transform.position = pos;
         gameObject.transform.rotation = rot;
-
-        // Debug.Log("eff");
 
     }
 }

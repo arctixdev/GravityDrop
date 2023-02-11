@@ -64,7 +64,7 @@ public static class SaveSystem
         for (int i = 0; i < paths.Length; i++)
         {
             names[i] = Path.GetFileName(paths[i].Replace(".txt", ""));
-            Debug.Log(names[i]);
+            // Debug.Log(names[i]); 
         }
         return names;
         // return paths;
