@@ -65,6 +65,23 @@ public class gridplacement : MonoBehaviour
     // public SimulationMode2D simulationMode;
     string currentMapName;
 
+    bool remove;
+
+    void addBlockPrefab(GameObject b){
+         GameObject msEffectBlock = Instantiate(b, msEffectParent.position, msEffectParent.rotation, msEffectParent);
+
+        BoxCollider2D boxCollider = msEffectBlock.GetComponent<BoxCollider2D>();
+        if (boxCollider != null)
+        {
+            Destroy(boxCollider);
+        }
+        Rigidbody2D rb = msEffectBlock.GetComponent<Rigidbody2D>();
+        if (rb != null)
+        {
+            Destroy(rb);
+        }
+    }
+
     // Start is called before the first frame update
 
     /// <summary>
@@ -127,33 +144,9 @@ public class gridplacement : MonoBehaviour
                 Debug.Log(element);
             }
         }
-
-        foreach (GameObject b in blockPrefabs)
+        for (int i = msEffectParent.childCount; i < blockPrefabs.Count; i++)
         {
-            GameObject msEffectBlock = Instantiate(b, msEffectParent.position, msEffectParent.rotation, msEffectParent);
-
-            BoxCollider2D boxCollider = msEffectBlock.GetComponent<BoxCollider2D>();
-            if (boxCollider != null)
-            {
-                Destroy(boxCollider);
-            }
-            Rigidbody2D rb = msEffectBlock.GetComponent<Rigidbody2D>();
-            if (rb != null)
-            {
-                Destroy(rb);
-            }
-
-            // // Get the sprite renderer component
-            // SpriteRenderer renderer = msEffectBlock.GetComponent<SpriteRenderer>();
-
-            // // Get the current color of the material
-            // Color currentColor = renderer.color;
-
-            // // Set the new alpha value (0-1)
-            // currentColor.a = 0.5f;
-
-            // // Set the new color back to the sprite renderer
-            // renderer.color = currentColor;
+            addBlockPrefab(blockPrefabs[i]);
         }
 
 
@@ -209,7 +202,7 @@ public class gridplacement : MonoBehaviour
                 if(Input.GetMouseButton(0) ){
                     
 
-                    if(blockType == toggleGroup.transform.childCount - 1){
+                    if(remove){
                         removeBlock(x, y);
                         
                     }
@@ -222,10 +215,11 @@ public class gridplacement : MonoBehaviour
             }
             
 
-            if(blockType != toggleGroup.transform.childCount - 1){
+            if(!remove){
 
                 GameObject child = msEffectParent.GetChild(blockType).gameObject;
-                iTween.RotateTo(child, iTween.Hash("z", rot * 90, "time", 0.1));
+                // child.SetActive(false);
+                // iTween.RotateTo(child, iTween.Hash("z", rot * 90, "time", 0.1));
                 iTween.MoveTo(child, iTween.Hash("x", x * 2.5f, "y", y * 2.5f, "time", 0.1, "easetype", EaseType));  
             }
         }
@@ -369,11 +363,16 @@ public class gridplacement : MonoBehaviour
         Toggle toggle = toggleGroup.ActiveToggles().FirstOrDefault();
         Debug.Log(toggle.transform.GetSiblingIndex());
 
-        if(blockType !=  toggleGroup.transform.childCount - 1) msEffectParent.GetChild(blockType).gameObject.SetActive(false);
+        msEffectParent.GetChild(blockType).gameObject.SetActive(false);
         
         blockType = toggle.transform.GetSiblingIndex();
 
-        if(blockType !=  toggleGroup.transform.childCount - 1){
+        if(toggle.transform.parent == toggleGroup){
+            // if it is the remove button
+            remove = true;
+        }
+        else {
+            remove = false;
             GameObject obj = msEffectParent.GetChild(blockType).gameObject;
             obj.SetActive(true);
             obj.transform.position = blockToWorldPos(getMsPos());
@@ -407,6 +406,7 @@ public class gridplacement : MonoBehaviour
 
         Physics2D.simulationMode = SimulationMode2D.FixedUpdate;
         
+        msEffectParent.GetChild(blockType).gameObject.SetActive(false);
 
 
     }
@@ -419,6 +419,8 @@ public class gridplacement : MonoBehaviour
         {
             b.resetTransform();
         }
+        msEffectParent.GetChild(blockType).gameObject.SetActive(true);
+
     }
 
     void swichCam(bool isPlaying){

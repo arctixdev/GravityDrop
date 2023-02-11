@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class mouseeffect : MonoBehaviour
 {
+    [SerializeField] TrailRenderer_Local trailRenderer;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,6 +18,10 @@ public class mouseeffect : MonoBehaviour
             Vector3 msPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
             transform.position = new Vector3(msPos.x, msPos.y, transform.position.z);
+        }
+
+        if(Input.GetMouseButtonDown(0)){
+            trailRenderer.Reset();
         }
     }
 }
