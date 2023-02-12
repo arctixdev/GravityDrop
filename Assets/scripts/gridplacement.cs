@@ -10,25 +10,18 @@ using System.Collections;
 
 public class gridplacement : MonoBehaviour
 {
-    public List<GameObject> blockPrefabs;
-    public Vector2 size;
+    [SerializeField] List<GameObject> blockPrefabs;
 
-    public Transform OtherBlocksParent;
+    [SerializeField] Transform OtherBlocksParent;
 
-    public float zPos;
-
-    public Vector3[] Xsides;
-    public Vector3[] Ysides;
-    public Vector3[] sides;
+    [SerializeField] float zPos;
 
     // public List<Vector2> blockPlacements = new List<Vector2>();
 
     HashSet<List<int>> mapList = new HashSet<List<int>>();
 
-    public int blockType = 0;
+    public int itemID = 0;
     public int rot = 0;
-
-    public string MapString;
 
     public ToggleGroup toggleGroup;
 
@@ -41,7 +34,7 @@ public class gridplacement : MonoBehaviour
     public GameObject player;
 
 
-    
+    [Header("Camaras")]
 
     [SerializeField]
     public GameObject editorCam;
@@ -52,20 +45,29 @@ public class gridplacement : MonoBehaviour
     public Transform msEffectParent;
     [SerializeField]
     public iTween.EaseType EaseType;
+    [Header("UI")]
 
-    public TMP_InputField MapNameInputField;
+    [SerializeField] TMP_InputField MapNameInputField;
 
-    public Transform MapsParent;
+    [SerializeField] Transform MapsParent;
 
-    public GameObject MapButtonPrefab;
+    [SerializeField] GameObject MapButtonPrefab;
 
-    public tileMapHandler tileMapHandler;
+    [SerializeField] tileMapHandler tileMapHandler;
 
 
     // public SimulationMode2D simulationMode;
     string currentMapName;
 
-    bool remove;
+
+
+    private int oldItemId;
+
+    private keyToggle keyToggle;
+
+    private int removeLayer;
+
+    [SerializeField] private TrailRenderer_Local trailRenderer;
 
     void addBlockPrefab(GameObject b){
          GameObject msEffectBlock = Instantiate(b, msEffectParent.position, msEffectParent.rotation, msEffectParent);
@@ -129,10 +131,10 @@ public class gridplacement : MonoBehaviour
     }
     void Start()
     {
+        keyToggle = toggleGroup.GetComponent<keyToggle>();
         importMapFromFile(MapNameInputField.text);
         ListMapsToLoad(MapButtonPrefab, MapsParent);
 
-        sides = Xsides.Union(Ysides).ToArray();
         HashSet<List<int>> list = exportMap();
 
 
@@ -189,8 +191,23 @@ public class gridplacement : MonoBehaviour
     }
     void Update()
     {
+        if(Input.GetKeyDown(KeyCode.LeftShift)){
+            oldItemId = itemID;
+            keyToggle.enableToggle(-1);
+        }
+        if(Input.GetKeyUp(KeyCode.LeftShift)){
+            print("you unshifted"); 
+            keyToggle.enableToggle(oldItemId);
+            
+        }
         // blockType += Mathf.RoundToInt(Input.mouseScrollDelta.y);
         if(!inPlayMode){
+
+            if(Input.GetMouseButtonUp(0)){
+                removeLayer = -1;
+
+                // reseting remove layer when not clicking
+            }
 
             Vector2Int msPos = getMsPos();
             int x = msPos.x;
@@ -200,12 +217,12 @@ public class gridplacement : MonoBehaviour
                 if(Input.GetMouseButton(0) ){
                     
 
-                    if(remove){
+                    if(itemID == -1){
                         removeBlock(x, y);
                         
                     }
                     else {
-                        addBlock(x, y, blockType, rot);
+                        addBlock(x, y, itemID, rot);
                     }
 
                 }
@@ -213,9 +230,9 @@ public class gridplacement : MonoBehaviour
             }
             
 
-            if(!remove){
+            if(itemID != -1){
 
-                GameObject child = msEffectParent.GetChild(blockType).gameObject;
+                GameObject child = msEffectParent.GetChild(itemID).gameObject;
                 // child.SetActive(false);
                 iTween.RotateTo(child, iTween.Hash("z", rot * 90, "time", 0.1));
                 iTween.MoveTo(child, iTween.Hash("x", x * 2.5f, "y", y * 2.5f, "time", 0.1, "easetype", EaseType));  
@@ -302,21 +319,26 @@ public class gridplacement : MonoBehaviour
     }
 
     void removeBlock(int x, int y){
-        for (int b = 0; b < OtherBlocksParent.transform.childCount; b++)
-        {
-            Transform block = OtherBlocksParent.transform.GetChild(b);
+        if(removeLayer != 0){
+            for (int b = 0; b < OtherBlocksParent.transform.childCount; b++)
+            {
+                Transform block = OtherBlocksParent.transform.GetChild(b);
 
-            if(block.position.x == x * 2.5f && block.position.y == y * 2.5f){
-                Destroy(block.gameObject);
+                if(block.position.x == x * 2.5f && block.position.y == y * 2.5f){
+                    Destroy(block.gameObject);
 
-                // var itemToRemove = mapList.Where(r => r[0] == x && r[1] == y);
-                mapList.RemoveWhere(r => r[0] == x && r[1] == y);
-                exportMapAsString();
-                return;
+                    // var itemToRemove = mapList.Where(r => r[0] == x && r[1] == y);
+                    mapList.RemoveWhere(r => r[0] == x && r[1] == y);
+                    exportMapAsString();
+                    removeLayer = 1;
+                    return;
+                }
+
+
             }
-
-
         }
+        if(removeLayer == 1) return;
+        removeLayer = 0;
 
         tileMapHandler.changeBlock(x, y, false);
         mapList.RemoveWhere(r => r[0] == x && r[1] == y);
@@ -369,20 +391,24 @@ public class gridplacement : MonoBehaviour
 
         Toggle toggle = toggleGroup.ActiveToggles().FirstOrDefault();
 
-        msEffectParent.GetChild(blockType).gameObject.SetActive(false);
-        
-        blockType = toggle.transform.GetSiblingIndex();
+        // msEffectParent.GetChild(itemID).gameObject.SetActive(false);
+        updateSelectedItem(toggle.transform.GetSiblingIndex());
 
-        if(toggle.transform.parent == toggleGroup){
-            // if it is the remove button
-            remove = true;
+        
+    }
+
+    public void updateSelectedItem(int NewitemID){
+        if(itemID != -1){
+            msEffectParent.GetChild(itemID).gameObject.SetActive(false);
         }
-        else {
-            remove = false;
-            GameObject obj = msEffectParent.GetChild(blockType).gameObject;
-            obj.SetActive(true);
-            obj.transform.position = blockToWorldPos(getMsPos());
-        }
+        itemID = NewitemID;
+        if(itemID == -1) return;
+        GameObject obj = msEffectParent.GetChild(itemID).gameObject;
+        obj.SetActive(true);
+        obj.transform.position = blockToWorldPos(getMsPos());
+
+
+
     }
     
     public void StartOrStopSim(){
@@ -412,12 +438,14 @@ public class gridplacement : MonoBehaviour
 
         Physics2D.simulationMode = SimulationMode2D.FixedUpdate;
         
-        msEffectParent.GetChild(blockType).gameObject.SetActive(false);
+        msEffectParent.GetChild(itemID).gameObject.SetActive(false);
+
+        trailRenderer.enabled = true;
 
 
     }
     void StopSim(){
-
+        trailRenderer.enabled = false;
 
         swichCam(false);
         Physics2D.simulationMode = SimulationMode2D.Script;
@@ -425,7 +453,7 @@ public class gridplacement : MonoBehaviour
         {
             b.resetTransform();
         }
-        msEffectParent.GetChild(blockType).gameObject.SetActive(true);
+        msEffectParent.GetChild(itemID).gameObject.SetActive(true);
 
     }
 
