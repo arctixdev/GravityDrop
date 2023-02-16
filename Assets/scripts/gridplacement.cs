@@ -84,11 +84,7 @@ public class gridplacement : MonoBehaviour
         }
     }
 
-    // Start is called before the first frame update
 
-    /// <summary>
-    /// Awake is called when the script instance is being loaded.
-    /// </summary>
     void Awake()
     {
         if(disablePhysicsOnStart){
@@ -97,17 +93,31 @@ public class gridplacement : MonoBehaviour
         }
     }
 
-    IEnumerator importMapFromFileIE(string MapName)
+    void Start()
     {
+        keyToggle = toggleGroup.GetComponent<keyToggle>();
+        // importMapFromFile(MapNameInputField.text);
+        ListMapsToLoad();
+        importMapAsString(SaveSystem.getDeafultMapName());
 
-        clearMap();
-        Debug.Log("importing map with name: " + MapName + " and info: " + SaveSystem.ReadString(MapName.Replace(" ", "-")));
-        yield return null;
-        yield return null;
-        importMapAsString(SaveSystem.ReadString(MapName.Replace(" ", "-")));
+        HashSet<List<int>> list = mapList;
+
+
+        foreach (List<int> row in list)
+        {
+            foreach (int element in row)
+            {
+                // Do something with the element
+            }
+        }
+        for (int i = msEffectParent.childCount; i < blockPrefabs.Count; i++)
+        {
+            addBlockPrefab(blockPrefabs[i]);
+        }
 
 
     }
+
 
 
 
@@ -126,54 +136,59 @@ public class gridplacement : MonoBehaviour
     }
     void importMapFromFile(string MapName){
         StartCoroutine(importMapFromFileIE(MapName));
-        
-        
     }
-    void Start()
+    IEnumerator importMapFromFileIE(string MapName)
     {
-        keyToggle = toggleGroup.GetComponent<keyToggle>();
-        importMapFromFile(MapNameInputField.text);
-        ListMapsToLoad(MapButtonPrefab, MapsParent);
-
-        HashSet<List<int>> list = exportMap();
-
-
-        foreach (List<int> row in list)
-        {
-            foreach (int element in row)
-            {
-                // Do something with the element
-            }
-        }
-        for (int i = msEffectParent.childCount; i < blockPrefabs.Count; i++)
-        {
-            addBlockPrefab(blockPrefabs[i]);
-        }
-
-
+        clearMap();
+        Debug.Log("importing map with name: " + MapName + " and info: " + SaveSystem.ReadString(MapName.Replace(" ", "-")));
+        yield return null;
+        yield return null;
+        importMapAsString(SaveSystem.ReadString(MapName.Replace(" ", "-")));
     }
 
-    void ListMapsToLoad(GameObject buttonPrefab, Transform mapListParent){
-        clearChildren(mapListParent);
+    // -- maps selection ui --
+    void ListMapsToLoad(){
+        clearChildren(MapsParent);
         string[] mapNames = SaveSystem.getAllSavedMapNames();
-
+// MapButtonPrefab, MapsParent
         for (int i = 0; i < mapNames.Length; i++)
         {
-            addButtonToMapList(buttonPrefab, mapListParent, mapNames[i]);
+            addButtonToMapList(MapButtonPrefab, MapsParent, mapNames[i]);
         }
     }
 
     void addButtonToMapList(GameObject buttonPrefab, Transform mapListParent, string mapName){
         GameObject newButton = Instantiate(buttonPrefab, mapListParent);
         changeTextOfButton(newButton, mapName);
-        newButton.GetComponent<Button>().onClick.AddListener(() => importMapFromFile(mapName));
+        newButton.GetComponent<Button>().onClick.AddListener(() => changeCurrentMap(mapName));
         
         
     }
-
     void changeTextOfButton(GameObject button, string newText){
         button.GetComponentInChildren<TMP_Text>().text = newText;
     }
+
+    // change the current map
+
+    void changeCurrentMap(string mapName){
+        currentMapName = mapName;
+        importMapFromFile(mapName);
+    }
+
+    // add a new map (mapName being the name for the new map). ////returns false if fails fx. if the map name already exists
+
+    public void addMap(){
+        clearMap();
+        currentMapName = MapNameInputField.text.Replace(" ", "-");
+        exportMapAsString();
+        ListMapsToLoad();
+        
+    }
+    //clones a map !! not implemented yet DO NOT USE
+    public void cloneMap(string NewMapName){
+
+    }
+
 
     
 
@@ -241,10 +256,7 @@ public class gridplacement : MonoBehaviour
         
     }
 
-    HashSet<List<int>> exportMap(){
 
-        return mapList;
-    }
 
     // void saveMapToBinnary(){
     //     int[,] map = {{0, 0}, {0, 0}};
@@ -281,17 +293,12 @@ public class gridplacement : MonoBehaviour
     }
 
     public void hellooo(){
-        GameObject selected = EventSystem.current.currentSelectedGameObject;
-        if (selected != MapNameInputField.gameObject)
-        {
+        
             
-            Debug.Log("saving map...");
-            exportMapAsString();
-            ListMapsToLoad(MapButtonPrefab, MapsParent);
-        }
-        else {
-            Debug.Log("you have focused a ui element so saving will be skipped");
-        }
+        Debug.Log("saving map to name: "+ currentMapName);
+        exportMapAsString();
+            // ListMapsToLoad(MapButtonPrefab, MapsParent);
+        
         
     }
 

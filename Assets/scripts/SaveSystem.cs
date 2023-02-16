@@ -70,4 +70,8 @@ public static class SaveSystem
         // return paths;
     }
 
+    public static string getDeafultMapName(){
+        return getAllSavedMapNames()[0];
+    }
+
 }
