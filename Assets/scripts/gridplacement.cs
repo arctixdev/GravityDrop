@@ -161,7 +161,7 @@ public class gridplacement : MonoBehaviour
         GameObject newButton = Instantiate(buttonPrefab, mapListParent);
         changeTextOfButton(newButton, mapName);
         newButton.GetComponent<Button>().onClick.AddListener(() => changeCurrentMap(mapName));
-        
+        newButton.GetComponentsInChildren<Button>()[1].onClick.AddListener(() => removeMap(mapName));
         
     }
     void changeTextOfButton(GameObject button, string newText){
@@ -174,21 +174,36 @@ public class gridplacement : MonoBehaviour
         currentMapName = mapName;
         importMapFromFile(mapName);
     }
+    public void saveMap(){
+        if(currentMapName is "" or null) return;
+        Debug.Log("saving map to name: "+ currentMapName);
+        exportMapAsString();
+            // ListMapsToLoad(MapButtonPrefab, MapsParent);
+    }
 
     // add a new map (mapName being the name for the new map). ////returns false if fails fx. if the map name already exists
 
     public void addMap(){
+        if(MapNameInputField.text.Replace(" ", "-") == "") return;
+
         clearMap();
         currentMapName = MapNameInputField.text.Replace(" ", "-");
-        exportMapAsString();
+        saveMap();
         ListMapsToLoad();
-        
     }
     //clones a map !! not implemented yet DO NOT USE
     public void cloneMap(string NewMapName){
 
     }
 
+    // removes the map with the mapNmae
+    public void removeMap(string MapName){
+        if(currentMapName == MapName){
+            currentMapName = "";
+        }
+        SaveSystem.removeFile(MapName);
+        ListMapsToLoad();
+    }
 
     
 
@@ -292,15 +307,7 @@ public class gridplacement : MonoBehaviour
         return MapString;
     }
 
-    public void hellooo(){
-        
-            
-        Debug.Log("saving map to name: "+ currentMapName);
-        exportMapAsString();
-            // ListMapsToLoad(MapButtonPrefab, MapsParent);
-        
-        
-    }
+
 
     void importMapAsString(string mapStr){
         foreach (string bstring in mapStr.Split(','))

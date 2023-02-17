@@ -46,6 +46,16 @@ public static class SaveSystem
         //Re-import the file to update the reference in the editor
     }
 
+    public static bool removeFile(string name){
+        string path = "Assets/MapsData/" + name + ".txt";
+        if(!File.Exists(path)) return false;
+
+        File.Delete(path);
+
+        return !File.Exists(path);
+
+
+    }
     public static string ReadString(string name)
     {
 

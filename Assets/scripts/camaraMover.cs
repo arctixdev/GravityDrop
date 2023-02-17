@@ -15,6 +15,8 @@ public class camaraMover : MonoBehaviour
 
     [SerializeField]
     public float rotationTime;
+
+    private int rotation;
     
     void Start()
     {
@@ -50,15 +52,18 @@ public class camaraMover : MonoBehaviour
         transform.Translate(new Vector3(xspeed * Time.deltaTime, yspeed * Time.deltaTime, 0));
 
         if(Input.GetKeyDown("[1]")){
-            rotateCam(-90);
+            rotateCam(-1);
         }
         if(Input.GetKeyDown("[2]")){
-            rotateCam(90);
+            rotateCam(1);
         }
     }
 
-    void rotateCam(float deg){
-        iTween.RotateTo(gameObject, iTween.Hash("rotation", new Vector3(0, 0, transform.rotation.eulerAngles.z + deg), "time", rotationTime, "easetype", iTween.EaseType.easeInOutCubic));
+    void rotateCam(int deg){
+        rotation += deg;
+        rotation = rotation % 4;
+        iTween.RotateTo(gameObject, iTween.Hash("rotation", new Vector3(0, 0, rotation * 90), "time", rotationTime, "easetype", iTween.EaseType.easeInOutCubic));
+        // rotation = rotation % 4;
     }
     float clampToZero(float n, float distance){
         if(n == 0) return 0;
