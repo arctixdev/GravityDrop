@@ -23,8 +23,11 @@ public class chainGen : MonoBehaviour
     Rigidbody2D endrb;
 
     int chaincount = 0;
+
+    Camera _cam;
     void Start()
     {
+        _cam = Camera.main;
         genChain(transform.position);
     }
 
@@ -56,15 +59,15 @@ public class chainGen : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // this.gameObject.transform.GetChild(0).GetChild(0).position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        // Vector3 mspos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        // endrb.MovePosition(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+        // this.gameObject.transform.GetChild(0).GetChild(0).position = _cam.ScreenToWorldPoint(Input.mousePosition);
+        // Vector3 mspos = _cam.ScreenToWorldPoint(Input.mousePosition);
+        // endrb.MovePosition(_cam.ScreenToWorldPoint(Input.mousePosition));
         if(moveWithMouse){
-            transform.GetChild(transform.childCount - 1).GetChild(1).position = Camera.main.ScreenToWorldPoint(Input.mousePosition + Vector3.forward * 4);
+            transform.GetChild(transform.childCount - 1).GetChild(1).position = _cam.ScreenToWorldPoint(Input.mousePosition + Vector3.forward * 4);
         }
 
         if(Input.GetMouseButtonDown(0)){
-            genChain(Camera.main.ScreenToWorldPoint(Input.mousePosition) + Vector3.forward * 4);
+            genChain(_cam.ScreenToWorldPoint(Input.mousePosition) + Vector3.forward * 4);
         }
         
 

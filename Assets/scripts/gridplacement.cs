@@ -69,6 +69,8 @@ public class gridplacement : MonoBehaviour
 
     [SerializeField] private TrailRenderer_Local trailRenderer;
 
+    private Camera _cam;
+
     void addBlockPrefab(GameObject b){
          GameObject msEffectBlock = Instantiate(b, msEffectParent.position, msEffectParent.rotation, msEffectParent);
 
@@ -95,6 +97,8 @@ public class gridplacement : MonoBehaviour
 
     void Start()
     {
+
+        _cam = Camera.main;
         keyToggle = toggleGroup.GetComponent<keyToggle>();
         // importMapFromFile(MapNameInputField.text);
         ListMapsToLoad();
@@ -210,7 +214,7 @@ public class gridplacement : MonoBehaviour
     // Update is called once per frame
     Vector2Int getMsPos(){
         Vector3 mousePosition = Input.mousePosition;
-        Vector3 worldPosition = Camera.main.ScreenToWorldPoint(mousePosition);
+        Vector3 worldPosition = _cam.ScreenToWorldPoint(mousePosition);
         return new Vector2Int(
             Mathf.RoundToInt(worldPosition.x / 2.5f),
             Mathf.RoundToInt(worldPosition.y / 2.5f));
