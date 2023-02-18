@@ -15,7 +15,7 @@ public class autoSave : MonoBehaviour
     public gridplacement script;
     void Start()
     {
-        script.InvokeRepeating("hellooo", startDelay, delay);
+        script.InvokeRepeating("saveMap", startDelay, delay);
     }
 
     // Update is called once per frame

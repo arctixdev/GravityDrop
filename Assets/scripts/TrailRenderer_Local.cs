@@ -35,6 +35,7 @@ public class TrailRenderer_Local : MonoBehaviour {
     }
  
     public void Reset() {
+        if(!this.enabled) return;
         // Wipe out any old positions in the LineRenderer
         myLine.positionCount = 0;
         // Then set the first position to our object's current local position

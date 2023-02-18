@@ -20,18 +20,18 @@ public class gridplacement : MonoBehaviour
 
     HashSet<List<int>> mapList = new HashSet<List<int>>();
 
-    public int itemID = 0;
-    public int rot = 0;
+    [SerializeField] private int itemID = 0;
+    [SerializeField] private int rot = 0;
 
-    public ToggleGroup toggleGroup;
+    [SerializeField] private ToggleGroup toggleGroup;
 
-    public bool disablePhysicsOnStart = true; 
+    [SerializeField] private bool disablePhysicsOnStart = true; 
 
     List<block> oldblockpos = new List<block>();
 
     bool inPlayMode;
 
-    public GameObject player;
+    [SerializeField] private GameObject player;
 
 
     [Header("Camaras")]
@@ -89,20 +89,22 @@ public class gridplacement : MonoBehaviour
 
     void Awake()
     {
-        if(disablePhysicsOnStart){
-            Physics2D.simulationMode = SimulationMode2D.Script;
-            Debug.Log("Disabled physics");
-        }
+        _cam = Camera.main;
+
     }
 
     void Start()
     {
+        if(disablePhysicsOnStart){
+            Physics2D.simulationMode = SimulationMode2D.Script;
+            Debug.Log("Disabled physics");
+        }
 
-        _cam = Camera.main;
+        
         keyToggle = toggleGroup.GetComponent<keyToggle>();
         // importMapFromFile(MapNameInputField.text);
         ListMapsToLoad();
-        importMapAsString(SaveSystem.getDeafultMapName());
+        changeCurrentMap(SaveSystem.getDeafultMapName());
 
         HashSet<List<int>> list = mapList;
 
@@ -211,9 +213,10 @@ public class gridplacement : MonoBehaviour
 
     
 
-    // Update is called once per frame
+
     Vector2Int getMsPos(){
         Vector3 mousePosition = Input.mousePosition;
+        if(_cam == null) _cam = Camera.main;
         Vector3 worldPosition = _cam.ScreenToWorldPoint(mousePosition);
         return new Vector2Int(
             Mathf.RoundToInt(worldPosition.x / 2.5f),
@@ -346,7 +349,7 @@ public class gridplacement : MonoBehaviour
                     Destroy(block.gameObject);
 
                     // var itemToRemove = mapList.Where(r => r[0] == x && r[1] == y);
-                    mapList.RemoveWhere(r => r[0] == x && r[1] == y);
+                    mapList.RemoveWhere(r => r[0] == x && r[1] == y && r[2] != 0);
                     exportMapAsString();
                     removeLayer = 1;
                     return;
@@ -359,7 +362,7 @@ public class gridplacement : MonoBehaviour
         removeLayer = 0;
 
         tileMapHandler.changeBlock(x, y, false);
-        mapList.RemoveWhere(r => r[0] == x && r[1] == y);
+        mapList.RemoveWhere(r => r[0] == x && r[1] == y && r[2] == 0);
     }
 
 
