@@ -11,7 +11,7 @@ public class GPGSManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        PlayGamesPlatform.Instance.Authenticate(ProcessAuthentication);
+        // PlayGamesPlatform.Instance.Authenticate(ProcessAuthentication);
     }
 
     // Update is called once per frame

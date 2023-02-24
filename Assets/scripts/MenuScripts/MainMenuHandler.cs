@@ -51,7 +51,7 @@ public class MainMenuHandler : MonoBehaviour
         // Register slider change func
         soundSlider.RegisterValueChangedCallback(soundChange);
 
-        PlayGamesPlatform.Instance.Authenticate(ProcessAuthentication);
+        // PlayGamesPlatform.Instance.Authenticate(ProcessAuthentication);
     }
 
     // Update is unused
@@ -74,7 +74,7 @@ public class MainMenuHandler : MonoBehaviour
 
     internal void ProcessAuthentication(SignInStatus status) {
       if (status == SignInStatus.Success) {
-        username = PlayGamesPlatform.Instance.GetUserDisplayName();
+        // username = PlayGamesPlatform.Instance.GetUserDisplayName();
       } else {
         username = "Guest";
       }
