@@ -1,7 +1,5 @@
 using System;
-using System.Security.Cryptography.X509Certificates;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class playerScript : MonoBehaviour
@@ -9,6 +7,7 @@ public class playerScript : MonoBehaviour
     // Start is called before the first frame update
 
     Vector3 spawnPoint;
+    
 
     public TrailRenderer trailRenderer;
 
