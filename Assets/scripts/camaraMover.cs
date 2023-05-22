@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Cinemachine;
 public class camaraMover : MonoBehaviour
 {
     // Start is called before the first frame update
@@ -17,10 +17,18 @@ public class camaraMover : MonoBehaviour
     public float rotationTime;
 
     private int rotation;
+
+    [SerializeField]
+    private CinemachineVirtualCamera virtuelCam;
+    private Camera cam;
+
+    private bool isDragging = false;
+    private Vector3 previousMousePosition;
     
     void Start()
     {
-        
+        virtuelCam = GetComponent<CinemachineVirtualCamera>(); 
+        cam = Camera.main;
     }
 
     // Update is called once per frame
@@ -46,17 +54,45 @@ public class camaraMover : MonoBehaviour
             xspeed = clampToZero(xspeed, Acceleration * Time.deltaTime);
 
         }
+
+        if(Input.mouseScrollDelta.y != 0 && Input.GetKey(KeyCode.LeftControl)){
+            virtuelCam.m_Lens.OrthographicSize *= 1 + Input.mouseScrollDelta.y * -0.1f;
+        }
         
 
+        if(xspeed != 0 || yspeed != 0){
 
-        transform.Translate(new Vector3(xspeed * Time.deltaTime, yspeed * Time.deltaTime, 0));
+            transform.Translate(new Vector3(xspeed * Time.deltaTime, yspeed * Time.deltaTime, 0));
+        }
 
         if(Input.GetKeyDown("[1]")){
             rotateCam(-1);
+            print("rot");
         }
-        if(Input.GetKeyDown("[2]")){
+        if(Input.GetKeyDown("[3]")){
             rotateCam(1);
         }
+
+        if (Input.GetMouseButtonDown(2)) // Middle mouse button pressed
+        {
+            isDragging = true;
+            previousMousePosition = cam.ScreenToWorldPoint(Input.mousePosition) - cam.transform.position;
+            
+            
+        }
+
+
+        if (Input.GetMouseButton(2))
+        {
+            Vector3 currentMousePosition = cam.ScreenToWorldPoint(Input.mousePosition) - cam.transform.position;
+            Vector3 mouseDelta = previousMousePosition - currentMousePosition;
+            transform.position += mouseDelta;
+            
+            // print(cam.cameraToWorldMatrix);
+
+            previousMousePosition = currentMousePosition;
+        }
+    
     }
 
     void rotateCam(int deg){

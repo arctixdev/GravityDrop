@@ -36,15 +36,14 @@ public class gridplacement : MonoBehaviour
 
     [Header("Camaras")]
 
-    [SerializeField]
-    public GameObject editorCam;
-    [SerializeField]
-    public GameObject playingCam;
 
-    [SerializeField]
-    public Transform msEffectParent;
-    [SerializeField]
-    public iTween.EaseType EaseType;
+    [SerializeField] private GameObject editorCam;
+
+    [SerializeField] private GameObject playingCam;
+
+
+    [SerializeField] private Transform msEffectParent;
+    [SerializeField] private iTween.EaseType EaseType;
     [Header("UI")]
 
     [SerializeField] TMP_InputField MapNameInputField;
@@ -263,7 +262,9 @@ public class gridplacement : MonoBehaviour
                     }
 
                 }
-                rot = (rot + Mathf.RoundToInt(Input.mouseScrollDelta.y)) % 4 ;
+                if(!Input.GetKey(KeyCode.LeftControl)){
+                    rot = (rot + Mathf.RoundToInt(Input.mouseScrollDelta.y)) % 4 ;
+                }
             }
             
 
