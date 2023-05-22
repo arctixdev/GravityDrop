@@ -15,7 +15,7 @@ EditorBuildSettings:
     path: Assets/Scenes/StartMenu.unity
     guid: 40a3dc1a3d672b6b2a028cb57fe802a6
   - enabled: 1
-    path: Assets/Scenes/map builder level.unity
+    path: Assets/Scenes/used/map builder level.unity
     guid: cc82fb0aaad6c0f4ab39a8f6d0e84c5c
   - enabled: 0
     path: Assets/Scenes/map 1.unity
