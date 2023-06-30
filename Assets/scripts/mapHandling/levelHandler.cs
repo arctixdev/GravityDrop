@@ -20,7 +20,7 @@ public class levelHandler : MonoBehaviour
         
     }
 
-    void nextLevel(){
+    public void nextLevel(){
         currentLevel += 1;
         saveLevel(currentLevel);
         ML.importMapFromFile("lvl" + currentLevel);
