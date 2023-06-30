@@ -6,7 +6,6 @@ using System.Linq;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using TMPro;
-using System.Collections;
 
 public class gridplacement : MonoBehaviour
 {
@@ -69,6 +68,7 @@ public class gridplacement : MonoBehaviour
     [SerializeField] private TrailRenderer_Local trailRenderer;
 
     private Camera _cam;
+    [SerializeField] mapLoader ML;
 
     void addBlockPrefab(GameObject b){
          GameObject msEffectBlock = Instantiate(b, msEffectParent.position, msEffectParent.rotation, msEffectParent);
@@ -98,23 +98,11 @@ public class gridplacement : MonoBehaviour
             Physics2D.simulationMode = SimulationMode2D.Script;
             Debug.Log("Disabled physics");
         }
-
         
         keyToggle = toggleGroup.GetComponent<keyToggle>();
-        // importMapFromFile(MapNameInputField.text);
         ListMapsToLoad();
         changeCurrentMap(SaveSystem.getDeafultMapName());
 
-        HashSet<List<int>> list = mapList;
-
-
-        foreach (List<int> row in list)
-        {
-            foreach (int element in row)
-            {
-                // Do something with the element
-            }
-        }
         for (int i = msEffectParent.childCount; i < blockPrefabs.Count; i++)
         {
             addBlockPrefab(blockPrefabs[i]);
@@ -129,12 +117,7 @@ public class gridplacement : MonoBehaviour
 
 
 
-    void clearMap(){
-        clearChildren(OtherBlocksParent);
-        tileMapHandler.clearMap();
 
-        mapList = new HashSet<List<int>>();
-    }
 
     void clearChildren(Transform parent){
         for (int i = 0; i < parent.childCount; i++)
@@ -142,17 +125,8 @@ public class gridplacement : MonoBehaviour
             Destroy(parent.GetChild(i).gameObject);
         }
     }
-    void importMapFromFile(string MapName){
-        StartCoroutine(importMapFromFileIE(MapName));
-    }
-    IEnumerator importMapFromFileIE(string MapName)
-    {
-        clearMap();
-        Debug.Log("importing map with name: " + MapName + " and info: " + SaveSystem.ReadString(MapName.Replace(" ", "-")));
-        yield return null;
-        yield return null;
-        importMapAsString(SaveSystem.ReadString(MapName.Replace(" ", "-")));
-    }
+
+
 
     // -- maps selection ui --
     void ListMapsToLoad(){
@@ -180,7 +154,7 @@ public class gridplacement : MonoBehaviour
 
     void changeCurrentMap(string mapName){
         currentMapName = mapName;
-        importMapFromFile(mapName);
+        mapList = ML.importMapFromFile(mapName);
     }
     public void saveMap(){
         if(currentMapName is "" or null) return;
@@ -194,7 +168,8 @@ public class gridplacement : MonoBehaviour
     public void addMap(){
         if(MapNameInputField.text.Replace(" ", "-") == "") return;
 
-        clearMap();
+        mapList = ML.clearMap();
+
         currentMapName = MapNameInputField.text.Replace(" ", "-");
         saveMap();
         ListMapsToLoad();
@@ -284,17 +259,6 @@ public class gridplacement : MonoBehaviour
 
 
 
-    // void saveMapToBinnary(){
-    //     int[,] map = {{0, 0}, {0, 0}};
-    //     foreach (List<int> i in mapList)
-    //     {
-    //         for (int b = 0; b < i.Count(); b++)
-    //         {
-    //             map[a, b] = i[b];
-    //         }
-    //     }
-    //     SaveSystem.SaveMap(map);
-    // }
     public string exportMapAsString(){
         String MapString = "";
         foreach (List<int> row in mapList)
@@ -397,11 +361,6 @@ public class gridplacement : MonoBehaviour
         }
         
         tileMapHandler.changeBlock(x, y, true);
-
-        
-
-
-            
 
             // if(child.)
     }
