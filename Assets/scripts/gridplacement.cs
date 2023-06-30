@@ -120,6 +120,9 @@ public class gridplacement : MonoBehaviour
             addBlockPrefab(blockPrefabs[i]);
         }
 
+        // initilize variables
+
+
 
     }
 
@@ -469,13 +472,16 @@ public class gridplacement : MonoBehaviour
     void StopSim(){
         trailRenderer.enabled = false;
 
-        swichCam(false);
-        Physics2D.simulationMode = SimulationMode2D.Script;
         foreach (block b in oldblockpos)
         {
             b.resetTransform();
         }
+        swichCam(false);
+        Physics2D.simulationMode = SimulationMode2D.Script;
+        
         msEffectParent.GetChild(itemID).gameObject.SetActive(true);
+
+        
 
     }
 
@@ -498,15 +504,18 @@ class block{
     private Vector3 pos;
     private Quaternion rot;
     private GameObject gameObject;
-    public block( GameObject igameObject){
+    private Rigidbody2D rb;
+    public block(GameObject igameObject){
         pos = igameObject.transform.position;
         rot = igameObject.transform.rotation;
+        rb = igameObject.GetComponent<Rigidbody2D>();
         gameObject = igameObject;
     }
 
     public void resetTransform(){
         gameObject.transform.position = pos;
         gameObject.transform.rotation = rot;
+        rb.velocity = Vector2.zero;
 
     }
 }
