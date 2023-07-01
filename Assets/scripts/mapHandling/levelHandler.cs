@@ -7,10 +7,26 @@ public class levelHandler : MonoBehaviour
     // Start is called before the first frame update
     private int currentLevel = 1;
 
+    private Vector3 startingPlayerPos;
+
     [SerializeField] mapLoader ML;
+
+    [SerializeField] GameObject player;
+    [SerializeField] bool resetLevel; // IMPORTANT: remove when moving to production
+
+    
+
     void Start()
     {
-        currentLevel = getLevel();
+        startingPlayerPos = player.transform.position;
+
+        
+        if(resetLevel){
+            currentLevel = 1;
+        } else {
+            currentLevel = getLevel();
+        }
+
         ML.importMapFromFile("lvl" + currentLevel);
     }
 
@@ -24,6 +40,7 @@ public class levelHandler : MonoBehaviour
         currentLevel += 1;
         saveLevel(currentLevel);
         ML.importMapFromFile("lvl" + currentLevel);
+        StartCoroutine(resetPlayerPos());
     }
 
     void saveLevel(int level){
@@ -32,4 +49,14 @@ public class levelHandler : MonoBehaviour
     int getLevel(){
         return PlayerPrefs.GetInt("level", 1);
     }
+
+    IEnumerator resetPlayerPos(){
+
+        player.transform.position = startingPlayerPos;
+
+        player.SetActive(true);
+
+    }
+
+
 }
