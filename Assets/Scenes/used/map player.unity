@@ -8142,6 +8142,11 @@ Transform:
   m_Father: {fileID: 745265181}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!96 &727478459 stripped
+TrailRenderer:
+  m_CorrespondingSourceObject: {fileID: 685702521, guid: b46b94448cfa84e42869cb4f5b8b2066, type: 3}
+  m_PrefabInstance: {fileID: 2744243322060380353}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &745265180
 GameObject:
   m_ObjectHideFlags: 0
@@ -12269,7 +12274,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ML: {fileID: 1815001537}
   player: {fileID: 1843792750}
+  cineCam: {fileID: 1780169595}
+  playerTrail: {fileID: 727478459}
   resetLevel: 1
+  mainController: {fileID: 1780169599}
 --- !u!1 &1826611221
 GameObject:
   m_ObjectHideFlags: 0
