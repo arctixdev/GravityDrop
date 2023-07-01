@@ -12268,6 +12268,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ML: {fileID: 1815001537}
+  player: {fileID: 1843792750}
+  resetLevel: 1
 --- !u!1 &1826611221
 GameObject:
   m_ObjectHideFlags: 0
