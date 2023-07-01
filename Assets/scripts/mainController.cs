@@ -289,4 +289,12 @@ public class mainController : MonoBehaviour
             transform.position = cameraPositions[curCameraPosition].position;
         }
     }
+
+    public void resetGravity(){
+        rot = 0;
+        rotNew = 0;
+        curRot = 0;
+        StartCoroutine(shiftGrav());
+
+    }
 }
