@@ -5,9 +5,15 @@ using UnityEngine;
 public class finish : MonoBehaviour
 {
     // Start is called before the first frame update
+    private GameObject finishUi;
     void Start()
     {
-        
+        foreach (Transform t in GameObject.Find("Canvas").GetComponentInChildren<Transform>(true))
+        {
+            if(t.name == "finish-ui"){
+                finishUi = t.gameObject;
+            }
+        }
     }
 
     // Update is called once per frame
@@ -24,11 +30,6 @@ public class finish : MonoBehaviour
 
     private void enabelUi(){
          
-        foreach (Transform t in GameObject.Find("Canvas").GetComponentInChildren<Transform>(true))
-        {
-            if(t.name == "finish-ui"){
-                t.gameObject.SetActive(true);
-            }
-        }
+        finishUi.SetActive(true);
     }
 }
