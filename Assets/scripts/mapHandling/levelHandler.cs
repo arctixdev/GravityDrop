@@ -61,16 +61,23 @@ public class levelHandler : MonoBehaviour
     }
 
     public void nextLevel(){
+        currentLevel += 1;
+        startLevel(currentLevel);
+        saveLevel(currentLevel);
+    }
+
+    public void startLevel(int levelIndex){
         if(freezePhysicsWhileLoading){
             Physics2D.simulationMode = SimulationMode2D.Script;
         }
-        currentLevel += 1;
-        saveLevel(currentLevel);
         ML.importMapFromFile("lvl" + currentLevel);
         mainController.resetGravity();
         resetPlayerPos();
         StartCoroutine(enablePhysics());
-        
+    }
+
+    public void restartLevel(){
+        startLevel(currentLevel);
     }
 
     void saveLevel(int level){
