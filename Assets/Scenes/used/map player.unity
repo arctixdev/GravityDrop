@@ -11468,7 +11468,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.70980394}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.89411765}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -11858,6 +11858,7 @@ GameObject:
   - component: {fileID: 1786522359}
   - component: {fileID: 1786522361}
   - component: {fileID: 1786522360}
+  - component: {fileID: 1786522362}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -11905,7 +11906,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: contrats!
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f423e144bbfed8a4fbc820e41ca588ce, type: 2}
   m_sharedMaterial: {fileID: 3198292956133356339, guid: f423e144bbfed8a4fbc820e41ca588ce, type: 2}
@@ -11932,13 +11933,13 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 150.5
+  m_fontSize: 281.3
   m_fontSizeBase: 281.3
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 1361.8
-  m_fontStyle: 17
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -11982,6 +11983,30 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1786522358}
   m_CullTransparentMesh: 1
+--- !u!114 &1786522362
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1786522358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e229e1073e5429b4ca84018513e46aeb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  messages:
+  - CONTRATS!
+  - YAY!
+  - LETS GO!
+  - YAAS!!
+  - NICE!
+  - Excellent job!
+  - You did it!
+  - Fantastic work!
+  - Woo-hoo!
+  - Well done!
+  - OMG!
 --- !u!1 &1792298754
 GameObject:
   m_ObjectHideFlags: 0
@@ -12278,6 +12303,7 @@ MonoBehaviour:
   playerTrail: {fileID: 727478459}
   resetLevel: 1
   mainController: {fileID: 1780169599}
+  freezePhysicsWhileLoading: 0
 --- !u!1 &1826611221
 GameObject:
   m_ObjectHideFlags: 0

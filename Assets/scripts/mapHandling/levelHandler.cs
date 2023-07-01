@@ -23,7 +23,17 @@ public class levelHandler : MonoBehaviour
 
     [SerializeField] private mainController mainController;
 
-    
+    [SerializeField] private bool freezePhysicsWhileLoading;
+    [SerializeField] private float enablePhysicsDelay;
+    [SerializeField] private float disableUIExtraDelay;
+    [SerializeField] private GameObject finishUi;
+
+
+    private void Awake() {
+        if(freezePhysicsWhileLoading){
+            Physics2D.simulationMode = SimulationMode2D.Script;
+        }
+    }
 
     void Start()
     {
@@ -39,6 +49,9 @@ public class levelHandler : MonoBehaviour
         }
 
         ML.importMapFromFile("lvl" + currentLevel);
+        if(freezePhysicsWhileLoading){
+            StartCoroutine(enablePhysics());
+        }
     }
 
     // Update is called once per frame
@@ -48,11 +61,16 @@ public class levelHandler : MonoBehaviour
     }
 
     public void nextLevel(){
+        if(freezePhysicsWhileLoading){
+            Physics2D.simulationMode = SimulationMode2D.Script;
+        }
         currentLevel += 1;
         saveLevel(currentLevel);
         ML.importMapFromFile("lvl" + currentLevel);
         mainController.resetGravity();
         resetPlayerPos();
+        StartCoroutine(enablePhysics());
+        
     }
 
     void saveLevel(int level){
@@ -62,6 +80,18 @@ public class levelHandler : MonoBehaviour
         return PlayerPrefs.GetInt("level", 1);
     }
 
+    IEnumerator enablePhysics(){
+        yield return new WaitForSeconds(enablePhysicsDelay);
+        if(freezePhysicsWhileLoading){
+            Physics2D.simulationMode = SimulationMode2D.FixedUpdate;
+        }
+        yield return new WaitForSeconds(disableUIExtraDelay);
+        finishUi.SetActive(false);
+
+        
+
+    }
+
     private void resetPlayerPos(){
 
         player.transform.position = startingPlayerPos;
@@ -69,6 +99,7 @@ public class levelHandler : MonoBehaviour
         playerTrail.Clear();
         cineCam.ForceCameraPosition(startingPlayerPos + Vector3.back * 50, startingCamRot);
     }
+
 
 
 }
