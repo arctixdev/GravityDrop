@@ -8,6 +8,6 @@ public class onedirmove : MonoBehaviour
     void Start()
     {
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
-        rb.constraints = transform.rotation.z % 180 < 45 ? RigidbodyConstraints2D.FreezePositionX : RigidbodyConstraints2D.FreezePositionY;
+        rb.constraints = transform.rotation.z % 180 > 45 ? RigidbodyConstraints2D.FreezePositionX : RigidbodyConstraints2D.FreezePositionY;
     }
 }
