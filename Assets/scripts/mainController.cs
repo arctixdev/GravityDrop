@@ -227,6 +227,7 @@ public class mainController : MonoBehaviour
             rotNew = rot < 0 ? rot + 360 : rot;
             if(curRot != rotNew)
             {
+                // Update everything if the rotation has happened
                 curRot = rotNew;
                 rotatecounter.IncreaseCounter();
                 thudScipt.rotate();
