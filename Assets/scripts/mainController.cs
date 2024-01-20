@@ -228,6 +228,7 @@ public class mainController : MonoBehaviour
                 curRot = rotNew;
                 thudScipt.rotate();
                 StartCoroutine(shiftGrav());
+                // hej johannes
             }
 
         }
