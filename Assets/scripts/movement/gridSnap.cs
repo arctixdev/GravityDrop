@@ -1,4 +1,6 @@
-using unityEngine;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class gridSnap : monoBehaviur
 {
@@ -10,7 +12,7 @@ public class gridSnap : monoBehaviur
         rigidbody rb = this.gameObject.getComponent<rigidbody>();
         if (rb.velocity < maxSpeed || unityEngine.Mathf.abs(rb.gameObject.transform.rotation.z) % 90 < maxRotationVariation)
         {
-            rb.gameObject.transform.rotation = new Vector3(rb.gameObject.transform.rotation.x, rb.gameObject.transform.rotation.y, unityEngine.Mathf.Round(rb.gameObject.transform.rotation/90)*90))
+            rb.gameObject.transform.rotation = new Vector3(rb.gameObject.transform.rotation.x, rb.gameObject.transform.rotation.y, unityEngine.Mathf.Round(rb.gameObject.transform.rotation/90)*90));
         }
     }
 }
