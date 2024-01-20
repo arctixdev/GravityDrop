@@ -229,7 +229,8 @@ public class mainController : MonoBehaviour
             {
                 // Update everything if the rotation has happened
                 curRot = rotNew;
-                rotatecounter.IncreaseCounter();
+                if(rotatecounter != null)
+                    rotatecounter.IncreaseCounter();
                 thudScipt.rotate();
                 StartCoroutine(shiftGrav());
                 // hej johannes
