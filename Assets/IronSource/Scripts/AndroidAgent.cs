@@ -2,19 +2,23 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System;
 
 public class AndroidAgent : IronSourceIAgent
 {
-	private static AndroidJavaObject _androidBridge; 
-	private readonly static string AndroidBridge = "com.ironsource.unity.androidbridge.AndroidBridge";
-	private const string REWARD_AMOUNT = "reward_amount";
-	private const string REWARD_NAME = "reward_name";
-	private const string PLACEMENT_NAME = "placement_name";
+	static AndroidJavaObject _androidBridge; 
+	readonly static string AndroidBridge = "com.ironsource.unity.androidbridge.AndroidBridge";
+	const string REWARD_AMOUNT = "reward_amount";
+	const string REWARD_NAME = "reward_name";
+	const string PLACEMENT_NAME = "placement_name";
+
+	const string WATERFALL_CONFIG_FLOOR = "floor";
+	const string WATERFALL_CONFIG_CEILING = "ceiling";
+	const string WATERFALL_CONFIG_API = "setWaterfallConfiguration";
 
 	public AndroidAgent ()
 	{
-		Debug.Log ("AndroidAgent ctr");
 		initEventsDispatcher();
 	}
 	
@@ -35,6 +39,48 @@ public class AndroidAgent : IronSourceIAgent
 
 	//******************* Base API *******************//
 
+	/// <summary>
+	/// Allows publishers to set configurations for a waterfall of a given ad type.
+	/// </summary>
+	/// <param name="waterfallConfiguration">The configuration for the given ad types waterfall. </param>
+	/// <param name="adFormat">The AdFormat for which to configure the waterfall.</param>
+	public void SetWaterfallConfiguration(WaterfallConfiguration waterfallConfiguration, AdFormat adFormat) 
+	{
+		var ceiling = waterfallConfiguration.Ceiling;
+		var floor = waterfallConfiguration.Floor;
+		var dict = new Dictionary<string, string>();
+
+		if (ceiling.HasValue)
+		{
+		    dict.Add(WATERFALL_CONFIG_CEILING, ceiling.Value.ToString(CultureInfo.InvariantCulture));
+		}
+
+		if (floor.HasValue)
+		{
+		    dict.Add(WATERFALL_CONFIG_FLOOR, floor.Value.ToString(CultureInfo.InvariantCulture));
+		}
+
+		var json = IronSourceJSON.Json.Serialize(dict);
+		string stringAdFormat;
+		
+		switch (adFormat)
+		{
+			case AdFormat.RewardedVideo:
+				stringAdFormat = "REWARDED_VIDEO";
+				break;
+			case AdFormat.Interstitial:
+				stringAdFormat = "INTERSTITIAL";
+				break;
+			case AdFormat.Banner:
+				stringAdFormat = "BANNER";
+				break;
+			default:
+				return;
+		}
+
+		getBridge().Call(WATERFALL_CONFIG_API, json, stringAdFormat);
+	}
+
 	public void onApplicationPause (bool pause)
 	{
 		if (pause) 
@@ -45,11 +91,6 @@ public class AndroidAgent : IronSourceIAgent
 		{                   
 			getBridge ().Call ("onResume");
 		}
-	}
-
-	public void setMediationSegment (string segment)
-	{
-		getBridge ().Call ("setMediationSegment", segment);
 	}
 
 	public string getAdvertiserId ()
@@ -89,7 +130,6 @@ public class AndroidAgent : IronSourceIAgent
 
 	public int? getConversionValue()
     {
-		Debug.Log("Unsupported Platform");
 		return null;
 	}
 
@@ -317,12 +357,10 @@ public class AndroidAgent : IronSourceIAgent
 
 	public void loadConsentViewWithType(string consentViewType)
 	{
-		Debug.Log("Unsupported Platform");
 	}
 
 	public void showConsentViewWithType(string consentViewType)
 	{
-		Debug.Log("Unsupported Platform");
 	}
 
 	//******************* ILRD API *******************//
@@ -331,6 +369,14 @@ public class AndroidAgent : IronSourceIAgent
 	{
 		string json = IronSourceJSON.Json.Serialize(impressionData);
 		getBridge().Call("setAdRevenueData", dataSource, json);
+	}
+
+	//******************* TestSuite API *******************//
+
+	public void launchTestSuite()
+	{
+		Debug.Log("AndroidAgent: launching TestSuite");
+		getBridge().Call("launchTestSuite");
 	}
 
 #endregion

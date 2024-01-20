@@ -13,7 +13,8 @@
                 "UnityNotificationRequestAuthorizationForRemoteNotificationsOnAppLaunch",
                 "UnityRemoteNotificationForegroundPresentationOptions",
                 "UnityUseAPSReleaseEnvironment",
-                "UnityUseLocationNotificationTrigger"
+                "UnityUseLocationNotificationTrigger",
+                "UnityAddTimeSensitiveEntitlement"
             ],
             "m_Values": [
                 "True",
@@ -21,6 +22,7 @@
                 "False",
                 "False",
                 "-1",
+                "False",
                 "False",
                 "False"
             ]
@@ -33,7 +35,7 @@
                 "UnityNotificationAndroidCustomActivityString"
             ],
             "m_Values": [
-                "False",
+                "True",
                 "0",
                 "False",
                 "com.unity3d.player.UnityPlayerActivity"

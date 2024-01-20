@@ -22,7 +22,7 @@ public class IronSourceManifestProcessor : IPreprocessBuild
     private const string AD_ID_PERMISSION_ATTR = "com.google.android.gms.permission.AD_ID";
     private const string MANIFEST_PERMISSION = "uses-permission";
     private const string MANIFEST_META_DATA = "meta-data";
-    private const string IRONSOURCE_MANIFEST_PATH = "IronSource/Plugins/Android/IronSource.plugin/AndroidManifest.xml";
+    private const string IRONSOURCE_MANIFEST_PATH = "IronSource/Plugins/Android/IronSource.androidlib/AndroidManifest.xml";
     private string manifestPath = "";
     private XNamespace ns = "http://schemas.android.com/apk/res/android";
 

@@ -51,7 +51,13 @@ namespace IronSourceJSON
 
 			public static object Parse (string jsonString)
 			{
-				using (var instance = new Parser(jsonString)) {
+				if (string.IsNullOrWhiteSpace(jsonString))
+				{
+					return null;
+				}
+				
+				using (var instance = new Parser(jsonString)) 
+				{
 					return instance.ParseValue ();
 				}
 			}

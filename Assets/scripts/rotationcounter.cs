@@ -19,13 +19,21 @@ public class rotationcounter : MonoBehaviour
         
     }
 
-    public  void IncreaseCounter()
+    public void hidecounter(){
+
+        Resetcounter();
+       // counterText.SetActive(false);
+
+    }
+    public void IncreaseCounter()
     {
         counter++;
         UpdateText();
 
     }
-
+    public void Resetcounter(){
+        counter = 0;
+    }
     void UpdateText()
     {
         counterText.text = counter.ToString();
