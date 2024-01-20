@@ -13552,8 +13552,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f95074d21acd9c041a8119c14c2e9bc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxRotationVariation: 12.5
-  maxSpeed: 1
+  maxRotationVariation: 1
+  maxSpeed: 0.1
+  shouldDebugFix: 1
 --- !u!1 &1869812767 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7562944640096631925, guid: 6f0c670679c73cc448fd51a193b950b5, type: 3}
@@ -14602,6 +14603,10 @@ PrefabInstance:
     - target: {fileID: 2744243322723031598, guid: b46b94448cfa84e42869cb4f5b8b2066, type: 3}
       propertyPath: m_Material
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2744243322723031598, guid: b46b94448cfa84e42869cb4f5b8b2066, type: 3}
+      propertyPath: m_AutoTiling
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2744243322723031599, guid: b46b94448cfa84e42869cb4f5b8b2066, type: 3}
       propertyPath: m_Material
