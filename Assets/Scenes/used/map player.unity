@@ -11591,7 +11591,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &1512767657
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12051,6 +12050,7 @@ MonoBehaviour:
   IsHitingWall: 0
   thudScipt: {fileID: 842828121}
   menuScript: {fileID: 0}
+  rotatecounter: {fileID: 2045370430}
   mobileRotateEnabled: 1
   useMenu: 0
   airRot: 1
@@ -12776,7 +12776,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!111 &1843792763
 Animation:
   m_ObjectHideFlags: 0
