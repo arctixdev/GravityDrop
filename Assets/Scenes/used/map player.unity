@@ -11591,7 +11591,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &1512767657
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12051,6 +12050,7 @@ MonoBehaviour:
   IsHitingWall: 0
   thudScipt: {fileID: 842828121}
   menuScript: {fileID: 0}
+  rotatecounter: {fileID: 2045370430}
   mobileRotateEnabled: 1
   useMenu: 0
   airRot: 1
@@ -12776,7 +12776,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!111 &1843792763
 Animation:
   m_ObjectHideFlags: 0
@@ -13327,8 +13326,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -154.42355, y: -110.7}
-  m_SizeDelta: {x: 133.6486, y: 88.6649}
+  m_AnchoredPosition: {x: -496.7832, y: -206.294}
+  m_SizeDelta: {x: 818.368, y: 279.853}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2045370428
 MonoBehaviour:
@@ -13352,8 +13351,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 0
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: f423e144bbfed8a4fbc820e41ca588ce, type: 2}
+  m_sharedMaterial: {fileID: 3198292956133356339, guid: f423e144bbfed8a4fbc820e41ca588ce, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -13377,14 +13376,14 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 72
-  m_fontSizeBase: 36
+  m_fontSize: 400
+  m_fontSizeBase: 400
   m_fontWeight: 400
-  m_enableAutoSizing: 1
+  m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 2
+  m_HorizontalAlignment: 4
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
