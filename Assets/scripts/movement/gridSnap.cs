@@ -1,16 +1,16 @@
-using unityEngine;
+using UnityEngine;
 
-public class gridSnap : monoBehaviur
+public class gridSnap : MonoBehaviour
 {
-    [serelizefield] private float maxRotationVariation;
-    [serelizefield] private float maxSpeed;
+    [SerializeField] private float maxRotationVariation;
+    [SerializeField] private float maxSpeed;
 
     void Update()
     {
-        rigidbody rb = this.gameObject.getComponent<rigidbody>();
-        if (rb.velocity < maxSpeed || unityEngine.Mathf.abs(rb.gameObject.transform.rotation.z) % 90 < maxRotationVariation)
+        Rigidbody rb = this.gameObject.GetComponent<Rigidbody>();
+        if (rb.velocity.magnitude < maxSpeed || UnityEngine.Mathf.Abs(rb.gameObject.transform.rotation.z) % 90 < maxRotationVariation)
         {
-            rb.gameObject.transform.rotation = new Vector3(rb.gameObject.transform.rotation.x, rb.gameObject.transform.rotation.y, unityEngine.Mathf.Round(rb.gameObject.transform.rotation/90)*90))
+            rb.gameObject.transform.rotation = Quaternion.Euler(new Vector3(rb.gameObject.transform.rotation.x, rb.gameObject.transform.rotation.y, UnityEngine.Mathf.Round(rb.gameObject.transform.rotation.eulerAngles.z/90)*90));
         }
     }
 }
