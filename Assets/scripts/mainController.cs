@@ -28,6 +28,8 @@ public class mainController : MonoBehaviour
     public ThudScript thudScipt;
 
     public IngameMenuScript menuScript;
+    public rotationcounter rotatecounter;
+
 
     private float SAngle;
 
@@ -227,6 +229,8 @@ public class mainController : MonoBehaviour
             {
                 // Update everything if the rotation has happened
                 curRot = rotNew;
+                if(rotatecounter != null)
+                    rotatecounter.IncreaseCounter();
                 thudScipt.rotate();
                 StartCoroutine(shiftGrav());
                 // hej johannes
