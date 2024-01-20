@@ -46,12 +46,6 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.2d.psdimporter": {
-      "version": "6.0.6",
-      "depth": 1,
-      "source": "registry",
-      "dependencies": {
-        "com.unity.2d.animation": "7.0.8",
-        "com.unity.2d.common": "6.0.5",
       "version": "8.0.2",
       "depth": 1,
       "source": "registry",
