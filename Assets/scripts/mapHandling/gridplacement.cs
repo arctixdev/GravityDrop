@@ -210,7 +210,7 @@ public class gridplacement : MonoBehaviour
             keyToggle.enableToggle(-1);
         }
         if(Input.GetKeyUp(KeyCode.LeftShift)){
-            print("you unshifted"); 
+            print("you unshifted");
             keyToggle.enableToggle(oldItemId);
             
         }

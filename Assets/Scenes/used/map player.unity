@@ -13918,9 +13918,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f95074d21acd9c041a8119c14c2e9bc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxRotationVariation: 1
-  maxSpeed: 0.1
+  maxRotationVariation: 16
+  minRotationVariation: 0.02
+  maxSpeed: 0.05
   shouldDebugFix: 1
+  actualRotation: 0
 --- !u!1 &1869812767 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7562944640096631925, guid: 6f0c670679c73cc448fd51a193b950b5, type: 3}
