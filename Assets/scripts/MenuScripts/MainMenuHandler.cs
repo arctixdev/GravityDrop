@@ -83,7 +83,7 @@ public class MainMenuHandler : MonoBehaviour
       }
       nameText.text = string.Format(message, username);
     }
-#endif
+#endif  
     void BackButtonPressed() {
         SettingsJumpOut();
         mainMenu.schedule.Execute(() => MainJumpIn()).StartingIn(0);
