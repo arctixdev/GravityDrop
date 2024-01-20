@@ -7,6 +7,7 @@ public class levelHandler : MonoBehaviour
 {
     // Start is called before the first frame update
     private int currentLevel = 1;
+    public rotationcounter rotatecounter;
 
     private Vector3 startingPlayerPos;
     private Quaternion startingPlayerRot;
@@ -94,7 +95,9 @@ public class levelHandler : MonoBehaviour
         }
         yield return new WaitForSeconds(disableUIExtraDelay);
         finishUi.SetActive(false);
-
+        if(rotatecounter != null)
+            print("test");
+            // rotatecounter(true);
         
 
     }
