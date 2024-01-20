@@ -5,6 +5,7 @@ using UnityEngine;
 public class mouseeffect : MonoBehaviour
 {
     [SerializeField] TrailRenderer_Local trailRenderer;
+    
     Camera _cam;
     // Start is called before the first frame update
     void Start()
