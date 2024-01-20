@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+#if UNITY_ANDROID
 using GooglePlayGames;
 using GooglePlayGames.BasicApi;
+#endif
 using UnityEngine.UI;
 using UnityEngine.SocialPlatforms;
 
@@ -17,6 +19,8 @@ public class GPGSManager : MonoBehaviour
     // Update is called once per frame
     void Update(){}
 
+#if UNITY_ANDROID
+
     internal void ProcessAuthentication(SignInStatus status) {
       if (status == SignInStatus.Success) {
         // Continue with Play Games Services
@@ -28,4 +32,5 @@ public class GPGSManager : MonoBehaviour
         // PlayGamesPlatform.Instance.ManuallyAuthenticate(ProcessAuthentication).
       }
     }
+#endif
 }

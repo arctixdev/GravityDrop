@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.SceneManagement;
+#if UNITY_ANDROID
 using GooglePlayGames;
 using GooglePlayGames.BasicApi;
-
+#endif
 public class MainMenuHandler : MonoBehaviour
 {
     private Button startButton;
@@ -72,6 +73,8 @@ public class MainMenuHandler : MonoBehaviour
         mainMenu.schedule.Execute(() => SceneManager.LoadSceneAsync(gameScene)).StartingIn(200);
     }
 
+#if UNITY_ANDROID
+
     internal void ProcessAuthentication(SignInStatus status) {
       if (status == SignInStatus.Success) {
         // username = PlayGamesPlatform.Instance.GetUserDisplayName();
@@ -80,7 +83,7 @@ public class MainMenuHandler : MonoBehaviour
       }
       nameText.text = string.Format(message, username);
     }
-
+#endif
     void BackButtonPressed() {
         SettingsJumpOut();
         mainMenu.schedule.Execute(() => MainJumpIn()).StartingIn(0);
