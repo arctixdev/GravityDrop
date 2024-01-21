@@ -19,7 +19,6 @@ public class MainMenuHandler : MonoBehaviour
     public string gameScene = "map builder level";
     public string username = "Guest";
     public string message = "Hi {0}!";
-    public AdsManager AdsManager;
 
     void Start()
     {
@@ -41,8 +40,6 @@ public class MainMenuHandler : MonoBehaviour
         startButton.clicked += StartButtonPressed;
         settingsButton.clicked += SettingsButtonPressed;
         backButton.clicked += BackButtonPressed;
-        huhButton.clicked += huhButtonPressed;
-
         // Hide settings
         settingsMenu.AddToClassList("goneDown");
 
@@ -54,10 +51,6 @@ public class MainMenuHandler : MonoBehaviour
 
     // Update is unused
     void Update() {}
-
-    void huhButtonPressed() {
-        AdsManager.PlayAd();
-    }
 
     void soundChange(ChangeEvent<float> evt) {
         PlayerPrefs.SetFloat("soundLevel", evt.newValue);
