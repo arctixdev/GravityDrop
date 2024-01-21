@@ -84,4 +84,19 @@ public class simpleMover : MonoBehaviour
         startNow = false;
         returnBool = false;
     }
+    public void ShiftAnimation()
+    {
+        if(!startNow)
+        {
+            time = 0;
+            startNow = true;
+            returnBool = false;
+        }
+        else
+        {
+            time = 0;
+            startNow = false;
+            returnBool = true;
+        }
+    }
 }
