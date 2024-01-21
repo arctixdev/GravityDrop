@@ -3,6 +3,7 @@ using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class chainGen : MonoBehaviour
 {
@@ -51,7 +52,7 @@ public class chainGen : MonoBehaviour
 
         }
         if(lockEnd){
-            endrb = transform.GetChild(transform.childCount - 1).GetChild(1).GetComponent<Rigidbody2D>();
+            endrb = transform.GetChild(transform.childCount - 1).GetChild(1).GetChild(1).GetComponent<Rigidbody2D>();
             endrb.constraints = RigidbodyConstraints2D.FreezePosition;
         }
     }
@@ -67,7 +68,7 @@ public class chainGen : MonoBehaviour
         }
 
         if(Input.GetMouseButtonDown(0)){
-            genChain(_cam.ScreenToWorldPoint(Input.mousePosition) + Vector3.forward * 4);
+            if(!EventSystem.current.IsPointerOverGameObject()) genChain(_cam.ScreenToWorldPoint(Input.mousePosition) + Vector3.forward * 4);
         }
         
 

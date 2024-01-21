@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.SceneManagement;
-using GooglePlayGames;
-using GooglePlayGames.BasicApi;
 
 public class MainMenuHandler : MonoBehaviour
 {
@@ -70,15 +68,6 @@ public class MainMenuHandler : MonoBehaviour
     void StartButtonPressed() {
         MainJumpOut();
         mainMenu.schedule.Execute(() => SceneManager.LoadSceneAsync(gameScene)).StartingIn(200);
-    }
-
-    internal void ProcessAuthentication(SignInStatus status) {
-      if (status == SignInStatus.Success) {
-        // username = PlayGamesPlatform.Instance.GetUserDisplayName();
-      } else {
-        username = "Guest";
-      }
-      nameText.text = string.Format(message, username);
     }
 
     void BackButtonPressed() {
