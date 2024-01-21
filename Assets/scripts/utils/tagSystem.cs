@@ -5,10 +5,6 @@ using UnityEngine;
 public class tagSystem : MonoBehaviour
 {
     public string[] tags;
-    /// <summary>
-    /// usefull if a tag is on multiple childs and they all need to point to a single object (not needed)
-    /// </summary>
-    public GameObject parrent;
 
     public bool getTag(string tag)
     {

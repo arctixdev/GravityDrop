@@ -83,4 +83,6 @@ public class bezeirCurve : MonoBehaviour
         ni = a1 / (a2 * a3);
         return ni;
     }
+
+
 }
