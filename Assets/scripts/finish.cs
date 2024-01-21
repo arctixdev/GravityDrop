@@ -22,7 +22,7 @@ public class finish : MonoBehaviour
             // Check if the script component was found
             if (myRotationCounter != null)
             {
-                myRotationCounter.hidecounter(); // Call the hidecounter method on the instance
+                myRotationCounter.Resetcounter(); // Call the reset method on the instance
             }
             else
             {

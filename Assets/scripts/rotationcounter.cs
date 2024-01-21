@@ -20,10 +20,9 @@ public class rotationcounter : MonoBehaviour
     }
 
     public void hidecounter(){
-        
 
-        Resetcounter();
-       // counterText.SetActive(false);
+
+        counterText.text = "";
 
     }
     public void IncreaseCounter()
