@@ -20,6 +20,7 @@ public class rotationcounter : MonoBehaviour
     }
 
     public void hidecounter(){
+        
 
         Resetcounter();
        // counterText.SetActive(false);
@@ -33,6 +34,9 @@ public class rotationcounter : MonoBehaviour
     }
     public void Resetcounter(){
         counter = 0;
+        print("resestcounter");
+        UpdateText();
+
     }
     void UpdateText()
     {
