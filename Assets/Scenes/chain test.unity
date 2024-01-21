@@ -6560,7 +6560,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debugSelect: 1
-  UIElements: []
+  UIElements:
+  - changeId: chain
+    type: 0
+    change: strength
+    Object: {fileID: 484410373}
+  - changeId: freeBox
+    type: 0
+    change: wheight
+    Object: {fileID: 24622947}
 --- !u!1 &1925259117
 GameObject:
   m_ObjectHideFlags: 0
