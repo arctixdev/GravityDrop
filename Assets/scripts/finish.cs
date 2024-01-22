@@ -64,5 +64,15 @@ public class finish : MonoBehaviour
     private void enabelUi(){
          
         finishUi.SetActive(true);
+        GameObject rotatecountergameobject = GameObject.Find(rotatecountername);
+
+        if (rotatecountergameobject != null)
+        {
+            rotationcounter myRotationCounter = rotatecountergameobject.GetComponent<rotationcounter>();
+            if (myRotationCounter != null)
+            {
+                myRotationCounter.hidecounter(); // Call the reset method on the instance
+            }
+        }
     }
 }
