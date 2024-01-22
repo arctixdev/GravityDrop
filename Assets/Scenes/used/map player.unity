@@ -12897,7 +12897,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 149.45
+  m_fontSize: 135.35
   m_fontSizeBase: 281.3
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -13287,6 +13287,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45c7e07ad7244c24e9b907f1f9c92918, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rotatecounter: {fileID: 0}
   ML: {fileID: 1815001537}
   player: {fileID: 1843792750}
   cineCam: {fileID: 1780169595}
@@ -13632,6 +13633,7 @@ MonoBehaviour:
   minRotationVariation: 0
   maxSpeed: 1
   shouldDebugFix: 0
+  actualRotation: 0
 --- !u!1 &1869812767 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7562944640096631925, guid: 6f0c670679c73cc448fd51a193b950b5, type: 3}
@@ -14218,7 +14220,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 0
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f423e144bbfed8a4fbc820e41ca588ce, type: 2}
   m_sharedMaterial: {fileID: 3198292956133356339, guid: f423e144bbfed8a4fbc820e41ca588ce, type: 2}
