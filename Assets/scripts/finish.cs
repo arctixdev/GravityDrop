@@ -35,6 +35,16 @@ public class finish : MonoBehaviour
         {
             if(t.name == "finish-ui"){
                 finishUi = t.gameObject;
+                if (rotatecountergameobject != null)
+                {
+                    rotationcounter myRotationCounter = rotatecountergameobject.GetComponent<rotationcounter>();
+                    if (myRotationCounter != null)
+                    {
+                        myRotationCounter.hidecounter(); // Call the reset method on the instance
+                    }
+                }
+
+
             }
         }
     }
