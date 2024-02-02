@@ -13,7 +13,7 @@ public class AdsManager : MonoBehaviour
         IronSource.Agent.validateIntegration();
         
         //IronSource Initialization - Rewarded Video
-        IronSource.Agent.init(appKey, IronSourceAdUnits.REWARDED_VIDEO);
+        IronSource.Agent.init(appKey);
 
         //Add AdInfo Rewarded Video Events
         IronSourceRewardedVideoEvents.onAdOpenedEvent += RewardedVideoOnAdOpenedEvent;
