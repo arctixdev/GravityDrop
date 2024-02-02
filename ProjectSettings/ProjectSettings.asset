@@ -8,7 +8,7 @@ PlayerSettings:
   AndroidProfiler: 0
   AndroidFilterTouchesWhenObscured: 0
   AndroidEnableSustainedPerformanceMode: 0
-  defaultScreenOrientation: 0
+  defaultScreenOrientation: 3
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
@@ -138,7 +138,7 @@ PlayerSettings:
   vulkanEnableLateAcquireNextImage: 0
   vulkanEnableCommandBufferRecycling: 1
   loadStoreDebugModeEnabled: 0
-  bundleVersion: 0.1.7
+  bundleVersion: beta1
   preloadedAssets: []
   metroInputSource: 0
   wsaTransparentSwapchain: 0
@@ -168,7 +168,7 @@ PlayerSettings:
     iPhone: 0
     tvOS: 0
   overrideDefaultApplicationIdentifier: 0
-  AndroidBundleVersionCode: 7
+  AndroidBundleVersionCode: 1
   AndroidMinSdkVersion: 27
   AndroidTargetSdkVersion: 33
   AndroidPreferredInstallLocation: 0
@@ -262,8 +262,8 @@ PlayerSettings:
   AndroidTargetDevices: 1
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
-  AndroidKeystoreName: C:/Users/jona114x/OneDrive - Roskilde Kommune/Dokumenter 1/GravityDrop.keystore
-  AndroidKeyaliasName: gravitydropkeystore
+  AndroidKeystoreName: /home/jonathan/Documents/secrets/GravityDrop.keystore
+  AndroidKeyaliasName: mainkey
   AndroidEnableArmv9SecurityFeatures: 0
   AndroidBuildApkPerCpuArchitecture: 0
   AndroidTVCompatibility: 0
@@ -271,15 +271,15 @@ PlayerSettings:
   AndroidEnableTango: 0
   androidEnableBanner: 1
   androidUseLowAccuracyLocation: 0
-  androidUseCustomKeystore: 0
+  androidUseCustomKeystore: 1
   m_AndroidBanners:
   - width: 320
     height: 180
     banner: {fileID: 0}
   androidGamepadSupportLevel: 0
   chromeosInputEmulation: 1
-  AndroidMinifyRelease: 0
-  AndroidMinifyDebug: 0
+  AndroidMinifyRelease: 1
+  AndroidMinifyDebug: 1
   AndroidValidateAppBundleSize: 1
   AndroidAppBundleSizeToValidate: 150
   m_BuildTargetIcons:
@@ -294,49 +294,48 @@ PlayerSettings:
   - m_BuildTarget: Android
     m_Icons:
     - m_Textures:
-      - {fileID: 2800000, guid: b211a78c0f2337556ab1d3375e67c662, type: 3}
-      - {fileID: 2800000, guid: 4a4808ede90e5d0d6a4dae366fd7e4ab, type: 3}
+      - {fileID: 2800000, guid: f9fcb103ef9b335a7bbe34ed3b4f127d, type: 3}
+      - {fileID: 2800000, guid: ffeb8a93d7c0c6104b745b0cdb7b9e81, type: 3}
       m_Width: 432
       m_Height: 432
       m_Kind: 2
       m_SubKind: 
     - m_Textures:
-      - {fileID: 2800000, guid: 7d81a1e8a7e7766a3b3d3f8b38f78f69, type: 3}
-      - {fileID: 2800000, guid: 553f4337ec45df4e082a89675f07afa0, type: 3}
+      - {fileID: 2800000, guid: f9fcb103ef9b335a7bbe34ed3b4f127d, type: 3}
+      - {fileID: 2800000, guid: ffeb8a93d7c0c6104b745b0cdb7b9e81, type: 3}
       m_Width: 324
       m_Height: 324
       m_Kind: 2
       m_SubKind: 
     - m_Textures:
-      - {fileID: 2800000, guid: 26c0c8564382869edabf993768052f3a, type: 3}
-      - {fileID: 2800000, guid: a1a998c2a07a662ac8d79195462ed031, type: 3}
+      - {fileID: 2800000, guid: f9fcb103ef9b335a7bbe34ed3b4f127d, type: 3}
+      - {fileID: 2800000, guid: ffeb8a93d7c0c6104b745b0cdb7b9e81, type: 3}
       m_Width: 216
       m_Height: 216
       m_Kind: 2
       m_SubKind: 
     - m_Textures:
-      - {fileID: 2800000, guid: 5300c9c37a87da7e19d2703a6ce2dc9b, type: 3}
-      - {fileID: 2800000, guid: a48c78e38d99fa2f08a42d96142cc4c2, type: 3}
+      - {fileID: 2800000, guid: f9fcb103ef9b335a7bbe34ed3b4f127d, type: 3}
+      - {fileID: 2800000, guid: ffeb8a93d7c0c6104b745b0cdb7b9e81, type: 3}
       m_Width: 162
       m_Height: 162
       m_Kind: 2
       m_SubKind: 
     - m_Textures:
-      - {fileID: 2800000, guid: cb48a080495364ae4a785d8e0f74fe06, type: 3}
-      - {fileID: 2800000, guid: 4b9619b9c42474216b38592b07e16de9, type: 3}
+      - {fileID: 2800000, guid: f9fcb103ef9b335a7bbe34ed3b4f127d, type: 3}
+      - {fileID: 2800000, guid: ffeb8a93d7c0c6104b745b0cdb7b9e81, type: 3}
       m_Width: 108
       m_Height: 108
       m_Kind: 2
       m_SubKind: 
     - m_Textures:
-      - {fileID: 2800000, guid: fbb61306736af9f168e05ea21e76d83e, type: 3}
-      - {fileID: 2800000, guid: 687b816a9f2099e0490d562be30d2238, type: 3}
+      - {fileID: 2800000, guid: f9fcb103ef9b335a7bbe34ed3b4f127d, type: 3}
+      - {fileID: 2800000, guid: ffeb8a93d7c0c6104b745b0cdb7b9e81, type: 3}
       m_Width: 81
       m_Height: 81
       m_Kind: 2
       m_SubKind: 
-    - m_Textures:
-      - {fileID: 2800000, guid: 2044c99b2030c80f98edc7c880063789, type: 3}
+    - m_Textures: []
       m_Width: 192
       m_Height: 192
       m_Kind: 1
@@ -366,8 +365,7 @@ PlayerSettings:
       m_Height: 36
       m_Kind: 1
       m_SubKind: 
-    - m_Textures:
-      - {fileID: 2800000, guid: 2044c99b2030c80f98edc7c880063789, type: 3}
+    - m_Textures: []
       m_Width: 192
       m_Height: 192
       m_Kind: 0
