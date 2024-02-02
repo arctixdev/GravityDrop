@@ -11,6 +11,11 @@ public class selectable : MonoBehaviour
     {
         uiTrigger?.Invoke();
     }
+
+    public void setMainWheight(float wheight)
+    {
+        this.GetComponent<Rigidbody2D>().mass = wheight;
+    }
 }
 
 [System.Serializable]

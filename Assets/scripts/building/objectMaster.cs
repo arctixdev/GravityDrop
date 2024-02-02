@@ -1,15 +1,126 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
+[System.Serializable]
+enum UIType
+{
+    slider,
+    button,
+    checkbox
+}
+[System.Serializable]
+struct namedValueUI
+{
+    /// <summary>
+    /// the type of gameobject should be changed by this, requires tag system
+    /// </summary>
+    public string changeId;
+    public UIType type;
+    public string change;
+    public GameObject Object;
+}
 public class objectMaster : MonoBehaviour
 {
+
     Camera mainCam;
     [SerializeField] private bool debugSelect;
+
+
+    [SerializeField] private namedValueUI[] UIElements;
     // Start is called before the first frame update
     void Start()
     {
          mainCam = Camera.main;
+    }
+
+    void select(selectable sel)
+    {
+        sel.select();
+        foreach(namedValueUI element in UIElements)
+        {
+            string name = element.changeId;
+            tagSystem ts = sel.gameObject.GetComponent<tagSystem>();
+            if (ts.getTag("ch_"+name))
+            {
+                if(ts.getTag("ch_freeBox"))
+                {
+                    //if(element.type == UIType.button)
+                    //{
+
+                    //}
+                    if(element.type == UIType.slider)
+                    {
+                        if(element.change == "wheight") element.Object.GetComponent<valueHandler>().floatValueEvent += sel.setMainWheight;
+                    }
+                    //if(element.type == UIType.checkbox)
+                    //{
+
+                    //}
+                }
+                if (ts.getTag("ch_oneDirBox"))
+                {
+                    //if (element.type == UIType.button)
+                    //{
+
+                    //}
+                    if (element.type == UIType.slider)
+                    {
+                        if (element.change == "wheight") element.Object.GetComponent<valueHandler>().floatValueEvent += sel.setMainWheight;
+                    }
+                    //if (element.type == UIType.checkbox)
+                    //{
+
+                    //}
+                }
+                if (ts.getTag("ch_chain"))
+                {
+                    //if (element.type == UIType.button)
+                    //{
+
+                    //}
+                    if (element.type == UIType.slider)
+                    {
+                        //if (element.change == "strength") element.Object.GetComponent<valueHandler>().floatValueEvent +=
+                    }
+                    //if (element.type == UIType.checkbox)
+                    //{
+
+                    //}
+                }
+                if (ts.getTag("ch_fan"))
+                {
+                    //if (element.type == UIType.button)
+                    //{
+
+                    //}
+                    //if (element.type == UIType.slider)
+                    //{
+                    //    element.Object.GetComponent<valueHandler>().floatValueEvent +=
+                    //}
+                    //if (element.type == UIType.checkbox)
+                    //{
+
+                    //}
+                }
+                if (ts.getTag("ch_boucePad"))
+                {
+                    //if (element.type == UIType.button)
+                    //{
+
+                    //}
+                    //if (element.type == UIType.slider)
+                    //{
+                    //    element.Object.GetComponent<valueHandler>().floatValueEvent +=
+                    //}
+                    //if (element.type == UIType.checkbox)
+                    //{
+
+                    //}
+                }
+            }
+        }
     }
 
     // Update is called once per frame
@@ -43,13 +154,13 @@ public class objectMaster : MonoBehaviour
                         bool t3 = selC.master.TryGetComponent<selectable>(out sel);
                         if(t3)
                         {
-                            sel.select();
+                            select(sel);
                         }
                     }
                 }
                 else
                 {
-                    sel.select();
+                    select(sel);
                 }
             }
         }
