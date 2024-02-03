@@ -12682,9 +12682,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1560927536}
-        m_TargetAssemblyTypeName: Restart, Assembly-CSharp
-        m_MethodName: restart
+      - m_Target: {fileID: 1815001538}
+        m_TargetAssemblyTypeName: levelHandler, Assembly-CSharp
+        m_MethodName: restartLevel
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
