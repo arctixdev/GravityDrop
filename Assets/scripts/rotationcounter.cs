@@ -11,9 +11,16 @@ public class rotationcounter : MonoBehaviour
 
     void Start()
     {
-        UpdateText();
+        hidecounter();
+
     }
 
+    void Awake()
+    {
+    
+        UpdateText();
+
+    }
     void Update()
     {
         
