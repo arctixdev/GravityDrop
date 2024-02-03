@@ -51,5 +51,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "GravityDrop.sln"
+    "dotnet.defaultSolution": "gravityDrop.sln"
 }
