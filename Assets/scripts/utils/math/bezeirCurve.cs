@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class bezeirCurve : MonoBehaviour
@@ -27,53 +28,54 @@ public class bezeirCurve : MonoBehaviour
             Vector2 bn = Bernstein(N, i, t) * controlPoints[i];
             p += bn;
         }
-
+        //UnityEngine.Debug.LogWarning(p);
         return p;
     }
     public static Vector2 Point2(float t, List<Vector2> controlPoints, float[] arcLengths, bool evenlySpaced)
     {
         if(!evenlySpaced) return Point2(t, controlPoints);
 
-        UnityEngine.Debug.Log("setting up starting values");
+        //UnityEngine.Debug.Log("setting up starting values");
         float len = arcLengths[arcLengths.Length - 1];
         float targetLength = t * len;
         int low = 0, high = arcLengths.Length - 1, index = 0;
-        UnityEngine.Debug.Log("initiating binary search");
-        //while (low < high)
-        //{
-        //    index = low + (((high - low) / 2) | 0);
-        //    if (arcLengths[index] < targetLength)
-        //    {
-        //        low = index + 1;
+        //UnityEngine.Debug.Log("initiating binary search");
+        while (low < high)
+        {
+            index = low + (((high - low) / 2) | 0);
+            if (arcLengths[index] < targetLength)
+            {
+                low = index + 1;
         
-        //    }
-        //    else
-        //    {
-        //        high = index;
-        //    }
-        //}
+            }
+            else
+            {
+                high = index;
+            }
+        }
         if (arcLengths[index] > targetLength)
         {
             index--;
         }
 
-        UnityEngine.Debug.Log("binary seach found index " + index);
+        //UnityEngine.Debug.Log("binary seach found index " + index + ", converted to t would be: " + index/len);
         float lengthBefore = arcLengths[index];
 
         if (lengthBefore == targetLength)
         {
+            UnityEngine.Debug.LogWarning("Using stuff: " + index / len + " with presumed len: " + len + " and index: " + index + "\n" +" target length is: "+targetLength+" and t is: "+t);
             return Point2(index / len, controlPoints);
-
         }
         else
         {
+            UnityEngine.Debug.LogWarning("Using (advanced) stuff: " + (index + (targetLength - lengthBefore) / (arcLengths[index + 1] - lengthBefore)) / len + " with presumed len: " + len + " and index: " + index + "\n" + " target length is: " + targetLength + " lerp start length is: "+ lengthBefore + " meaning lerp distance should be: " + (targetLength-lengthBefore) + " and lerp percent is: " + (targetLength - lengthBefore) / (arcLengths[index + 1] - lengthBefore) + " and t is: " + t);
             return Point2((index + (targetLength - lengthBefore) / (arcLengths[index + 1] - lengthBefore)) / len, controlPoints);
         }
     }
 
     public static List<Vector2> PointList2(List<Vector2> controlPoints, int pointAmount)
     {
-        int interval = 1 / pointAmount;
+        float interval = 1f / pointAmount;
         List<Vector2> points = new List<Vector2>();
         for (float t = 0.0f; t <= 1.0f + interval - 0.0001f; t += interval)
         {
@@ -84,34 +86,47 @@ public class bezeirCurve : MonoBehaviour
     }
     public static List<Vector2> PointList2(List<Vector2> controlPoints, bool evenlySpaced, int pointAmount, int precision = 100)
     {
-        float interval = 1 / pointAmount;
+        if(!evenlySpaced) return PointList2(controlPoints, pointAmount);
+
+        float interval = 1f / pointAmount;
         float[] arcLenths = new float[precision];
         UnityEngine.Debug.Log("beginning arclength generation");
-        float counter = Time.realtimeSinceStartup;
+        float counter = Time.realtimeSinceStartup, tCounter = 0;
         arcLenths[0] = 0f;
         for(int i = 1; i < precision; i++)
         {
-            float index = 1 / precision * i;
-            arcLenths[i] = arcLenths[i - 1] + Vector2.Distance(Point2(index - 1, controlPoints), Point2(index, controlPoints));
+            float index = 1f / precision * i;
+            index = math.round(index * 1000) / 1000;
+            float x = arcLenths[i - 1] + Vector2.Distance(Point2(index - 1, controlPoints), Point2(index, controlPoints));
+            arcLenths[i] = x;
+            //UnityEngine.Debug.Log("current arcLength is: "+x+" at t: "+index);
         }
-        UnityEngine.Debug.Log("finished arclength generation in " + (Time.realtimeSinceStartup - counter) + "seconds");
+        UnityEngine.Debug.Log("finished arclength generation in " + (tCounter += Time.realtimeSinceStartup - counter) + "seconds");
+        string arcString = "";
+        for(int i = 0; i < arcLenths.Length; i++)
+        {
+            arcString += arcLenths[i] + " - ";
+        }
+        UnityEngine.Debug.Log("arcLengths are as follows: \n"+arcString);
         UnityEngine.Debug.Log("beginning point generation");
+        for(int i = 0; i < controlPoints.Count; i++)
+        {
+            UnityEngine.Debug.Log("control point "+ i +" is " + controlPoints[i]);
+        }
         counter = Time.realtimeSinceStartup;
         List<Vector2> points = new List<Vector2>();
         int it = 0;
-        for (float t = 0.0f; t <= 1.0f && it < 500; t += interval)
+        for (float t = 0.0f; t < 1.0f/* + interval - 0.0001f*/; t += interval, it++)
         {
-            //Process currentProcess1 = Process.GetCurrentProcess();
-            //currentProcess1.Refresh();
-            //long totalMemoryUsedByProcess1 = currentProcess1.WorkingSet64;
-            //if(totalMemoryUsedByProcess1 > 10_000_000_000) break;
-
-            //if (t > interval * 500) break;
-
+            t = math.round(t * 1000) / 1000;
+            //UnityEngine.Debug.Log("Arc length: " + arcLenths);
             points.Add(Point2(t, controlPoints, arcLenths, true));
-            it++;
+            //points.Add(Point2(t, controlPoints));
+            //UnityEngine.Debug.Log("generated point at: " + points[points.Count-1]);
+            //UnityEngine.Debug.Log("point made at t: "+t+", interval is: "+interval);
         }
-        UnityEngine.Debug.Log("finished arclength generation in " + (Time.realtimeSinceStartup - counter) + "seconds with " + it + " iterations");
+        UnityEngine.Debug.Log("finished point generation in " + (tCounter += Time.realtimeSinceStartup - counter) + "seconds with " + it + " iterations with a iterations value of " + interval);
+        UnityEngine.Debug.Log("finished biased bezier curve in "+tCounter);
 
         return points;
     }
