@@ -9,14 +9,14 @@ EditorBuildSettings:
     path: Assets/Scenes/used/startMenuNew.unity
     guid: 0822922b6dda7a14ab15681973ccf3e3
   - enabled: 1
-    path: Assets/Scenes/used/map builder level 1.unity
-    guid: d49cd89d25ad8874aa6118357200ed31
-  - enabled: 1
     path: Assets/Scenes/used/map player.unity
     guid: 7e506921ff02e1d4eb468c7dd1aeea9a
   - enabled: 0
     path: Assets/IronSource/DemoScene/IronSourceDemo.unity
     guid: ccc0ac08126704384bdda74c26d99797
+  - enabled: 1
+    path: Assets/Scenes/used/map builder level 1.unity
+    guid: d49cd89d25ad8874aa6118357200ed31
   m_configObjects:
     com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: efc3c46f92337a2c9968e80cb3a5e731, type: 2}
     com.unity.adaptiveperformance.samsung.android.provider_settings: {fileID: 11400000, guid: 18fcdede29d78d2a7bf2e4e96291e8ab, type: 2}

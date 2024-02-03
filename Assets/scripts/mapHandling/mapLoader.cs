@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using System.Collections;
+using UnityEngine.Networking;
+using UnityEditor.PackageManager.Requests;
 public class mapLoader : MonoBehaviour
 {
     [SerializeField] List<GameObject> blockPrefabs;
@@ -23,10 +25,16 @@ public class mapLoader : MonoBehaviour
     IEnumerator importMapFromFileIE(string MapName)
     {
         clearMap();
-        Debug.Log("importing map with name: " + MapName + " and info: " + SaveSystem.ReadString(MapName.Replace(" ", "-")));
-        yield return null;
-        yield return null;
-        importMapAsString(SaveSystem.ReadString(MapName.Replace(" ", "-")));
+        UnityWebRequest request = UnityWebRequest.Get("https://raw.githubusercontent.com/arctixdev/GravityDrop/main/Assets/MapsData/" + MapName.Replace(" ", "-") + ".txt");
+        Debug.Log("importing map with name: " + MapName);
+        yield return request.SendWebRequest();
+        if (request.result == UnityWebRequest.Result.Success) {
+            string reponseText = request.downloadHandler.text;
+            Debug.Log("And info: " + reponseText);
+            importMapAsString(reponseText);
+        } else {
+            Debug.Log("Download of data failed");
+        }
     }
 
     void clearChildren(Transform parent){
