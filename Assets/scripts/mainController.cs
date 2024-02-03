@@ -61,6 +61,7 @@ public class mainController : MonoBehaviour
 
     float oldrottomouse;
     float startrotmouse;
+    public int sensitivityMobile = 2;
     float RM;
     public enum rotModes
     {
@@ -206,19 +207,19 @@ public class mainController : MonoBehaviour
 
             if(mobileRotateEnabled){
 
-                if(shouldMobileRot(45)){
+                if(shouldMobileRot(90/sensitivityMobile)){
                     rot = 180;
                    
                 }
-                if(shouldMobileRot(90)){
+                if(shouldMobileRot(180/sensitivityMobile)){
                     rot = 90;
                     
                 }
-                if(shouldMobileRot(-45)){
+                if(shouldMobileRot(-90/sensitivityMobile)){
                     rot = 0;
                     
                 }
-                if(shouldMobileRot(0)){
+                if(shouldMobileRot(0/sensitivityMobile)){
                     rot = -90;
                    
                 }
@@ -229,8 +230,9 @@ public class mainController : MonoBehaviour
             {
                 // Update everything if the rotation has happened
                 curRot = rotNew;
-                if(rotatecounter != null)
+                if(rotatecounter != null) {
                     rotatecounter.IncreaseCounter();
+                }
                 thudScipt.rotate();
                 StartCoroutine(shiftGrav());
                 // hej johannes

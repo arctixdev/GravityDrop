@@ -13089,9 +13089,10 @@ MonoBehaviour:
   waitBeforeGravChange: 0
   preRot: {x: 0, y: 0, z: 0}
   Dimension3D: 0
+  sensitivityMobile: 20
   rotationMode: 1
   rotDisToRotate: 10
-  EaseType: 4
+  EaseType: 3
 --- !u!1 &1786522358
 GameObject:
   m_ObjectHideFlags: 0
