@@ -11,7 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/used/map player.unity
     guid: 7e506921ff02e1d4eb468c7dd1aeea9a
-  - enabled: 1
+  - enabled: 0
     path: Assets/IronSource/DemoScene/IronSourceDemo.unity
     guid: ccc0ac08126704384bdda74c26d99797
   - enabled: 1
