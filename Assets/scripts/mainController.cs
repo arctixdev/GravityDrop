@@ -206,15 +206,15 @@ public class mainController : MonoBehaviour
 
             if(mobileRotateEnabled){
 
-                if(shouldMobileRot(90)){
+                if(shouldMobileRot(45)){
                     rot = 180;
                    
                 }
-                if(shouldMobileRot(180)){
+                if(shouldMobileRot(90)){
                     rot = 90;
                     
                 }
-                if(shouldMobileRot(-90)){
+                if(shouldMobileRot(-45)){
                     rot = 0;
                     
                 }
