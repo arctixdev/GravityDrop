@@ -585,7 +585,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2010314232}
         m_TargetAssemblyTypeName: AdsManager, Assembly-CSharp
-        m_MethodName: PlayAd
+        m_MethodName: ShowAd
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
