@@ -186,8 +186,29 @@ public class chainGenV2 : MonoBehaviour
     {
         if (EventSystem.current.IsPointerOverGameObject()) return false;
 
+        int pointAmount = 25;
+
         if (points.Length < 2) return false;
-        Vector2[] computedPoints = bezeirCurve.PointList2(new List<Vector2>(points), true, 25, precision).ToArray();
+
+        float[] arcLengths = new float[precision];
+        arcLengths[0] = 0f;
+        float lastArcT = 0f;
+        string arcString = "";
+        for(int i = 1; i < precision; i++)
+        {
+            float t = i / (float)precision;
+            Debug.Log("t is: " + t);
+            List<Vector2> vector2s = new List<Vector2>(points);
+            arcLengths[i] = arcLengths[i - 1] + Vector2.Distance(bezeirCurve.Point2(lastArcT, vector2s), bezeirCurve.Point2(t, vector2s));
+            lastArcT = t;
+            arcString += i + ": " + arcLengths[i] + "\n";
+        }
+        Debug.Log("arclengts are: " + "\n" + arcString);
+        Vector2[] computedPoints = new Vector2[pointAmount + 1];
+        for (int i = 0; i <= pointAmount; i++)
+        {
+            computedPoints[i] = biasedBezier.biasedPoint2(i / pointAmount, points, arcLengths);
+        }
         //Vector2[] computedPoints = bezeirCurve.PointList2(new List<Vector2>(points), precision).ToArray();
         //Debug.Log("minimum reselution, distance would be: " + Vector2.Distance(controlPositions[0], controlPositions[controlPositions.Length-1]));
         if(printDistances)
