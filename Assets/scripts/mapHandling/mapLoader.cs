@@ -13,7 +13,7 @@ public class mapLoader : MonoBehaviour
     [SerializeField] tileMapHandler tileMapHandler;
 
     [SerializeField] float zPos;
-
+    [SerializeField] bool DevMode;
 
     public HashSet<List<int>> importMapFromFile(string MapName){
         StartCoroutine(importMapFromFileIE(MapName));
@@ -24,16 +24,30 @@ public class mapLoader : MonoBehaviour
     IEnumerator importMapFromFileIE(string MapName)
     {
         clearMap();
-        UnityWebRequest request = UnityWebRequest.Get("https://raw.githubusercontent.com/arctixdev/GravityDrop/main/Assets/MapsData/" + MapName.Replace(" ", "-") + ".txt");
-        Debug.Log("importing map with name: " + MapName);
-        yield return request.SendWebRequest();
-        if (request.result == UnityWebRequest.Result.Success) {
-            string reponseText = request.downloadHandler.text;
-            Debug.Log("And info: " + reponseText);
-            importMapAsString(reponseText);
-        } else {
-            Debug.Log("Download of data failed");
+        if (!DevMode)
+        {
+            UnityWebRequest request = UnityWebRequest.Get("https://raw.githubusercontent.com/arctixdev/GravityDrop/main/Assets/MapsData/" + MapName.Replace(" ", "-") + ".txt");
+            Debug.Log("importing map with name: " + MapName);
+            yield return request.SendWebRequest();
+            if (request.result == UnityWebRequest.Result.Success)
+            {
+                string reponseText = request.downloadHandler.text;
+                Debug.Log("And info: " + reponseText);
+                importMapAsString(reponseText);
+            }
+            else
+            {
+                Debug.Log("Download of data failed");
+            }
         }
+        else
+        {
+            Debug.Log("importing map with name: " + MapName + " and info: " + SaveSystem.ReadString(MapName.Replace(" ", "-")));
+            yield return null;
+            yield return null;
+            importMapAsString(SaveSystem.ReadString(MapName.Replace(" ", "-")));
+        }
+
     }
 
     void clearChildren(Transform parent){
