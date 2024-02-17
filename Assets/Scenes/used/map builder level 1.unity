@@ -10963,7 +10963,7 @@ MonoBehaviour:
   OtherBlocksParent: {fileID: 1736024118}
   tileMapHandler: {fileID: 1815001535}
   zPos: 0
-  DevMode: 0
+  DevMode: 1
 --- !u!1 &1826611221
 GameObject:
   m_ObjectHideFlags: 0
