@@ -12,9 +12,12 @@ public class LevelSelector : MonoBehaviour
         
     }
 
-    public void updateActiveLVL(int newActiveLVL){
-        currentLevel = newActiveLVL;
+    public void updateActiveLVL(){ 
+        string objectname =  gameObject.name;
+        char lastChar = objectname[objectname.Length - 1];
+        int newActiveLVL = lastChar - '0';
 
+        currentLevel = newActiveLVL;
     }
 
     // Update is called once per frame
