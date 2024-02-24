@@ -6,7 +6,6 @@ using Cinemachine;
 public class levelHandler : MonoBehaviour
 {
     // Start is called before the first frame update
-    private int currentLevel = 1;
     public rotationcounter rotatecounter;
 
     private Vector3 startingPlayerPos;
@@ -44,12 +43,12 @@ public class levelHandler : MonoBehaviour
         
         
         if(resetLevel){
-            currentLevel = 1;
+            LevelSelector.currentLevel = 1;
         } else {
-            currentLevel = getLevel();
+            LevelSelector.currentLevel = getLevel();
         }
 
-        ML.importMapFromFile("lvl" + currentLevel);
+        ML.importMapFromFile("lvl" + LevelSelector.currentLevel);
         if(freezePhysicsWhileLoading){
             StartCoroutine(enablePhysics());
         }
@@ -62,23 +61,23 @@ public class levelHandler : MonoBehaviour
     }
 
     public void nextLevel(){
-        currentLevel += 1;
-        startLevel(currentLevel);
-        saveLevel(currentLevel);
+        LevelSelector.currentLevel += 1;
+        startLevel(LevelSelector.currentLevel);
+        saveLevel(LevelSelector.currentLevel);
     }
 
     public void startLevel(int levelIndex){
         if(freezePhysicsWhileLoading){
             Physics2D.simulationMode = SimulationMode2D.Script;
         }
-        ML.importMapFromFile("lvl" + currentLevel);
+        ML.importMapFromFile("lvl" + LevelSelector.currentLevel);
         mainController.resetGravity();
         resetPlayerPos();
         StartCoroutine(enablePhysics());
     }
 
     public void restartLevel(){
-        startLevel(currentLevel);
+        startLevel(LevelSelector.currentLevel);
     }
 
     void saveLevel(int level){
