@@ -18,7 +18,8 @@ public class chainGenV2 : MonoBehaviour
     /// this is HIGLY temporary, a system for pushing them away from the line dynamicly WILL be implemented
     /// </summary>
     [SerializeField] private Vector3 plusDefaultOffset;
-    [SerializeField] private GameObject[] plusses;
+    //[SerializeField]
+    private GameObject[] plusses;
     [SerializeField] private bool printDistances;
     [SerializeField] private bool generateDebugLines;
     [SerializeField] private bool useAsyncFunction;
@@ -202,10 +203,6 @@ public class chainGenV2 : MonoBehaviour
         return -1;
     }
 
-    void generateChainSegment(Vector2[] points, int precision)
-    {
-
-    }
 
     //Vector2[] points;
     //int precision;
@@ -343,7 +340,6 @@ public class chainGenV2 : MonoBehaviour
         return arcLengths;
     }
 
-
     LineRenderer lr;
     void DrawLine(Vector2[] points)
     {
@@ -365,5 +361,31 @@ public class chainGenV2 : MonoBehaviour
             lr.SetPosition(i, v3Points[i]);
         }
         //GameObject.Destroy(myLine, duration);
+    }
+
+    Quaternion GetRotation(Vector3 position)
+    {
+        Vector3 objectPos = transform.position;
+        position.x = position.x - objectPos.x;
+        position.y = position.y - objectPos.y;
+
+        float angle = Mathf.Atan2(position.y, position.x) * Mathf.Rad2Deg;
+        return Quaternion.Euler(new Vector3(0, 0, angle));
+    }
+    [SerializeField] private GameObject[] chainPrefabs;
+    void drawChain(Vector2[] curvePoints, int chainSegments)
+    {
+        Time.timeScale = 0;
+        int constLevel = (int)math.ceil(curvePoints.Length / (float)chainSegments);
+        for (int i = 0; i < chainSegments; i++)
+        {
+            GameObject instance = Instantiate(chainPrefabs[i % chainPrefabs.Length], transform);
+            instance.transform.SetParent(transform, false);
+            //instance.transform.position = 
+        }
+    }
+    void generateChainSegment(Vector2[] points, int precision)
+    {
+
     }
 }
