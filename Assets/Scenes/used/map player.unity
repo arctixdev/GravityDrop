@@ -13344,7 +13344,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: LevelSelector
+          m_StringArgument: mapselector
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1660824018
@@ -14114,7 +14114,7 @@ MonoBehaviour:
   player: {fileID: 1843792750}
   cineCam: {fileID: 1780169595}
   playerTrail: {fileID: 727478459}
-  resetLevel: 1
+  resetLevel: 0
   mainController: {fileID: 1780169599}
   freezePhysicsWhileLoading: 1
   enablePhysicsDelay: 0.7
