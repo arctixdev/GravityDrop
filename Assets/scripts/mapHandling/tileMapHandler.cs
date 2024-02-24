@@ -18,10 +18,8 @@ public class tileMapHandler : MonoBehaviour
         changeBlock(2, 2, true);
     }
 
-    public void changeBlock(int BX, int BY, bool place){
+    public void changeBlock(int x, int y, bool place){
         TileBase tile = place ? ruleTile : null;
-        int x = BX * 2;
-        int y = BY * 2;
         grid.SetTile(new Vector3Int(x, y), tile);
         grid.SetTile(new Vector3Int(x + 1, y), tile);
         grid.SetTile(new Vector3Int(x, y + 1), tile);

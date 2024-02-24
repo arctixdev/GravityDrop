@@ -336,31 +336,27 @@ public class gridplacement : MonoBehaviour
 
 
     void addBlock(int x, int y, int blockType, int Rotation){
-        Vector3 worldPosition = new Vector3(x * 2.5F, y * 2.5F, zPos);
-
-
         List<int> block = new List<int>() {
                                 x, 
                                 y,
                                 blockType,
                                 Rotation
                             };
-
         if(mapList.Any(x => x.SequenceEqual(block))) return;
-
-
+        
         mapList.Add(block);
 
-
-        // MapString = exportMapAsString();
-        
-        if(blockType != 0){
-            worldPosition += Vector3.back * 2;
-            Instantiate(blockPrefabs[blockType], worldPosition, Quaternion.Euler(0, 0, Rotation * 90), OtherBlocksParent);
+        if(blockType == 0)
+        {
+            tileMapHandler.changeBlock(x - 1, y - 1, true);
             return;
         }
-        
-        tileMapHandler.changeBlock(x, y, true);
+
+
+        Vector3 worldPosition = new Vector3(x * 2.5F, y * 2.5F, zPos);
+
+        worldPosition += Vector3.back * 2;
+        Instantiate(blockPrefabs[blockType], worldPosition, Quaternion.Euler(0, 0, Rotation * 90), OtherBlocksParent);
 
             // if(child.)
     }
