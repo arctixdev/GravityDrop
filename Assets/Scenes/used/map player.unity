@@ -13909,7 +13909,7 @@ MonoBehaviour:
   player: {fileID: 1843792750}
   cineCam: {fileID: 1780169595}
   playerTrail: {fileID: 727478459}
-  resetLevel: 1
+  resetLevel: 0
   mainController: {fileID: 1780169599}
   freezePhysicsWhileLoading: 1
   enablePhysicsDelay: 0.7
