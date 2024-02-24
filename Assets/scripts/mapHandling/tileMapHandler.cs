@@ -14,17 +14,18 @@ public class tileMapHandler : MonoBehaviour
     public List<Tile> sqareTiles = new List<Tile>();
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
-    public void changeBlock(int BX, int BY, bool place){
-        
+    public void changeBlock(int BX, int BY, bool place)
+    {
+
         for (int x = 0; x < 4; x++)
         {
             for (int y = 0; y < 4; y++)
@@ -35,33 +36,38 @@ public class tileMapHandler : MonoBehaviour
         }
     }
 
-    bool isCornerTile(Tile tile){
+    bool isCornerTile(Tile tile)
+    {
         return inSideTiles.Contains(tile) || tile == null;
     }
 
-    public void removeBlock(){
+    public void removeBlock()
+    {
 
     }
 
-    bool checkTile(int x, int y, int BX, int BY, bool place){
+    bool checkTile(int x, int y, int BX, int BY, bool place)
+    {
         // Debug.Log(x - (x % 2));
-        if(x - BX * 2 is -1 or 0 && y - BY * 2 is -1 or 0) return place;
+        if (x - BX * 2 is -1 or 0 && y - BY * 2 is -1 or 0) return place;
         return !isCornerTile(grid.GetTile<Tile>(new Vector3Int(x, y, 0)));
         // return true;
     }
 
-    void updateTile(int x, int y, int BX, int BY, bool place){
+    void updateTile(int x, int y, int BX, int BY, bool place)
+    {
         int TilesAround = 0;
 
-        
-        if(checkTile(x + -1, y, BX, BY, place)) TilesAround ++;
-        if(checkTile(x + 1, y, BX, BY, place)) TilesAround ++;
-        if(checkTile(x, y + -1, BX, BY, place)) TilesAround ++;
-        if(checkTile(x, y + 1, BX, BY, place)) TilesAround ++;
-        
+
+        if (checkTile(x + -1, y, BX, BY, place)) TilesAround++;
+        if (checkTile(x + 1, y, BX, BY, place)) TilesAround++;
+        if (checkTile(x, y + -1, BX, BY, place)) TilesAround++;
+        if (checkTile(x, y + 1, BX, BY, place)) TilesAround++;
 
 
-        if(!checkTile(x, y, BX, BY, place)){
+
+        if (!checkTile(x, y, BX, BY, place))
+        {
             switch (TilesAround)
             {
                 case <= 1:
@@ -76,14 +82,15 @@ public class tileMapHandler : MonoBehaviour
             }
             return;
         }
-        switch (TilesAround){
+        switch (TilesAround)
+        {
             case >= 3:
                 placeTile(x, y, sqareTiles);
                 break;
             default:
                 placeTile(x, y, outSideTiles);
                 break;
-            
+
         }
         return;
 
@@ -91,18 +98,21 @@ public class tileMapHandler : MonoBehaviour
 
     }
 
-    void placeTile(int x, int y, List<Tile> tiles){
+    void placeTile(int x, int y, List<Tile> tiles)
+    {
         grid.SetTile(new Vector3Int(x, y, 0), tiles[3 - (Math.Abs(x) % 2 + (1 - Math.Abs(y) % 2) * 2)]);
     }
-    void removeTile(int x, int y){
+    void removeTile(int x, int y)
+    {
         grid.SetTile(new Vector3Int(x, y, 0), null);
     }
 
-    public void clearMap(){
+    public void clearMap()
+    {
         grid.ClearAllTiles();
     }
 
-    
+
 
 }
 

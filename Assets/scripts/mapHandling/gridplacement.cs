@@ -24,7 +24,7 @@ public class gridplacement : MonoBehaviour
 
     [SerializeField] private ToggleGroup toggleGroup;
 
-    [SerializeField] private bool disablePhysicsOnStart = true; 
+    [SerializeField] private bool disablePhysicsOnStart = true;
 
     List<block> oldblockpos = new List<block>();
 
@@ -70,8 +70,9 @@ public class gridplacement : MonoBehaviour
     private Camera _cam;
     [SerializeField] mapLoader ML;
 
-    void addBlockPrefab(GameObject b){
-         GameObject msEffectBlock = Instantiate(b, msEffectParent.position, msEffectParent.rotation, msEffectParent);
+    void addBlockPrefab(GameObject b)
+    {
+        GameObject msEffectBlock = Instantiate(b, msEffectParent.position, msEffectParent.rotation, msEffectParent);
 
         BoxCollider2D boxCollider = msEffectBlock.GetComponent<BoxCollider2D>();
         if (boxCollider != null)
@@ -94,11 +95,12 @@ public class gridplacement : MonoBehaviour
 
     void Start()
     {
-        if(disablePhysicsOnStart){
+        if (disablePhysicsOnStart)
+        {
             Physics2D.simulationMode = SimulationMode2D.Script;
             Debug.Log("Disabled physics");
         }
-        
+
         keyToggle = toggleGroup.GetComponent<keyToggle>();
         ListMapsToLoad();
         changeCurrentMap(SaveSystem.getDeafultMapName());
@@ -119,7 +121,8 @@ public class gridplacement : MonoBehaviour
 
 
 
-    void clearChildren(Transform parent){
+    void clearChildren(Transform parent)
+    {
         for (int i = 0; i < parent.childCount; i++)
         {
             Destroy(parent.GetChild(i).gameObject);
@@ -129,44 +132,50 @@ public class gridplacement : MonoBehaviour
 
 
     // -- maps selection ui --
-    void ListMapsToLoad(){
+    void ListMapsToLoad()
+    {
         clearChildren(MapsParent);
         string[] mapNames = SaveSystem.getAllSavedMapNames();
-// MapButtonPrefab, MapsParent
+        // MapButtonPrefab, MapsParent
         for (int i = 0; i < mapNames.Length; i++)
         {
             addButtonToMapList(MapButtonPrefab, MapsParent, mapNames[i]);
         }
     }
 
-    void addButtonToMapList(GameObject buttonPrefab, Transform mapListParent, string mapName){
+    void addButtonToMapList(GameObject buttonPrefab, Transform mapListParent, string mapName)
+    {
         GameObject newButton = Instantiate(buttonPrefab, mapListParent);
         changeTextOfButton(newButton, mapName);
         newButton.GetComponent<Button>().onClick.AddListener(() => changeCurrentMap(mapName));
         newButton.GetComponentsInChildren<Button>()[1].onClick.AddListener(() => removeMap(mapName));
-        
+
     }
-    void changeTextOfButton(GameObject button, string newText){
+    void changeTextOfButton(GameObject button, string newText)
+    {
         button.GetComponentInChildren<TMP_Text>().text = newText;
     }
 
     // change the current map
 
-    void changeCurrentMap(string mapName){
+    void changeCurrentMap(string mapName)
+    {
         currentMapName = mapName;
         mapList = ML.importMapFromFile(mapName);
     }
-    public void saveMap(){
-        if(currentMapName is "" or null) return;
-        Debug.Log("saving map to name: "+ currentMapName);
+    public void saveMap()
+    {
+        if (currentMapName is "" or null) return;
+        Debug.Log("saving map to name: " + currentMapName);
         exportMapAsString();
-            // ListMapsToLoad(MapButtonPrefab, MapsParent);
+        // ListMapsToLoad(MapButtonPrefab, MapsParent);
     }
 
     // add a new map (mapName being the name for the new map). ////returns false if fails fx. if the map name already exists
 
-    public void addMap(){
-        if(MapNameInputField.text.Replace(" ", "-") == "") return;
+    public void addMap()
+    {
+        if (MapNameInputField.text.Replace(" ", "-") == "") return;
 
         mapList = ML.clearMap();
 
@@ -175,49 +184,58 @@ public class gridplacement : MonoBehaviour
         ListMapsToLoad();
     }
     //clones a map !! not implemented yet DO NOT USE
-    public void cloneMap(string NewMapName){
+    public void cloneMap(string NewMapName)
+    {
 
     }
 
     // removes the map with the mapNmae
-    public void removeMap(string MapName){
-        if(currentMapName == MapName){
+    public void removeMap(string MapName)
+    {
+        if (currentMapName == MapName)
+        {
             currentMapName = "";
         }
         SaveSystem.removeFile(MapName);
         ListMapsToLoad();
     }
 
-    
 
 
-    Vector2Int getMsPos(){
+
+    Vector2Int getMsPos()
+    {
         Vector3 mousePosition = Input.mousePosition;
-        if(_cam == null) _cam = Camera.main;
+        if (_cam == null) _cam = Camera.main;
         Vector3 worldPosition = _cam.ScreenToWorldPoint(mousePosition);
         return new Vector2Int(
             Mathf.RoundToInt(worldPosition.x / 2.5f),
             Mathf.RoundToInt(worldPosition.y / 2.5f));
     }
 
-    Vector2 blockToWorldPos(Vector2Int pos){
+    Vector2 blockToWorldPos(Vector2Int pos)
+    {
         return new Vector2(pos.x * 2.5f, pos.y * 2.5f);
     }
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.LeftShift)){
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
             oldItemId = itemID;
             keyToggle.enableToggle(-1);
         }
-        if(Input.GetKeyUp(KeyCode.LeftShift)){
+        if (Input.GetKeyUp(KeyCode.LeftShift))
+        {
             print("you unshifted");
             keyToggle.enableToggle(oldItemId);
-            
+
         }
         // blockType += Mathf.RoundToInt(Input.mouseScrollDelta.y);
-        if(!inPlayMode){
+        if (!inPlayMode)
+        {
 
-            if(Input.GetMouseButtonUp(0)){
+            if (Input.GetMouseButtonUp(0))
+            {
                 removeLayer = -1;
 
                 // reseting remove layer when not clicking
@@ -226,56 +244,63 @@ public class gridplacement : MonoBehaviour
             Vector2Int msPos = getMsPos();
             int x = msPos.x;
             int y = msPos.y;
-            if(!EventSystem.current.IsPointerOverGameObject()){
-                
-                if(Input.GetMouseButton(0) ){
-                    
+            if (!EventSystem.current.IsPointerOverGameObject())
+            {
 
-                    if(itemID == -1){
+                if (Input.GetMouseButton(0))
+                {
+
+
+                    if (itemID == -1)
+                    {
                         removeBlock(x, y);
-                        
+
                     }
-                    else {
+                    else
+                    {
                         addBlock(x, y, itemID, rot);
                     }
 
                 }
-                if(!Input.GetKey(KeyCode.LeftControl)){
-                    rot = (rot + Mathf.RoundToInt(Input.mouseScrollDelta.y)) % 4 ;
+                if (!Input.GetKey(KeyCode.LeftControl))
+                {
+                    rot = (rot + Mathf.RoundToInt(Input.mouseScrollDelta.y)) % 4;
                 }
             }
-            
 
-            if(itemID != -1){
+
+            if (itemID != -1)
+            {
 
                 GameObject child = msEffectParent.GetChild(itemID).gameObject;
                 // child.SetActive(false);
                 iTween.RotateTo(child, iTween.Hash("z", rot * 90, "time", 0.1));
-                iTween.MoveTo(child, iTween.Hash("x", x * 2.5f, "y", y * 2.5f, "time", 0.1, "easetype", EaseType));  
+                iTween.MoveTo(child, iTween.Hash("x", x * 2.5f, "y", y * 2.5f, "time", 0.1, "easetype", EaseType));
             }
         }
-        
+
     }
 
 
 
-    public string exportMapAsString(){
+    public string exportMapAsString()
+    {
         String MapString = "";
         foreach (List<int> row in mapList)
         {
             foreach (int element in row)
             {
                 // Do something with the element
-                
+
                 MapString += element;
                 MapString += ' ';
 
-            
-            
+
+
             }
             MapString += ',';
         }
-        
+
         SaveSystem.WriteString(currentMapName, MapString);
         // SaveSystem.WriteString(MapNameInputField.text.Replace(" ", "-"), MapString);
 
@@ -284,17 +309,18 @@ public class gridplacement : MonoBehaviour
 
 
 
-    void importMapAsString(string mapStr){
+    void importMapAsString(string mapStr)
+    {
         foreach (string bstring in mapStr.Split(','))
         {
-            if(bstring == "") continue;
+            if (bstring == "") continue;
 
             string[] elements = bstring.Split(' ');
             int[] numbers = new int[elements.Length];
 
             for (int i = 0; i < elements.Length; i++)
             {
-                if(elements[i] == "") continue;
+                if (elements[i] == "") continue;
                 numbers[i] = int.Parse(elements[i]);
             }
             addBlock(
@@ -307,13 +333,16 @@ public class gridplacement : MonoBehaviour
 
     }
 
-    void removeBlock(int x, int y){
-        if(removeLayer != 0){
+    void removeBlock(int x, int y)
+    {
+        if (removeLayer != 0)
+        {
             for (int b = 0; b < OtherBlocksParent.transform.childCount; b++)
             {
                 Transform block = OtherBlocksParent.transform.GetChild(b);
 
-                if(block.position.x == x * 2.5f && block.position.y == y * 2.5f){
+                if (block.position.x == x * 2.5f && block.position.y == y * 2.5f)
+                {
                     Destroy(block.gameObject);
 
                     // var itemToRemove = mapList.Where(r => r[0] == x && r[1] == y);
@@ -326,7 +355,7 @@ public class gridplacement : MonoBehaviour
 
             }
         }
-        if(removeLayer == 1) return;
+        if (removeLayer == 1) return;
         removeLayer = 0;
 
         tileMapHandler.changeBlock(x, y, false);
@@ -335,58 +364,59 @@ public class gridplacement : MonoBehaviour
 
 
 
-    void addBlock(int x, int y, int blockType, int Rotation){
-        Vector3 worldPosition = new Vector3(x * 2.5F, y * 2.5F, zPos);
-
-
+    void addBlock(int x, int y, int blockType, int Rotation)
+    {
         List<int> block = new List<int>() {
-                                x, 
+                                x,
                                 y,
                                 blockType,
                                 Rotation
                             };
-
-        if(mapList.Any(x => x.SequenceEqual(block))) return;
-
+        if (mapList.Any(x => x.SequenceEqual(block))) return;
 
         mapList.Add(block);
 
-
-        // MapString = exportMapAsString();
-        
-        if(blockType != 0){
-            worldPosition += Vector3.back * 2;
-            Instantiate(blockPrefabs[blockType], worldPosition, Quaternion.Euler(0, 0, Rotation * 90), OtherBlocksParent);
+        if (blockType == 0)
+        {
+            tileMapHandler.changeBlock(x, y, true);
             return;
         }
-        
-        tileMapHandler.changeBlock(x, y, true);
 
-            // if(child.)
+
+        Vector3 worldPosition = new Vector3(x * 2.5F, y * 2.5F, zPos);
+
+        worldPosition += Vector3.back * 2;
+        Instantiate(blockPrefabs[blockType], worldPosition, Quaternion.Euler(0, 0, Rotation * 90), OtherBlocksParent);
+
+        // if(child.)
     }
 
-    bool isBlockHere(Vector3 pos, List<int> bb){
+    bool isBlockHere(Vector3 pos, List<int> bb)
+    {
         return pos.x == bb[0] && pos.y == bb[1];
     }
 
-    
 
-    public void updateSelectedItem(){
+
+    public void updateSelectedItem()
+    {
 
         Toggle toggle = toggleGroup.ActiveToggles().FirstOrDefault();
 
         // msEffectParent.GetChild(itemID).gameObject.SetActive(false);
         updateSelectedItem(toggle.transform.GetSiblingIndex());
 
-        
+
     }
 
-    public void updateSelectedItem(int NewitemID){
-        if(itemID != -1){
+    public void updateSelectedItem(int NewitemID)
+    {
+        if (itemID != -1)
+        {
             msEffectParent.GetChild(itemID).gameObject.SetActive(false);
         }
         itemID = NewitemID;
-        if(itemID == -1) return;
+        if (itemID == -1) return;
         GameObject obj = msEffectParent.GetChild(itemID).gameObject;
         obj.SetActive(true);
         obj.transform.position = blockToWorldPos(getMsPos());
@@ -394,15 +424,17 @@ public class gridplacement : MonoBehaviour
 
 
     }
-    
-    public void StartOrStopSim(){
-        if(inPlayMode) StopSim();
+
+    public void StartOrStopSim()
+    {
+        if (inPlayMode) StopSim();
         else StartSim();
     }
 
-    void StartSim(){
+    void StartSim()
+    {
 
-        
+
 
         swichCam(true);
         oldblockpos.Clear();
@@ -411,7 +443,8 @@ public class gridplacement : MonoBehaviour
         {
             GameObject block = OtherBlocksParent.transform.GetChild(b).gameObject;
 
-            if(block.GetComponent<Rigidbody2D>() != null){
+            if (block.GetComponent<Rigidbody2D>() != null)
+            {
                 oldblockpos.Add(new block(block.gameObject));
 
             }
@@ -421,14 +454,15 @@ public class gridplacement : MonoBehaviour
         oldblockpos.Add(new block(player));
 
         Physics2D.simulationMode = SimulationMode2D.FixedUpdate;
-        
+
         msEffectParent.GetChild(itemID).gameObject.SetActive(false);
 
         trailRenderer.enabled = true;
 
 
     }
-    void StopSim(){
+    void StopSim()
+    {
         trailRenderer.enabled = false;
 
         foreach (block b in oldblockpos)
@@ -437,14 +471,15 @@ public class gridplacement : MonoBehaviour
         }
         swichCam(false);
         Physics2D.simulationMode = SimulationMode2D.Script;
-        
+
         msEffectParent.GetChild(itemID).gameObject.SetActive(true);
 
-        
+
 
     }
 
-    void swichCam(bool isPlaying){
+    void swichCam(bool isPlaying)
+    {
         inPlayMode = isPlaying;
         editorCam.SetActive(!isPlaying);
         playingCam.SetActive(isPlaying);
@@ -458,20 +493,23 @@ public class gridplacement : MonoBehaviour
 
 
 
-class block{
+class block
+{
 
     private Vector3 pos;
     private Quaternion rot;
     private GameObject gameObject;
     private Rigidbody2D rb;
-    public block(GameObject igameObject){
+    public block(GameObject igameObject)
+    {
         pos = igameObject.transform.position;
         rot = igameObject.transform.rotation;
         rb = igameObject.GetComponent<Rigidbody2D>();
         gameObject = igameObject;
     }
 
-    public void resetTransform(){
+    public void resetTransform()
+    {
         gameObject.transform.position = pos;
         gameObject.transform.rotation = rot;
         rb.velocity = Vector2.zero;
