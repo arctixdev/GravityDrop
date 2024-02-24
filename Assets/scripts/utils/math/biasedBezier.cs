@@ -7,11 +7,15 @@ using UnityEngine.UIElements;
 
 public class biasedBezier : MonoBehaviour
 {
-    public static Vector2 biasedPoint2(float t, Vector2[] controlPoints, float[] arcLengths, bool evenlySpaced = true)
+    public static Vector2 biasedPoint2(float t, Vector2[] controlPoints, float[] arcLengths, ref string timeString, ref System.Diagnostics.Stopwatch time1, ref System.Diagnostics.Stopwatch time2, bool evenlySpaced = true)
     {
         //return legasyPoint2(biasedT, new List<Vector2>(controlPoints), arcLengths, 25, true);
 
         if (!evenlySpaced) return bezeirCurve.Point2(t, controlPoints);
+
+        System.Diagnostics.Stopwatch stopwatch = System.Diagnostics.Stopwatch.StartNew();
+        time1.Start();
+
 
         //UnityEngine.Debug.Log("setting up starting values");
         //float len = arcLengths[arcLengths.Length - 1];
@@ -44,15 +48,23 @@ public class biasedBezier : MonoBehaviour
             index--;
         }
 
-        Debug.Log("binary seach found index " + index + ", floored to nearest arclength would give t: " + (index / (float)totalArcLength) + "\n" +
-            "targetLength was: " + targetLength + " with a starting t of: " + t
-            );
+        time1.Stop();
+        timeString = "finished binary search in " + (stopwatch.ElapsedMilliseconds / 1000) + " seconds\n" + timeString;
+
+        //Debug.Log("binary seach found index " + index + ", floored to nearest arclength would give t: " + (index / (float)totalArcLength) + "\n" +
+        //    "targetLength was: " + targetLength + " with a starting t of: " + t
+        //    );
+
+        float lastValue = stopwatch.ElapsedMilliseconds;
+        time2.Start();
+
+        Vector2 x = new();
         float lengthBefore = arcLengths[index];
         if (lengthBefore == targetLength)
         {
             //UnityEngine.Debug.LogWarning("Using stuff: " + index / pointAmount + " with presumed len: " + pointAmount + " and index: " + index + "\n" +" target length is: "+targetLength+" and t is: "+t);
-            Debug.Log("point made at t: " + index / (float)totalArcLength + " index is: " + index);
-            return bezeirCurve.Point2(index / (float)totalArcLength, controlPoints);
+            //Debug.Log("point made at t: " + index / (float)totalArcLength + " index is: " + index);
+            x = bezeirCurve.Point2(index / (float)totalArcLength, controlPoints);
         }
 
         else
@@ -70,9 +82,14 @@ public class biasedBezier : MonoBehaviour
             //float finalT = (index + localT) / totalArcLength;
 
             //UnityEngine.Debug.LogWarning("Using (advanced) stuff: " + (index + (targetLength - lengthBefore) / (arcLengths[index + 1] - lengthBefore)) / pointAmount + " with presumed len: " + pointAmount + " and index: " + index + "\n" + " target length is: " + targetLength + " lerp start length is: "+ lengthBefore + " meaning lerp distance should be: " + (targetLength-lengthBefore) + " and lerp percent is: " + (targetLength - lengthBefore) / (arcLengths[index + 1] - lengthBefore) + " and t is: " + t);
-            UnityEngine.Debug.Log("(advanced) point made at t: " + (index + (targetLength - lengthBefore) / (arcLengths[index + 1] - lengthBefore)) / totalArcLength);
-            return bezeirCurve.Point2((index + (targetLength - lengthBefore) / (arcLengths[index + 1] - lengthBefore)) / totalArcLength, controlPoints);
+            //UnityEngine.Debug.Log("(advanced) point made at t: " + (index + (targetLength - lengthBefore) / (arcLengths[index + 1] - lengthBefore)) / totalArcLength);
+            x = bezeirCurve.Point2((index + (targetLength - lengthBefore) / (arcLengths[index + 1] - lengthBefore)) / totalArcLength, controlPoints);
         }
+
+        time2.Stop();
+        timeString = "finished point generation in " + ((stopwatch.ElapsedMilliseconds - lastValue) / 1000) + " seconds" + "\n" + timeString + "\n";
+
+        return x;
 
         // old refurbished code
         /*
