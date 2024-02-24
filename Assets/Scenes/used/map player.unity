@@ -11961,7 +11961,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1423322755
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11979,7 +11979,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 792, y: 817}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 141, y: 162}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1423322756
@@ -13850,21 +13850,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   grid: {fileID: 1394901789}
-  outSideTiles:
-  - {fileID: 11400000, guid: 89729d83968a6784babdca7bf4a51102, type: 2}
-  - {fileID: 11400000, guid: 9bd96e6de45670e418359df5ff82f565, type: 2}
-  - {fileID: 11400000, guid: 04c65c717133ed94f95b63dad0b043ff, type: 2}
-  - {fileID: 11400000, guid: 7940cd630b3e10847b30a761129ade4d, type: 2}
-  inSideTiles:
-  - {fileID: 11400000, guid: f0df1ae6ca7bf094e842eb41613b83c7, type: 2}
-  - {fileID: 11400000, guid: 502a01494bd534040ab610034324d5de, type: 2}
-  - {fileID: 11400000, guid: e7598b6a2af6c554b8b613f6e6f2aaeb, type: 2}
-  - {fileID: 11400000, guid: d7651250f925f8a4ead35cb1a88355fe, type: 2}
-  sqareTiles:
-  - {fileID: 11400000, guid: 4416853e9bb5ab24793eb0f294f0ab0d, type: 2}
-  - {fileID: 11400000, guid: 0e6d847e00efa6a4d9e439d9f25372ac, type: 2}
-  - {fileID: 11400000, guid: 2e7d3eb7a17b5194bb7465a01233bc1d, type: 2}
-  - {fileID: 11400000, guid: 83eebd79c879f094cab07aedb35b9cb0, type: 2}
+  collisonGrid: {fileID: 0}
+  ruleTile: {fileID: 0}
+  collisonTile: {fileID: 0}
 --- !u!114 &1815001537
 MonoBehaviour:
   m_ObjectHideFlags: 0
