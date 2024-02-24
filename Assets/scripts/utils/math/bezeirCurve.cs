@@ -9,21 +9,20 @@ public class bezeirCurve : MonoBehaviour
 {
 
 
-    public static Vector2 Point2(float t, List<Vector2> controlPoints)
+    public static Vector2 Point2(float t, Vector2[] controlPoints)
     {
-        int N = controlPoints.Count - 1;
+        int N = controlPoints.Length - 1;
         if (N > 16)
         {
-            UnityEngine.Debug.LogWarning("You have used more than 16 control points. The maximum control points allowed is 16.");
-            controlPoints.RemoveRange(16, controlPoints.Count - 16);
+            UnityEngine.Debug.LogWarning("You have used more than 16 control points. The maximum recommended control points allowed is 16.");
         }
 
         if (t <= 0) return controlPoints[0];
-        if (t >= 1) return controlPoints[controlPoints.Count - 1];
+        if (t >= 1) return controlPoints[N];
 
         Vector2 p = new Vector2();
 
-        for (int i = 0; i < controlPoints.Count; ++i)
+        for (int i = 0; i < N + 1; ++i)
         {
             Vector2 bn = Bernstein(N, i, t) * controlPoints[i];
             p += bn;
@@ -31,7 +30,7 @@ public class bezeirCurve : MonoBehaviour
         //UnityEngine.Debug.LogWarning(p);
         return p;
     }
-    public static Vector2 Point2(float t, List<Vector2> controlPoints, float[] arcLengths, int pointAmount, bool evenlySpaced)
+    public static Vector2 Point2(float t, Vector2[] controlPoints, float[] arcLengths, int pointAmount, bool evenlySpaced)
     {
         if(!evenlySpaced) return Point2(t, controlPoints);
     
@@ -83,7 +82,7 @@ public class bezeirCurve : MonoBehaviour
         }
     }
 
-    public static List<Vector2> PointList2(List<Vector2> controlPoints, int pointAmount)
+    public static List<Vector2> PointList2(Vector2[] controlPoints, int pointAmount)
     {
         float interval = 1f / pointAmount;
         List<Vector2> points = new List<Vector2>();
