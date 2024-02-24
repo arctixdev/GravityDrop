@@ -13891,7 +13891,7 @@ MonoBehaviour:
   OtherBlocksParent: {fileID: 1736024118}
   tileMapHandler: {fileID: 1815001535}
   zPos: 0
-  DevMode: 0
+  DevMode: 1
 --- !u!114 &1815001538
 MonoBehaviour:
   m_ObjectHideFlags: 0
