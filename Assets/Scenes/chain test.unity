@@ -5151,7 +5151,8 @@ MonoBehaviour:
   - {fileID: 1251659051}
   handlePrefab: {fileID: 1298051170339969726, guid: 744b4f05c603d5e48b11d32b3434857a, type: 3}
   plusPrefab: {fileID: 2740148577308038461, guid: de2d01cbdc8a45a46bc999c669f077bd, type: 3}
-  precision: 26
+  precision: 4
+  pointAmount: 10
   plusDefaultOffset: {x: 0.2, y: -0.2, z: 1}
   plusses: []
   printDistances: 0

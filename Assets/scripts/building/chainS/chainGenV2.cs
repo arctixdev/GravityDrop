@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.ParticleSystem;
-using UnityEngine.Rendering;
 using UnityEngine.EventSystems;
 using Unity.Mathematics;
 
@@ -12,6 +10,7 @@ public class chainGenV2 : MonoBehaviour
     [SerializeField] private GameObject handlePrefab;
     [SerializeField] private GameObject plusPrefab;
     public int precision;
+    public int pointAmount;
     /// <summary>
     /// this is HIGLY temporary, a system for pushing them away from the line dynamicly WILL be implemented
     /// </summary>
@@ -53,7 +52,7 @@ public class chainGenV2 : MonoBehaviour
                 if(handles.Length - 1 >= i) handles[i].transform.position = controlPositions[i];
             }
             regenPlusObjects(true);
-            generateChain(controlPositions, precision);
+            generateChain(controlPositions, precision, pointAmount);
             //List<Vector2> l = bezeirCurve.PointList2(new List<Vector2>(x), 10);
             //for(int i = 0; i < l.Count; i++)
             //{
@@ -66,13 +65,13 @@ public class chainGenV2 : MonoBehaviour
             if ((Vector2)handles[i].transform.position != oldHandles[i])
             {
                 regenControlPoints();
-                generateChain(controlPositions, precision);
+                generateChain(controlPositions, precision, pointAmount);
                 //Debug.Log("control position " + i +" are as follows: " + controlPositions[i]);
             }
         }
         if(printDistances)
         {
-            generateChain(controlPositions, precision);
+            generateChain(controlPositions, precision, pointAmount);
         }
     }
     void regenControlPoints()
@@ -151,7 +150,7 @@ public class chainGenV2 : MonoBehaviour
         }
         regenPlusObjects(false);
         regenControlPoints();
-        generateChain(controlPositions, precision);
+        generateChain(controlPositions, precision, pointAmount);
     }
 
     public int findMyObjectIndex(GameObject searchedObject)
@@ -182,59 +181,90 @@ public class chainGenV2 : MonoBehaviour
     [SerializeField] private bool generateDebugLines;
     [SerializeField] private float chainSegmentLength;
     //public bool generateChain(Vector2[] points, int precision, int searchDistance = 3)
-    public bool generateChain(Vector2[] points, int precision)
+    public bool generateChain(Vector2[] points, int precision, int chainPointAmount, int depth = 1)
     {
+        if (precision < 1) return false;
         if (EventSystem.current.IsPointerOverGameObject()) return false;
 
-        int pointAmount = 25;
+        // add 1 to precesion because 1 is 'wasted' on the first point which is on 0 anyway what
+        precision++;
+
+        //int pointAmount = 5;
 
         if (points.Length < 2) return false;
 
-        float[] arcLengths = new float[precision];
-        arcLengths[0] = 0f;
-        float lastArcT = 0f;
         string arcString = "";
-        for(int i = 1; i < precision; i++)
+        float[] arcLengths = generateArcLengths(points, out arcString);
+        Vector2[] computedPoints = new Vector2[1];
+        for (int i = 0; i < depth; i++)
         {
-            float t = i / (float)precision;
-            Debug.Log("t is: " + t);
-            List<Vector2> vector2s = new List<Vector2>(points);
-            arcLengths[i] = arcLengths[i - 1] + Vector2.Distance(bezeirCurve.Point2(lastArcT, vector2s), bezeirCurve.Point2(t, vector2s));
-            lastArcT = t;
-            arcString += i + ": " + arcLengths[i] + "\n";
+            computedPoints = generateInnerChain(points, precision, chainPointAmount, arcLengths);
+            if (i == depth - 1) break;
+
+
         }
         Debug.Log("arclengts are: " + "\n" + arcString);
-        Vector2[] computedPoints = new Vector2[pointAmount + 1];
-        for (int i = 0; i <= pointAmount; i++)
-        {
-            computedPoints[i] = biasedBezier.biasedPoint2(i / pointAmount, points, arcLengths);
-        }
-        //Vector2[] computedPoints = bezeirCurve.PointList2(new List<Vector2>(points), precision).ToArray();
-        //Debug.Log("minimum reselution, distance would be: " + Vector2.Distance(controlPositions[0], controlPositions[controlPositions.Length-1]));
-        if(printDistances)
-        {
-            string x = "";
-            for(int i = 1; i < computedPoints.Length; i++)
-            {
-                x += "distance " + i + " is: " + Vector2.Distance(computedPoints[i], computedPoints[i-1]) + "\n";
-            }
-            Debug.Log(x);
-            printDistances = false;
-        }
         if (generateDebugLines)
         {
-            //Debug.Log("drawing the following lines:");
-            for(int i = 0; i < computedPoints.Length; i++)
-            {
-                //Debug.Log(computedPoints[i]);
-            }
-            DrawLine(computedPoints);
+            generateDebugCurve(computedPoints);
         }
         return true;
     }
 
+    Vector2[] generateInnerChain(Vector2[] points, int precision, int chainPointAmount, float[] arcLengths)
+    {
+        Vector2[] computedPoints = new Vector2[chainPointAmount + 1];
+        for (int i = 0; i <= chainPointAmount; i++)
+        {
+            computedPoints[i] = biasedBezier.biasedPoint2(i / (float)chainPointAmount, points, arcLengths);
+        }
+        //Vector2[] computedPoints = bezeirCurve.PointList2(new List<Vector2>(points), precision).ToArray();
+        //Debug.Log("minimum reselution, distance would be: " + Vector2.Distance(controlPositions[0], controlPositions[controlPositions.Length-1]));
+        if (printDistances)
+        {
+            string x = "";
+            for (int i = 1; i < computedPoints.Length; i++)
+            {
+                x += "distance " + i + " is: " + Vector2.Distance(computedPoints[i], computedPoints[i - 1]) + "\n";
+            }
+            Debug.Log(x);
+            printDistances = false;
+        }
+        return computedPoints;
+    }
+
+    float[] generateArcLengths(Vector2[] points, out string arcString)
+    {
+        float[] arcLengths = new float[precision];
+        arcLengths[0] = 0f;
+        float lastArcT = 0f;
+        arcString = "";
+        for (int i = 1; i < precision; i++)
+        {
+            // generate t values 0 through 1 with [precesion] points
+            float t = i / (float)precision;
+            Debug.Log("t is: " + t);
+            arcLengths[i] = arcLengths[i - 1] + Vector2.Distance(
+                bezeirCurve.Point2(lastArcT, points),
+                bezeirCurve.Point2(t, points)
+            );
+            lastArcT = t;
+            arcString += i + ": " + arcLengths[i] + "\n";
+        }
+        return arcLengths;
+    }
+
+    void generateDebugCurve(Vector2[] computedPoints)
+    {
+        //Debug.Log("drawing the following lines:");
+        for (int i = 0; i < computedPoints.Length; i++)
+        {
+            //Debug.Log(computedPoints[i]);
+        }
+        DrawLine(computedPoints);
+    }
+
     LineRenderer lr;
-    //[SerializeField] private LineRenderer lineRenderer;
     void DrawLine(Vector2[] points)
     {
         //LineRenderer lr = lineRenderer;
@@ -243,7 +273,7 @@ public class chainGenV2 : MonoBehaviour
         //}
         if (!(lr = gameObject.GetComponent<LineRenderer>())) lr = gameObject.AddComponent<LineRenderer>();
         //lr.useWorldSpace = false;
-        lr.widthMultiplier = 0.1f;
+        lr.widthMultiplier = 0.03f;
         //lr.gameObject.transform.position = points[0];
         Vector3[] v3Points = new Vector3[points.Length];
         lr.positionCount = points.Length;

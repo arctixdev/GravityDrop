@@ -7,10 +7,75 @@ using UnityEngine.UIElements;
 
 public class biasedBezier : MonoBehaviour
 {
-    public static Vector2 biasedPoint2(float biasedT, Vector2[] controlPoints, float[] arcLengths)
+    public static Vector2 biasedPoint2(float t, Vector2[] controlPoints, float[] arcLengths, bool evenlySpaced = true)
     {
-        return legasyPoint2(biasedT, new List<Vector2>(controlPoints), arcLengths, 25, true);
+        //return legasyPoint2(biasedT, new List<Vector2>(controlPoints), arcLengths, 25, true);
 
+        if (!evenlySpaced) return bezeirCurve.Point2(t, controlPoints);
+
+        //UnityEngine.Debug.Log("setting up starting values");
+        //float len = arcLengths[arcLengths.Length - 1];
+        int totalArcLength = arcLengths.Length - 1;
+        float targetLength = t * arcLengths[totalArcLength];
+        int low = 0, high = totalArcLength, index = 0;
+        //UnityEngine.Debug.Log("initiating binary search");
+        while (low < high)
+        {
+            index = low + (((high - low) / 2) | 0);
+            //UnityEngine.Debug.LogWarning("index is: " + (low + (((high - low) / 2) | 0)) + " without rounding it would be: " + (low + (high - low) / 2));
+            if (arcLengths[index] < targetLength)
+            {
+                low = index + 1;
+            }
+            else
+            {
+                high = index;
+            }
+        }
+        //    if (arcLengths[index] == targetLength)
+        //    {
+        //        //UnityEngine.Debug.LogWarning("Using stuff: " + index / pointAmount + " with presumed len: " + pointAmount + " and index: " + index + "\n" +" target length is: "+targetLength+" and t is: "+t);
+        //        UnityEngine.Debug.Log("point made at t: " + index / (float)pointAmount);
+        //        return Point2(index / (float)pointAmount, controlPoints);
+        //    }
+
+        if (arcLengths[index] > targetLength)
+        {
+            index--;
+        }
+
+        Debug.Log("binary seach found index " + index + ", floored to nearest arclength would give t: " + (index / (float)totalArcLength) + "\n" +
+            "targetLength was: " + targetLength + " with a starting t of: " + t
+            );
+        float lengthBefore = arcLengths[index];
+        if (lengthBefore == targetLength)
+        {
+            //UnityEngine.Debug.LogWarning("Using stuff: " + index / pointAmount + " with presumed len: " + pointAmount + " and index: " + index + "\n" +" target length is: "+targetLength+" and t is: "+t);
+            Debug.Log("point made at t: " + index / (float)totalArcLength + " index is: " + index);
+            return bezeirCurve.Point2(index / (float)totalArcLength, controlPoints);
+        }
+
+        else
+        {
+            // the amount targetDistance is bigger than the arcLength before it
+            //float distanceLeft = targetLength - lengthBefore;
+
+            // the distance between the arcLength before targetLength and the arcLength after targetLength
+            //float totalDistanceToNextArcLength = (arcLengths[index + 1] - lengthBefore);
+
+            // gets a number from 0 - 1 indicating how far to interpelate between lengthBefore and the next arcLength
+            //float localT = distanceLeft / totalDistanceToNextArcLength;
+
+            // gets the final t by adding the interpolated value to the found index and dividing by the total amount of values
+            //float finalT = (index + localT) / totalArcLength;
+
+            //UnityEngine.Debug.LogWarning("Using (advanced) stuff: " + (index + (targetLength - lengthBefore) / (arcLengths[index + 1] - lengthBefore)) / pointAmount + " with presumed len: " + pointAmount + " and index: " + index + "\n" + " target length is: " + targetLength + " lerp start length is: "+ lengthBefore + " meaning lerp distance should be: " + (targetLength-lengthBefore) + " and lerp percent is: " + (targetLength - lengthBefore) / (arcLengths[index + 1] - lengthBefore) + " and t is: " + t);
+            UnityEngine.Debug.Log("(advanced) point made at t: " + (index + (targetLength - lengthBefore) / (arcLengths[index + 1] - lengthBefore)) / totalArcLength);
+            return bezeirCurve.Point2((index + (targetLength - lengthBefore) / (arcLengths[index + 1] - lengthBefore)) / totalArcLength, controlPoints);
+        }
+
+        // old refurbished code
+        /*
         int arcAmount = arcLengths.Length - 1;
         float targetLength = biasedT * arcLengths[arcAmount];
         int min = 0, max = arcAmount, index = 0;
@@ -73,6 +138,7 @@ public class biasedBezier : MonoBehaviour
             return bezeirCurve.Point2(finalT, new List<Vector2>(controlPoints));
             //return bezeirCurve.Point2((index + (targetLength - lengthBefore) / (arcLengths[index + 1] - lengthBefore)) / arcAmount, new List<Vector2>(controlPoints));
         }
+        */
     }
 
     static float getBiasedT(float length1, float length2, float targetLength, int foundIndex, int totalIndexAmount)
@@ -92,14 +158,15 @@ public class biasedBezier : MonoBehaviour
         return finalT;
     }
 
-    public static Vector2 legasyPoint2(float t, List<Vector2> controlPoints, float[] arcLengths, int pointAmount, bool evenlySpaced)
+    public static Vector2 legasyPoint2(float t, Vector2[] controlPoints, float[] arcLengths, int pointAmount, bool evenlySpaced)
     {
         if (!evenlySpaced) return bezeirCurve.Point2(t, controlPoints);
 
         //UnityEngine.Debug.Log("setting up starting values");
         //float len = arcLengths[arcLengths.Length - 1];
-        float targetLength = t * arcLengths[pointAmount];
-        int low = 0, high = pointAmount, index = 0;
+        int totalArcLength = arcLengths.Length - 1;
+        float targetLength = t * arcLengths[totalArcLength];
+        int low = 0, high = totalArcLength, index = 0;
         //UnityEngine.Debug.Log("initiating binary search");
         while (low < high)
         {
@@ -108,7 +175,6 @@ public class biasedBezier : MonoBehaviour
             if (arcLengths[index] < targetLength)
             {
                 low = index + 1;
-
             }
             else
             {
@@ -127,20 +193,22 @@ public class biasedBezier : MonoBehaviour
             index--;
         }
 
-        Debug.Log("binary seach found index " + index + ", converted straigt to t would be: " + index / (float)pointAmount);
+        Debug.Log("binary seach found index " + index + ", floored to nearest arclength would give t: " + (index / (float)totalArcLength) + "\n" + 
+            "targetLength was: " + targetLength + " with a starting t of: " + t
+            );
         float lengthBefore = arcLengths[index];
         if (lengthBefore == targetLength)
         {
             //UnityEngine.Debug.LogWarning("Using stuff: " + index / pointAmount + " with presumed len: " + pointAmount + " and index: " + index + "\n" +" target length is: "+targetLength+" and t is: "+t);
-            Debug.Log("point made at t: " + index / (float)pointAmount + " index is: " + index);
-            return bezeirCurve.Point2(index / (float)pointAmount, controlPoints);
+            Debug.Log("point made at t: " + index / (float)totalArcLength + " index is: " + index);
+            return bezeirCurve.Point2(index / (float)totalArcLength, controlPoints);
         }
 
         else
         {
             //UnityEngine.Debug.LogWarning("Using (advanced) stuff: " + (index + (targetLength - lengthBefore) / (arcLengths[index + 1] - lengthBefore)) / pointAmount + " with presumed len: " + pointAmount + " and index: " + index + "\n" + " target length is: " + targetLength + " lerp start length is: "+ lengthBefore + " meaning lerp distance should be: " + (targetLength-lengthBefore) + " and lerp percent is: " + (targetLength - lengthBefore) / (arcLengths[index + 1] - lengthBefore) + " and t is: " + t);
-            UnityEngine.Debug.Log("(advanced) point made at t: " + (index + (targetLength - lengthBefore) / (arcLengths[index + 1] - lengthBefore)) / pointAmount);
-            return bezeirCurve.Point2((index + (targetLength - lengthBefore) / (arcLengths[index + 1] - lengthBefore)) / pointAmount, controlPoints);
+            UnityEngine.Debug.Log("(advanced) point made at t: " + (index + (targetLength - lengthBefore) / (arcLengths[index + 1] - lengthBefore)) / totalArcLength);
+            return bezeirCurve.Point2((index + (targetLength - lengthBefore) / (arcLengths[index + 1] - lengthBefore)) / totalArcLength, controlPoints);
         }
     }
 }
