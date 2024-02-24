@@ -18,6 +18,7 @@ public class LevelSelector : MonoBehaviour
         int newActiveLVL = lastChar - '0';
 
         currentLevel = newActiveLVL;
+        print(currentLevel);
     }
 
     // Update is called once per frame
