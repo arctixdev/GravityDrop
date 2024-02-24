@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Search;
 using UnityEngine;
 
 public class LevelSelector : MonoBehaviour
@@ -14,8 +15,7 @@ public class LevelSelector : MonoBehaviour
 
     public void updateActiveLVL(){ 
         string objectname =  gameObject.name;
-        char lastChar = objectname[objectname.Length - 1];
-        int newActiveLVL = lastChar - '0';
+        int newActiveLVL = int.Parse(objectname);
 
         currentLevel = newActiveLVL;
         print(currentLevel);
