@@ -14,6 +14,8 @@ public class chainGenV2 : MonoBehaviour
     public int precision;
     public int pointAmount;
     public int depth;
+
+    public int chainSegmentAmount;
     /// <summary>
     /// this is HIGLY temporary, a system for pushing them away from the line dynamicly WILL be implemented
     /// </summary>
@@ -95,8 +97,9 @@ public class chainGenV2 : MonoBehaviour
         doUpdateCheck();
         if (shouldReDraw)
         {
-
             if(generateDebugLines) DrawLine(currentComputedPoints); shouldReDraw = false;
+            Debug.Log("finished drawing debug lines");
+            drawChain(currentComputedPoints, chainSegmentAmount);
         }
     }
 
@@ -223,11 +226,13 @@ public class chainGenV2 : MonoBehaviour
 
     [SerializeField] private float chainSegmentLength;
     Vector2[] currentComputedPoints;
+    [SerializeField] private float currentChainSegmentLength;
     //public bool generateChain(Vector2[] points, int precision, int searchDistance = 3)
-    public bool generateChain(Vector2[] points, int precision, int chainPointAmount, int depth = 1, bool isThreaded = false, int threadIndex = 0)
+    public bool generateChain(Vector2[] points, int precision, int chainPointAmount, int depth = 1, bool isThreaded = false, int threadIndex = 0, bool autoAdjustPointAmount = true)
     {
         if (precision < 1) return false;
         if (EventSystem.current.IsPointerOverGameObject()) return false;
+
 
         // add 1 to precesion because 1 is 'wasted' on the first point which is on 0 anyway what
         precision++;
@@ -247,6 +252,16 @@ public class chainGenV2 : MonoBehaviour
         string arcString = "";
         float[] arcLengths = generateArcLengths(points, out arcString);
         Vector2[] computedPoints = new Vector2[1];
+
+        if(autoAdjustPointAmount)
+        {
+            //set amount of chain segments based on total curve length and the length of each chain segment
+            chainSegmentAmount = (int)math.round(arcLengths[arcLengths.Length - 1] / currentChainSegmentLength);
+            //set amount of points to a higher value dividable by chainsegmentamount
+            pointAmount = chainSegmentAmount * 4;
+
+            Debug.Log("generating chain with: "+chainSegmentAmount+" segments and: "+pointAmount+" points");
+        }
 
         //check if thread is too old
         if (isThreaded && threadIndex < currentNewestChainGenIndex) return false;
@@ -294,8 +309,8 @@ public class chainGenV2 : MonoBehaviour
         currentComputedPoints = computedPoints;
         shouldReDraw = true;
 
-        //check if thread is too old
-        if(threadIndex < currentNewestChainGenIndex) return false;
+        //Debug.Log("chain generated, redrawing");
+
         if (isThreaded)
         {
 
@@ -363,25 +378,45 @@ public class chainGenV2 : MonoBehaviour
         //GameObject.Destroy(myLine, duration);
     }
 
-    Quaternion GetRotation(Vector3 position)
+    Quaternion GetRotation(Vector3 position, GameObject rotatedObject, float rotationOffset = 0)
     {
-        Vector3 objectPos = transform.position;
+        Vector3 objectPos = rotatedObject.transform.position;
         position.x = position.x - objectPos.x;
         position.y = position.y - objectPos.y;
 
         float angle = Mathf.Atan2(position.y, position.x) * Mathf.Rad2Deg;
-        return Quaternion.Euler(new Vector3(0, 0, angle));
+        return Quaternion.Euler(new Vector3(0, 0, angle + rotationOffset));
+    }
+    int intRound(float value)
+    {
+        return (int)math.round(value);
     }
     [SerializeField] private GameObject[] chainPrefabs;
+    private GameObject[] currentChainSegments;
     void drawChain(Vector2[] curvePoints, int chainSegments)
     {
-        Time.timeScale = 0;
-        int constLevel = (int)math.ceil(curvePoints.Length / (float)chainSegments);
+        if(currentChainSegments != null) for(int i = 0; i < currentChainSegments.Length; i++)
+        {
+            Destroy(currentChainSegments[i]);
+        }
+        currentChainSegments = new GameObject[chainSegments];
+
+        //Time.timeScale = 0;
+        // what curvepoint to instansiate the chain segment at
+        float constLevel = (curvePoints.Length / (float)chainSegments);
         for (int i = 0; i < chainSegments; i++)
         {
+            //Debug.Log("generating chain segment");
             GameObject instance = Instantiate(chainPrefabs[i % chainPrefabs.Length], transform);
             instance.transform.SetParent(transform, false);
-            //instance.transform.position = 
+            instance.transform.position = curvePoints[intRound(constLevel * i)];
+            Vector3 nextPos = new Vector3(0, 0, 0);
+            if (i == 0) nextPos = curvePoints[intRound(constLevel * i + 1)];
+            else nextPos = currentChainSegments[i - 1].transform.position;
+            //Debug.Log(curvePoints[intRound(constLevel * i)] + " + " + nextPos);
+            instance.transform.rotation = GetRotation(nextPos, instance, -90);
+
+            currentChainSegments[i] = instance;
         }
     }
     void generateChainSegment(Vector2[] points, int precision)
