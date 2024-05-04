@@ -32,6 +32,9 @@ public class chainGenV2 : MonoBehaviour
     Vector2[] controlPositions;
 
     bool shouldReDraw;
+    bool shouldAddPhysics;
+    // will stop chainGen from running every update
+    bool shouldUpdate;
 
     System.Diagnostics.Stopwatch timer = new System.Diagnostics.Stopwatch();
     Vector3 plusModifyer;
@@ -47,8 +50,6 @@ public class chainGenV2 : MonoBehaviour
         plusModifyer = new Vector3(1, -1, 1);
     }
 
-    bool shouldUpdate;
-    // will stop chainGen from running every update
     private void Update()
     {
         Camera mainCam = Camera.main;
@@ -93,6 +94,8 @@ public class chainGenV2 : MonoBehaviour
                 shouldUpdate = true;
                 
                 //Debug.Log("control position " + i +" are as follows: " + controlPositions[i]);
+
+                break;
             }
         }
         if(printDistances)
@@ -105,7 +108,11 @@ public class chainGenV2 : MonoBehaviour
             if(generateDebugLines) DrawLine(currentComputedPoints); shouldReDraw = false;
             Debug.Log("finished drawing debug lines");
             drawChain(currentComputedPoints, chainSegmentAmount);
+        }
+        if(shouldAddPhysics)
+        {
             makeChainPhysics();
+            shouldAddPhysics = false;
         }
     }
 
