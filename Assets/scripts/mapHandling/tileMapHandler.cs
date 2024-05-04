@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using Unity.Collections;
 using UnityEditor.Overlays;
 using UnityEditor.U2D.Aseprite;
 using UnityEngine;
@@ -11,7 +12,7 @@ using UnityEngine.Tilemaps;
 public class tileMapHandler : MonoBehaviour
 {
     // Start is called before the first frame update
-    // public Tilemap grid;
+    public Tilemap grid;
     public Tilemap collisonGrid;
 
     public List<CustomRuleTile> tileRules;
@@ -26,10 +27,6 @@ public class tileMapHandler : MonoBehaviour
 
     // public List<ArrayLayout> tileRules2 = new List<ArrayLayout>();
 
-
-
-
-    public TileBase ruleTile;
     public Tile collisonTile;
 
     public int toBinary(bool[] arr)
@@ -60,6 +57,8 @@ public class tileMapHandler : MonoBehaviour
         print(tileRulesDict[3]);
 
         changeBlock(2, 2, true);
+        changeBlock(3, 2, true);
+        changeBlock(2, 3, true);
 
         print(tileRules[0].rules.rows.Length);
         print(tileRules[0].rules.rows[0].row[0]);
@@ -70,13 +69,46 @@ public class tileMapHandler : MonoBehaviour
 
     public void changeBlock(int x, int y, bool place)
     {
-        // TileBase tile = place ? ruleTile : null;
+
         // grid.SetTile(new Vector3Int(x, y), tile);
         // grid.SetTile(new Vector3Int(x + 1, y), tile);
         // grid.SetTile(new Vector3Int(x, y + 1), tile);
         // grid.SetTile(new Vector3Int(x + 1, y + 1), tile);
+        collisonGrid.SetTile(new Vector3Int(x, y), place ? collisonTile : null);
+        print(collisonGrid.HasTile(new Vector3Int(x, y)));
 
-        // collisonGrid.SetTile(new Vector3Int(x, y), place ? collisonTile : null);
+
+        changeVisualTile(x, y, place);
+        changeVisualTile(x + 1, y, place);
+        changeVisualTile(x, y + 1, place);
+        changeVisualTile(x + 1, y + 1, place);
+
+    }
+
+    public bool checkTile(int x, int y)
+    {
+        return collisonGrid.HasTile(new Vector3Int(x, y));
+    }
+
+    public void changeVisualTile(int x, int y, bool place)
+    {
+        if (!place)
+        {
+            grid.SetTile(new Vector3Int(x, y), null);
+            return;
+        }
+        bool[] blocksAround = {
+            checkTile(x - 1, y),
+            checkTile(x, y),
+            checkTile(x - 1, y - 1),
+            checkTile(x, y - 1)
+        };
+
+        print(toBinary(blocksAround));
+
+        Tile correctTile = tileRulesDict[toBinary(blocksAround)];
+
+        grid.SetTile(new Vector3Int(x, y), correctTile);
     }
 
     public void clearMap()
