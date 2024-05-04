@@ -37,7 +37,8 @@ public class movableHandle : MonoBehaviour
         if (selected)
         {
             Vector3 x = cam.ScreenToWorldPoint(Input.mousePosition); x.z = 0;
-            selected.transform.position = x + offset;
+            float prevZ = selected.transform.position.z;
+            selected.transform.position = new Vector3(x.x + offset.x, x.y + offset.y, prevZ);
         }
     }
 }

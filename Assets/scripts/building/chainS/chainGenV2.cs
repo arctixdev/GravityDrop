@@ -64,7 +64,11 @@ public class chainGenV2 : MonoBehaviour
             };
             for (int i = 0; i < controlPositions.Length; i++)
             {
-                if(handles.Length - 1 >= i) handles[i].transform.position = controlPositions[i];
+                if(handles.Length - 1 >= i)
+                {
+                    handles[i].transform.position = controlPositions[i];
+                    handles[i].transform.position += new Vector3(0, 0, -0.15f);
+                }
             }
             regenPlusObjects(true);
             shouldUpdate = true;
@@ -395,23 +399,23 @@ public class chainGenV2 : MonoBehaviour
     private GameObject[] currentChainSegments;
     void drawChain(Vector2[] curvePoints, int chainSegments)
     {
-        if(currentChainSegments != null) for(int i = 0; i < currentChainSegments.Length; i++)
+        if(currentChainSegments != null) for(int i = 1; i < currentChainSegments.Length; i++)
         {
             Destroy(currentChainSegments[i]);
         }
-        currentChainSegments = new GameObject[chainSegments];
+        currentChainSegments = new GameObject[chainSegments + 1];
 
         //Time.timeScale = 0;
         // what curvepoint to instansiate the chain segment at
         float constLevel = (curvePoints.Length / (float)chainSegments);
-        for (int i = 0; i < chainSegments; i++)
+        for (int i = 1; i <= chainSegments; i++)
         {
             //Debug.Log("generating chain segment");
             GameObject instance = Instantiate(chainPrefabs[i % chainPrefabs.Length], transform);
             instance.transform.SetParent(transform, false);
-            instance.transform.position = curvePoints[intRound(constLevel * i)];
+            instance.transform.position = curvePoints[math.min(intRound(constLevel * i), curvePoints.Length - 1)];
             Vector3 nextPos = new Vector3(0, 0, 0);
-            if (i == 0) nextPos = curvePoints[intRound(constLevel * i + 1)];
+            if (i == 1) nextPos = curvePoints[math.min(intRound(constLevel * i - 1), curvePoints.Length - 1)];
             else nextPos = currentChainSegments[i - 1].transform.position;
             //Debug.Log(curvePoints[intRound(constLevel * i)] + " + " + nextPos);
             instance.transform.rotation = GetRotation(nextPos, instance, -90);
