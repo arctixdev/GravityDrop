@@ -8,9 +8,11 @@ public class movableHandle : MonoBehaviour
     // for a better implementation in the total scheme
     
     Camera cam;
+    Rigidbody2D rb;
     void Start()
     {
         cam = Camera.main;
+        TryGetComponent<Rigidbody2D>(out rb);
     }
 
     GameObject selected;
@@ -33,11 +35,14 @@ public class movableHandle : MonoBehaviour
         if (Input.GetMouseButtonUp(0))
         {
             selected = null;
+            if (rb != null) rb.simulated = true;
         }
         if (selected)
         {
+            if(rb != null) rb.simulated = false;
             Vector3 x = cam.ScreenToWorldPoint(Input.mousePosition); x.z = 0;
-            selected.transform.position = x + offset;
+            float prevZ = selected.transform.position.z;
+            selected.transform.position = new Vector3(x.x + offset.x, x.y + offset.y, prevZ);
         }
     }
 }
