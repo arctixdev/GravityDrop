@@ -5157,11 +5157,11 @@ MonoBehaviour:
   chainSegmentAmount: 25
   plusDefaultOffset: {x: 0.2, y: -0.2, z: 1}
   printDistances: 0
-  generateDebugLines: 1
+  generateDebugLines: 0
   useAsyncFunction: 0
   chainUpdateInterval: 16
   chainSegmentLength: 0
-  currentChainSegmentLength: 1
+  currentChainSegmentLength: 0.225
   chainPrefabs:
   - {fileID: 3650942638173159787, guid: f5d5d3978fcbd3b4c98d762a8edd0fe9, type: 3}
   - {fileID: 110046074480975535, guid: f52f1e026cb3a094bb35862bcfef280b, type: 3}
