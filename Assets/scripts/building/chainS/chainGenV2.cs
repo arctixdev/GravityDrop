@@ -105,6 +105,7 @@ public class chainGenV2 : MonoBehaviour
             if(generateDebugLines) DrawLine(currentComputedPoints); shouldReDraw = false;
             Debug.Log("finished drawing debug lines");
             drawChain(currentComputedPoints, chainSegmentAmount);
+            makeChainPhysics();
         }
     }
 
@@ -398,6 +399,7 @@ public class chainGenV2 : MonoBehaviour
     }
     [SerializeField] private GameObject[] chainPrefabs;
     private GameObject[] currentChainSegments;
+    private int lastChainSegments;
     void drawChain(Vector2[] curvePoints, int chainSegments)
     {
         if(currentChainSegments != null) for(int i = 1; i < currentChainSegments.Length; i++)
@@ -406,7 +408,6 @@ public class chainGenV2 : MonoBehaviour
         }
         currentChainSegments = new GameObject[chainSegments + 1];
 
-        HingeJoint2D[] joints = new HingeJoint2D[chainSegments + 1];
 
         //Time.timeScale = 0;
         // what curvepoint to instansiate the chain segment at
@@ -426,27 +427,34 @@ public class chainGenV2 : MonoBehaviour
             instance.transform.rotation = GetRotation(nextPos, instance, -90);
 
             currentChainSegments[i] = instance;
+        }
 
-            if(i > -1)
+        lastChainSegments = chainSegments;
+    }
+    bool makeChainPhysics()
+    {
+        HingeJoint2D[] joints = new HingeJoint2D[lastChainSegments + 1];
+        for(int i = 1; i <= lastChainSegments; i++)
+        {
+            int chainType = i % chainPrefabs.Length;
+
+            currentChainSegments[i].AddComponent<Rigidbody2D>();
+
+            HingeJoint2D joint = currentChainSegments[i].AddComponent<HingeJoint2D>();
+            joint.autoConfigureConnectedAnchor = false;
+            joint.anchor = new Vector2(0, currentChainSegmentLength * (chainType == 0 ? 5f : 4.5f));
+            if(i == 1)
             {
-                instance.AddComponent<Rigidbody2D>();
-
-                HingeJoint2D joint = instance.AddComponent<HingeJoint2D>();
-                joint.autoConfigureConnectedAnchor = false;
-                joint.anchor = new Vector2(0, currentChainSegmentLength * (chainType == 0 ? 5f : 4.5f));
-                if(i == 1)
-                {
-                    Debug.Log("making welded point");
-                    joint.connectedAnchor = handles[0].transform.position;
-                }
-                else
-                {
-                    joint.connectedBody = currentChainSegments[i - 1].GetComponent<Rigidbody2D>();
-                    joint.connectedAnchor = new Vector2(0, 0);
-                }
-
-                joints[i] = joint;
+                Debug.Log("making welded point");
+                joint.connectedAnchor = handles[0].transform.position;
             }
+            else
+            {
+                joint.connectedBody = currentChainSegments[i - 1].GetComponent<Rigidbody2D>();
+                joint.connectedAnchor = new Vector2(0, 0);
+            }
+
+            joints[i] = joint;
         }
         HingeJoint2D endJoint = currentChainSegments[currentChainSegments.Length - 1].AddComponent<HingeJoint2D>();
 
@@ -463,6 +471,8 @@ public class chainGenV2 : MonoBehaviour
             joints[i].enabled = true;
         }
         endJoint.enabled = true;
+
+        return true;
     }
     void generateChainSegment(Vector2[] points, int precision)
     {
