@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class selectable : MonoBehaviour
+public class selectableOld : MonoBehaviour
 {
     public selectEvent uiTrigger;
     public void select()

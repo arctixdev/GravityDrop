@@ -11,7 +11,7 @@ enum UIType
     checkbox
 }
 [System.Serializable]
-struct namedValueUI
+struct namedValueUIOld2
 {
     /// <summary>
     /// the type of gameobject should be changed by this, requires tag system
@@ -28,17 +28,17 @@ public class objectMaster : MonoBehaviour
     [SerializeField] private bool debugSelect;
 
 
-    [SerializeField] private namedValueUI[] UIElements;
+    [SerializeField] private namedValueUIOld2[] UIElements;
     // Start is called before the first frame update
     void Start()
     {
          mainCam = Camera.main;
     }
 
-    void select(selectable sel)
+    void select(selectableOld sel)
     {
         sel.select();
-        foreach(namedValueUI element in UIElements)
+        foreach(namedValueUIOld2 element in UIElements)
         {
             string name = element.changeId;
             tagSystem ts = sel.gameObject.GetComponent<tagSystem>();
@@ -141,17 +141,17 @@ public class objectMaster : MonoBehaviour
             if(hit.collider != null)
             {
                 if(debugSelect) Debug.Log("hit object. finding selectable component");
-                selectable sel;
-                bool t = hit.collider.gameObject.TryGetComponent<selectable>(out sel);
+                selectableOld sel;
+                bool t = hit.collider.gameObject.TryGetComponent<selectableOld>(out sel);
                 if(!t)
                 {
                     if (debugSelect) Debug.Log("didnt find selectable component. finding selecteble child component");
-                    selectableChild selC;
-                    bool t2 = hit.collider.gameObject.TryGetComponent<selectableChild>(out selC);
+                    selectableChildOld selC;
+                    bool t2 = hit.collider.gameObject.TryGetComponent<selectableChildOld>(out selC);
                     if (t2)
                     {
                         if (debugSelect) Debug.Log("found selectableChild component");
-                        bool t3 = selC.master.TryGetComponent<selectable>(out sel);
+                        bool t3 = selC.master.TryGetComponent<selectableOld>(out sel);
                         if(t3)
                         {
                             select(sel);
